@@ -1,0 +1,2511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lenten Journey 2026 — A Season of Grace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --burgundy: #5c1a1a;
+    --burgundy-dark: #3d0f0f;
+    --burgundy-light: #7a2525;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e8c0;
+    --cream: #faf6ee;
+    --parchment: #f2ead8;
+    --ash: #8a8070;
+    --ash-light: #bdb4a0;
+    --text-dark: #2a1f1f;
+    --text-mid: #5a4040;
+    --text-light: #8a7060;
+    --shadow: rgba(60,20,20,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Text', Georgia, serif;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  /* === HERO === */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: var(--burgundy-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  /* Kramskoi painting as background */
+  .hero-painting {
+    position: absolute;
+    inset: 0;
+    background-image: url('kramskoy.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    opacity: 0.28;
+    filter: sepia(20%) saturate(80%);
+  }
+
+  .hero-painting-credit {
+    position: absolute !important;
+    bottom: 5rem;
+    right: 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: rgba(201,168,76,0.5);
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.6;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 60%, rgba(201,168,76,0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* All hero content sits above painting */
+  .hero > *:not(.hero-painting):not(.hero-painting-credit) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-cross {
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeDown 1s ease 0.3s forwards;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 40px rgba(201,168,76,0.4);
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--gold-light);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    opacity: 0;
+    animation: fadeDown 1s ease 0.5s forwards;
+    text-shadow: 0 2px 30px rgba(201,168,76,0.3);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    color: var(--ash-light);
+    margin-top: 0.8rem;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeDown 1s ease 0.7s forwards;
+  }
+
+  .hero-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fadeDown 1s ease 0.9s forwards;
+  }
+
+  .hero-progress-wrap {
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeDown 1s ease 1.1s forwards;
+    width: min(400px, 90%);
+  }
+
+  .hero-progress-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--ash);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .progress-bar-bg {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--burgundy-light), var(--gold));
+    border-radius: 2px;
+    transition: width 1.5s ease 1.5s;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeDown 1s ease 1.5s forwards;
+  }
+
+  .hero-scroll span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--ash);
+    text-transform: uppercase;
+  }
+
+  .scroll-chevron {
+    width: 20px;
+    height: 20px;
+    border-right: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    transform: rotate(45deg);
+    animation: bounce 1.8s infinite;
+    opacity: 0.6;
+  }
+
+  /* === NAV === */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(61,15,15,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0.8rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ash-light);
+    text-decoration: none;
+    padding: 0.4rem 0.7rem;
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  /* === MAIN LAYOUT === */
+  .main-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* === DATE NAVIGATOR === */
+  .date-nav-section {
+    background: var(--parchment);
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+    padding: 1.5rem;
+    position: sticky;
+    top: 53px;
+    z-index: 90;
+  }
+
+  .date-nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .date-nav-btn {
+    background: none;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .date-nav-btn:hover {
+    background: var(--gold);
+    color: var(--burgundy-dark);
+  }
+
+  .date-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .date-nav-btn:disabled:hover {
+    background: none;
+    color: var(--gold);
+  }
+
+  .date-nav-center {
+    text-align: center;
+  }
+
+  .date-nav-day {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--burgundy);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .date-nav-full {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  .date-nav-lent {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    color: var(--ash);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.1rem;
+  }
+
+  #day-select {
+    margin-top: 0.6rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--burgundy);
+    background: white;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 2px;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    width: 100%;
+    max-width: 260px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  #day-select:focus {
+    border-color: var(--gold);
+  }
+
+  /* === SECTIONS === */
+  section {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    color: var(--burgundy);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  /* === READINGS === */
+  .reading-block {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 2px 15px var(--shadow);
+  }
+
+  .reading-type {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--burgundy-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .reading-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+
+  .reading-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+  }
+
+  .reading-text em {
+    color: var(--burgundy);
+    font-style: italic;
+  }
+
+  .psalm-response {
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    padding: 0.6rem 1rem;
+    background: var(--gold-pale);
+    border-radius: 4px;
+    font-style: italic;
+    color: var(--burgundy-dark);
+    font-size: 0.95rem;
+  }
+
+  .psalm-response::before {
+    content: '℟. ';
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+  }
+
+  .psalm-stanza {
+    margin-top: 0.8rem;
+    margin-bottom: 0;
+    padding-left: 0.5rem;
+    border-left: 2px solid var(--gold);
+  }
+
+  /* === GOSPEL === */
+  .gospel-block {
+    background: var(--burgundy-dark);
+    color: var(--gold-pale);
+    padding: 2rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    box-shadow: 0 4px 25px var(--shadow);
+  }
+
+  .gospel-block .reading-type { color: var(--gold); }
+  .gospel-block .reading-ref { color: var(--gold-light); }
+  .gospel-block .reading-text { color: rgba(245,232,192,0.9); }
+
+  /* === SAINT === */
+  .saint-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 15px var(--shadow);
+    align-items: start;
+  }
+
+  .saint-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--burgundy-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px var(--gold), 0 0 0 6px rgba(201,168,76,0.2);
+  }
+
+  .saint-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--burgundy);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .saint-dates {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 0.6rem;
+  }
+
+  .saint-bio {
+    font-size: 1rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  .saint-feast {
+    display: inline-block;
+    margin-top: 0.6rem;
+    padding: 0.2rem 0.7rem;
+    background: var(--gold-pale);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--burgundy);
+    text-transform: uppercase;
+  }
+
+  /* === MEDITATION === */
+  .meditation-quote {
+    position: relative;
+    padding: 2.5rem 2rem 2rem;
+    background: linear-gradient(135deg, var(--parchment), white);
+    border-radius: 4px;
+    box-shadow: 0 2px 15px var(--shadow);
+    margin-bottom: 1.5rem;
+  }
+
+  .meditation-quote::before {
+    content: '\201C';
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 7rem;
+    color: var(--gold);
+    opacity: 0.2;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    font-style: italic;
+    color: #2a1f1f !important;
+    line-height: 1.55;
+    position: relative;
+    z-index: 1;
+  }
+
+  .meditation-quote, .meditation-quote * {
+    color: #2a1f1f !important;
+  }
+
+  .meditation-quote .quote-attribution {
+    color: #5c1a1a !important;
+  }
+
+  .quote-attribution {
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--burgundy);
+    text-transform: uppercase;
+  }
+
+  /* Ensure all text inside meditation container is dark */
+  #meditation-container,
+  #meditation-container p,
+  #meditation-container div,
+  #meditation-container span {
+    color: var(--text-dark);
+  }
+
+  #meditation-container .quote-attribution {
+    color: var(--burgundy);
+  }
+
+  #meditation-container .ornament {
+    color: var(--gold);
+  }
+
+  /* === PRAYER === */
+  .prayer-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    line-height: 1.85;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 15px var(--shadow);
+    border-top: 3px solid var(--burgundy);
+    font-style: italic;
+  }
+
+  /* === FASTING REMINDER === */
+  .fast-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--burgundy);
+    color: var(--gold-pale);
+    border-radius: 4px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+  }
+
+  .fast-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+  .fast-banner strong {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: block;
+    color: var(--gold);
+    margin-bottom: 0.1rem;
+  }
+
+  /* === STATIONS === */
+  .stations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .station-item {
+    text-align: center;
+    padding: 1.2rem 0.8rem;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px var(--shadow);
+    cursor: pointer;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+  }
+
+  .station-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+  }
+
+  .station-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    color: var(--burgundy);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .station-title {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 0.4rem;
+    line-height: 1.3;
+  }
+
+  /* === STATION MODAL === */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(30,5,5,0.85);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal-box {
+    background: var(--cream);
+    max-width: 550px;
+    width: 100%;
+    border-radius: 6px;
+    padding: 2.5rem;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.active .modal-box { transform: translateY(0); }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: var(--ash);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--burgundy); }
+
+  .modal-station-num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-station-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    color: var(--burgundy);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .modal-station-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+
+  .modal-prayer {
+    margin-top: 1.2rem;
+    padding: 1rem 1.2rem;
+    background: var(--parchment);
+    border-left: 3px solid var(--gold);
+    font-style: italic;
+    color: var(--text-dark);
+    font-size: 1rem;
+  }
+
+  .modal-scripture {
+    margin-top: 1.2rem;
+    padding: 1rem 1.2rem;
+    background: var(--burgundy-dark);
+    color: var(--gold-pale);
+    border-radius: 4px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .modal-scripture-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .modal-scripture-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .modal-meditation {
+    margin-top: 1.2rem;
+    padding: 1rem 1.2rem;
+    background: linear-gradient(135deg, var(--parchment), white);
+    border-radius: 4px;
+    border-left: 3px solid var(--burgundy-light);
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    color: #2a1f1f !important;
+    line-height: 1.75;
+  }
+
+  .modal-meditation, .modal-meditation * {
+    color: #2a1f1f !important;
+  }
+
+  .modal-meditation .modal-meditation-label {
+    color: #5c1a1a !important;
+  }
+
+  .modal-meditation-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* === EMAIL SIGNUP === */
+  #subscribe {
+    background: var(--burgundy-dark);
+    color: var(--cream);
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+
+  #subscribe .section-label {
+    color: var(--gold);
+    justify-content: center;
+  }
+
+  #subscribe .section-label::after { display: none; }
+
+  .subscribe-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--gold-light);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .subscribe-desc {
+    color: var(--ash-light);
+    font-style: italic;
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    font-size: 1.05rem;
+  }
+
+  .subscribe-form {
+    display: flex;
+    gap: 0.8rem;
+    max-width: 480px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .subscribe-input {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.85rem 1.2rem;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 2px;
+    color: var(--cream);
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .subscribe-input::placeholder { color: var(--ash); }
+  .subscribe-input:focus { border-color: var(--gold); }
+
+  .subscribe-btn {
+    padding: 0.85rem 2rem;
+    background: var(--gold);
+    color: var(--burgundy-dark);
+    border: none;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .subscribe-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .subscribe-success {
+    display: none;
+    margin-top: 1.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .subscribe-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--ash);
+    font-style: italic;
+  }
+
+  /* === FOOTER === */
+  footer {
+    background: #1a0808;
+    color: var(--ash);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+  }
+
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* === REVEAL ANIMATIONS === */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(5px); }
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 600px) {
+    .saint-card { grid-template-columns: 1fr; }
+    .saint-icon { margin: 0 auto; }
+    .stations-grid { grid-template-columns: repeat(3, 1fr); }
+    .nav-links { display: none; }
+  }
+
+  /* Ornamental divider */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+    margin: 1.5rem 0;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-painting" id="hero-painting"></div>
+  <div class="hero-cross">✝</div>
+  <h1>Lenten Journey</h1>
+  <p class="hero-subtitle">A Season of Repentance, Reflection &amp; Renewal</p>
+  <p class="hero-date" id="hero-date">Ash Wednesday · February 18, 2026</p>
+
+  <div class="hero-progress-wrap">
+    <div class="hero-progress-label">
+      <span>Ash Wednesday</span>
+      <span id="progress-label">Day 1 of 40</span>
+      <span>Easter Sunday</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-chevron"></div>
+  </div>
+
+  <div class="hero-painting-credit">
+    Ivan Kramskoi<br>
+    "Christ in the Desert," 1872<br>
+    Tretyakov Gallery, Moscow · Public Domain
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a class="nav-brand" href="#top">✝ Lenten Journey 2026</a>
+  <div class="nav-links">
+    <a href="#readings">Readings</a>
+    <a href="#saint">Saint</a>
+    <a href="#meditation">Meditation</a>
+    <a href="#prayer">Prayer</a>
+    <a href="#stations">Stations</a>
+    <a href="#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<!-- DATE NAVIGATOR -->
+<div class="date-nav-section">
+  <div class="date-nav-inner">
+    <button class="date-nav-btn" id="prev-btn" onclick="changeDay(-1)">← Previous</button>
+    <div class="date-nav-center">
+      <div class="date-nav-day" id="nav-day-name">Ash Wednesday</div>
+      <div class="date-nav-full" id="nav-date-full">February 18, 2026</div>
+      <div class="date-nav-lent" id="nav-lent-label">Day 1 of Lent</div>
+      <select id="day-select" onchange="jumpToDay(this.value)" aria-label="Jump to day">
+        <option value="">— Jump to a day —</option>
+      </select>
+    </div>
+    <button class="date-nav-btn" id="next-btn" onclick="changeDay(1)">Next →</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+  <!-- READINGS -->
+  <section id="readings">
+    <div class="section-label reveal">Sacred Liturgy</div>
+    <h2 class="section-title reveal" id="readings-title">Mass Readings for Ash Wednesday</h2>
+
+    <div id="fast-banner-wrap" class="reveal"></div>
+
+    <div id="readings-container" class="reveal"></div>
+  </section>
+
+  <!-- SAINT -->
+  <section id="saint">
+    <div class="section-label reveal">Communion of Saints</div>
+    <h2 class="section-title reveal">Saint of the Day</h2>
+    <div id="saint-container" class="reveal"></div>
+  </section>
+
+  <!-- MEDITATION -->
+  <section id="meditation">
+    <div class="section-label reveal">Lectio Divina</div>
+    <h2 class="section-title reveal">Meditation for Today</h2>
+    <div id="meditation-container" class="reveal"></div>
+  </section>
+
+  <!-- PRAYER -->
+  <section id="prayer">
+    <div class="section-label reveal">Daily Prayer</div>
+    <h2 class="section-title reveal">Prayer of the Day</h2>
+    <div id="prayer-container" class="reveal"></div>
+  </section>
+
+  <!-- STATIONS OF THE CROSS -->
+  <section id="stations">
+    <div class="section-label reveal">Via Crucis</div>
+    <h2 class="section-title reveal">Stations of the Cross</h2>
+    <p class="reveal" style="color:var(--text-light);font-style:italic;margin-bottom:1.5rem;">
+      Click any station to reflect and pray. Traditionally prayed on Fridays during Lent.
+    </p>
+    <div class="stations-grid reveal" id="stations-grid"></div>
+  </section>
+
+</div><!-- end main-content -->
+
+<!-- SUBSCRIBE -->
+<section id="subscribe">
+  <div class="section-label">Daily Devotional</div>
+  <h2 class="subscribe-title">Receive Lent in Your Inbox</h2>
+  <p class="subscribe-desc">
+    Each morning at 6:00 AM during Lent, receive the day's readings, saint, meditation, and prayer — a quiet moment before your day begins.
+  </p>
+  <form class="subscribe-form" onsubmit="handleSubscribe(event)">
+    <input class="subscribe-input" type="email" placeholder="Your email address" required id="email-input">
+    <button class="subscribe-btn" type="submit">Subscribe</button>
+  </form>
+  <div class="subscribe-success" id="sub-success">
+    ✝ &nbsp; You are now enrolled in the Lenten Journey. Check your inbox.
+  </div>
+  <p class="subscribe-note">Daily emails run from Ash Wednesday (Feb 18) through Holy Saturday (Apr 4). No spam, ever.</p>
+
+  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(201,168,76,0.2);text-align:center;">
+    <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--ash);text-transform:uppercase;margin-bottom:0.8rem;">Email Preview Tool</div>
+    <p style="font-family:'Crimson Text',serif;font-size:0.95rem;color:var(--ash-light);font-style:italic;margin-bottom:1rem;">Preview the daily email as subscribers will receive it.</p>
+    <button class="subscribe-btn" onclick="previewEmail()" style="background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid var(--gold);">
+      Preview Today's Email
+    </button>
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1.2rem 1.5rem;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.15);border-radius:4px;text-align:left;max-width:560px;margin-left:auto;margin-right:auto;">
+    <div style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;">⚙ Daily Email Automation — Next Steps</div>
+    <div style="font-family:'Crimson Text',serif;font-size:0.9rem;color:var(--ash-light);line-height:1.8;">
+      <strong style="color:var(--gold-pale);">Subscriber collection is live.</strong> Emails entered on this site are automatically added to your EmailOctopus list.<br><br>
+      <strong style="color:var(--gold-pale);">For daily 6am sends:</strong> In EmailOctopus, go to <strong style="color:var(--gold-pale);">Automations → Create automation</strong>. Set the trigger to "Contact joins list" and add one email per day of Lent (46 total), each delayed by +1 day. Use the <strong style="color:var(--gold-pale);">"Preview Today's Email"</strong> button above to copy each day's HTML into EmailOctopus's template editor.
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL PREVIEW MODAL -->
+<div class="modal-overlay" id="email-preview-modal" onclick="if(event.target===this)this.classList.remove('active')" style="z-index:300;">
+  <div class="modal-box" style="max-width:680px;width:100%;max-height:90vh;overflow-y:auto;">
+    <button class="modal-close" onclick="document.getElementById('email-preview-modal').classList.remove('active')">✕</button>
+    <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem;">Email Preview</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--burgundy);margin-bottom:1rem;">Today's Subscriber Email</div>
+    <div style="display:flex;gap:0.6rem;margin-bottom:1rem;flex-wrap:wrap;">
+      <button onclick="copyEmailHTML()" style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;padding:0.4rem 0.8rem;background:var(--burgundy);color:var(--gold-pale);border:none;border-radius:2px;cursor:pointer;text-transform:uppercase;">Copy HTML</button>
+      <button onclick="openEmailInTab()" style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;padding:0.4rem 0.8rem;background:var(--gold);color:var(--burgundy-dark);border:none;border-radius:2px;cursor:pointer;text-transform:uppercase;">Open in New Tab</button>
+    </div>
+    <iframe id="email-preview-frame" style="width:100%;height:500px;border:1px solid rgba(201,168,76,0.3);border-radius:4px;"></iframe>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom:0.5rem;">✝ &nbsp; LENTEN JOURNEY 2026 &nbsp; ✝</div>
+  <div>"Return to me with your whole heart." — Joel 2:12</div>
+</footer>
+
+<!-- STATION MODAL -->
+<div class="modal-overlay" id="station-modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('station-modal').classList.remove('active')">✕</button>
+    <div class="modal-station-num" id="modal-station-num"></div>
+    <div class="modal-station-title" id="modal-station-title"></div>
+    <div class="modal-station-text" id="modal-station-text"></div>
+    <div class="modal-scripture" id="modal-station-scripture"></div>
+    <div class="modal-meditation" id="modal-station-meditation"></div>
+    <div class="modal-prayer" id="modal-station-prayer"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// LENTEN DATA — 2026
+// Ash Wednesday: Feb 18 | Easter: Apr 5
+// ============================================================
+
+const LENT_START = new Date(2026, 1, 18); // Feb 18, 2026
+const LENT_END   = new Date(2026, 3, 4);  // Holy Saturday Apr 4
+
+// Helper to format dates
+function formatDate(d) {
+  return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+}
+
+function shortDate(d) {
+  return d.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+}
+
+function dayOfWeek(d) {
+  return ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
+}
+
+// Days of Lent (0-indexed: 0 = Ash Wednesday)
+function lentDay(d) {
+  const diff = Math.round((d - LENT_START) / 86400000);
+  return diff;
+}
+
+// ============================================================
+// LENTEN LECTIONARY 2026 — Complete 46-Day Calendar
+// Ash Wednesday Feb 18 → Holy Saturday Apr 4
+// Readings fetched dynamically from bible-api.com (WEB, public domain)
+// ============================================================
+
+// Each entry: { title, isFasting?, fastNote?, first, psalm, second?, gospel }
+// Passages use bible-api.com format: "book chapter:verse-verse"
+// For ranges with gaps (e.g. 6:1-6,16-18) we fetch each part separately
+
+const LECTIONARY = {
+  "2-18": {
+    title: "Ash Wednesday",
+    isFasting: true, fastNote: "Today is a day of fasting and abstinence from meat.",
+    first:  { type: "First Reading",   ref: "Joel 2:12–18",           passages: ["joel 2:12-18"] },
+    psalm:  { ref: "Psalm 51:3–4, 5–6, 12–13, 14, 17", response: "Be merciful, O Lord, for we have sinned.", passages: ["psalm 51:3-17"], stanzas: ["Have mercy on me, God, in your goodness;\nin your abundant compassion blot out my offense.\nWash away all my guilt;\nfrom my sin cleanse me.", "For I know my offense;\nmy sin is always before me.\nAgainst you alone have I sinned;\nI have done such evil in your sight.", "A clean heart create for me, God;\nrenew in me a steadfast spirit.\nDo not drive me from your presence,\nnor take from me your holy spirit.", "Restore my joy in your salvation;\nsustain in me a willing spirit.\nMy sacrifice, God, is a broken spirit;\nGod, do not spurn a broken, humbled heart."] },
+    second: { type: "Second Reading",  ref: "2 Corinthians 5:20–6:2", passages: ["2 corinthians 5:20-21", "2 corinthians 6:1-2"] },
+    gospel: { ref: "Matthew 6:1–6, 16–18",                            passages: ["matthew 6:1-6", "matthew 6:16-18"] }
+  },
+  "2-19": {
+    title: "Thursday after Ash Wednesday",
+    first:  { type: "First Reading", ref: "Deuteronomy 30:15–20", passages: ["deuteronomy 30:15-20"] },
+    psalm:  { ref: "Psalm 1:1–2, 3, 4, 6", response: "Blessed are they who hope in the Lord.", passages: ["psalm 1:1-6"], stanzas: ["Blessed are they who do not follow the counsel of the wicked,\nnor go the way of sinners,\nnor sit in company with scoffers.\nRather, the law of the Lord is their joy;\nGod's law they study day and night.", "They are like a tree planted near streams of water,\nthat yields its fruit in season;\nits leaves never wither;\nwhatever they do prospers.", "But not the wicked!\nThey are like chaff driven by the wind.\nFor the Lord knows the way of the just,\nbut the way of the wicked leads to ruin."] },
+    gospel: { ref: "Luke 9:22–25", passages: ["luke 9:22-25"] }
+  },
+  "2-20": {
+    title: "Friday after Ash Wednesday",
+    isFasting: true, fastNote: "Fridays in Lent are days of abstinence from meat.",
+    first:  { type: "First Reading", ref: "Isaiah 58:1–9a", passages: ["isaiah 58:1-9"] },
+    psalm:  { ref: "Psalm 51:3–4, 5–6, 18–19", response: "A heart contrite and humbled, O God, you will not spurn.", passages: ["psalm 51:3-6", "psalm 51:18-19"], stanzas: ["Have mercy on me, God, in your goodness;\nin your abundant compassion blot out my offense.\nWash away all my guilt;\nfrom my sin cleanse me.", "For I know my offense;\nmy sin is always before me.\nAgainst you alone have I sinned;\nI have done such evil in your sight.", "For you do not desire sacrifice;\na burnt offering you would not accept.\nMy sacrifice, God, is a broken spirit;\nGod, do not spurn a broken, humbled heart."] },
+    gospel: { ref: "Matthew 9:14–15", passages: ["matthew 9:14-15"] }
+  },
+  "2-21": {
+    title: "Saturday after Ash Wednesday",
+    first:  { type: "First Reading", ref: "Isaiah 58:9b–14", passages: ["isaiah 58:9-14"] },
+    psalm:  { ref: "Psalm 86:1–2, 3–4, 5–6", response: "Teach me your way, O Lord, that I may walk in your truth.", passages: ["psalm 86:1-6"], stanzas: ["Hear me, Lord, and answer me,\nfor I am poor and oppressed.\nPreserve my life, for I am devoted to you;\nsave your servant who trusts in you.", "Be gracious to me, Lord,\nfor to you I call all the day.\nGlad the soul of your servant;\nto you, Lord, I lift up my soul.", "Lord, you are good and forgiving,\nmost merciful to all who call on you.\nHear my prayer, Lord;\nlisten to my cry for help."] },
+    gospel: { ref: "Luke 5:27–32", passages: ["luke 5:27-32"] }
+  },
+  "2-22": {
+    title: "First Sunday of Lent",
+    first:  { type: "First Reading",  ref: "Deuteronomy 26:4–10",  passages: ["deuteronomy 26:4-10"] },
+    psalm:  { ref: "Psalm 91:1–2, 10–11, 12–13, 14–15", response: "Be with me, Lord, when I am in trouble.", passages: ["psalm 91:1-2", "psalm 91:10-15"], stanzas: ["You who dwell in the shelter of the Most High,\nwho abide in the shade of the Almighty,\nsay to the Lord: My refuge and fortress,\nmy God in whom I trust.", "No evil shall befall you,\nno affliction come near your tent.\nFor God commands the angels\nto guard you in all your ways.", "They will support you with their hands,\nlest you strike your foot against a stone.\nYou can tread upon the asp and the viper,\ntrample the lion and the dragon.", "Because he clings to me I will deliver him;\nI will set him on high because he knows my name.\nHe will call upon me and I will answer;\nI will be with him in distress."] },
+    second: { type: "Second Reading", ref: "Romans 10:8–13",        passages: ["romans 10:8-13"] },
+    gospel: { ref: "Luke 4:1–13", passages: ["luke 4:1-13"] }
+  },
+  "2-23": {
+    title: "Monday of the First Week of Lent",
+    first:  { type: "First Reading", ref: "Leviticus 19:1–2, 11–18", passages: ["leviticus 19:1-2", "leviticus 19:11-18"] },
+    psalm:  { ref: "Psalm 19:8, 9, 10, 15", response: "Your words, Lord, are Spirit and life.", passages: ["psalm 19:8-10", "psalm 19:15"], stanzas: ["The law of the Lord is perfect,\nrefreshing the soul.\nThe decree of the Lord is trustworthy,\ngiving wisdom to the simple.", "The precepts of the Lord are right,\nrejoicing the heart.\nThe command of the Lord is clear,\nenlightening the eye.", "The fear of the Lord is pure,\nenduring forever.\nThe statutes of the Lord are true,\nall of them just.", "Let the words of my mouth meet with your favor,\nkeep the thoughts of my heart before you,\nLord, my rock and my redeemer."] },
+    gospel: { ref: "Matthew 25:31–46", passages: ["matthew 25:31-46"] }
+  },
+  "2-24": {
+    title: "Tuesday of the First Week of Lent",
+    first:  { type: "First Reading", ref: "Isaiah 55:10–11", passages: ["isaiah 55:10-11"] },
+    psalm:  { ref: "Psalm 34:4–5, 6–7, 16–17, 18–19", response: "From all their distress God rescues the just.", passages: ["psalm 34:4-19"], stanzas: ["I will bless the Lord at all times;\npraise shall always be in my mouth.\nMy soul will glory in the Lord;\nlet the poor hear and be glad.", "Look to God that you may be radiant with joy\nand your faces may not blush for shame.\nIn my misfortune I called, the Lord heard\nand saved me from all my troubles.", "The angel of the Lord, who encamps with them,\ndelivers all who fear God.\nLearn to savor how good the Lord is;\nhappy are those who take refuge in him.", "Fear the Lord, you holy ones;\nnothing is lacking to those who fear him.\nThe Lord redeems the lives of his servants;\nnone are condemned who take refuge in him."] },
+    gospel: { ref: "Matthew 6:7–15", passages: ["matthew 6:7-15"] }
+  },
+  "2-25": {
+    title: "Wednesday of the First Week of Lent",
+    first:  { type: "First Reading", ref: "Jonah 3:1–10", passages: ["jonah 3:1-10"] },
+    psalm:  { ref: "Psalm 51:3–4, 12–13, 18–19", response: "A heart contrite and humbled, O God, you will not spurn.", passages: ["psalm 51:3-4", "psalm 51:12-13", "psalm 51:18-19"], stanzas: ["Have mercy on me, God, in your goodness;\nin your abundant compassion blot out my offense.\nWash away all my guilt;\nfrom my sin cleanse me.", "A clean heart create for me, God;\nrenew in me a steadfast spirit.\nDo not drive me from your presence,\nnor take from me your holy spirit.", "For you do not desire sacrifice;\na burnt offering you would not accept.\nMy sacrifice, God, is a broken spirit;\nGod, do not spurn a broken, humbled heart."] },
+    gospel: { ref: "Luke 11:29–32", passages: ["luke 11:29-32"] }
+  },
+  "2-26": {
+    title: "Thursday of the First Week of Lent",
+    first:  { type: "First Reading", ref: "Esther C:12, 14–16, 23–25", passages: ["esther 4:1-17"] },
+    psalm:  { ref: "Psalm 138:1–2a, 2bc–3, 7c–8", response: "Lord, on the day I called for help, you answered me.", passages: ["psalm 138:1-8"], stanzas: ["I thank you, Lord, with all my heart;\nin the presence of the angels I sing your praise.\nI bow low toward your holy temple;\nI praise your name for your mercy and faithfulness.", "When I cried out, you answered;\nyou strengthened my spirit.\nThe Lord is on high but cares for the lowly\nand knows the proud from afar.", "Your right hand saves me.\nThe Lord is with me to the end.\nLord, your mercy endures forever.\nNever forsake the work of your hands."] },
+    gospel: { ref: "Matthew 7:7–12", passages: ["matthew 7:7-12"] }
+  },
+  "2-27": {
+    title: "Friday of the First Week of Lent",
+    isFasting: true, fastNote: "Fridays in Lent are days of abstinence from meat.",
+    first:  { type: "First Reading", ref: "Ezekiel 18:21–28", passages: ["ezekiel 18:21-28"] },
+    psalm:  { ref: "Psalm 130:1–2, 3–4, 5–7a, 7bc–8", response: "If you, O Lord, mark iniquities, who can stand?", passages: ["psalm 130:1-8"], stanzas: ["Out of the depths I call to you, Lord;\nLord, hear my cry!\nMay your ears be attentive\nto my cry for mercy.", "If you, Lord, keep account of sins,\nLord, who can stand?\nBut with you is forgiveness\nand so you are revered.", "I wait for the Lord,\nmy soul waits and I hope for his word.\nMy soul looks for the Lord\nmore than sentinels for daybreak.", "For with the Lord is mercy,\nwith him is plentiful redemption,\nand he will redeem Israel\nfrom all its sins."] },
+    gospel: { ref: "Matthew 5:20–26", passages: ["matthew 5:20-26"] }
+  },
+  "2-28": {
+    title: "Saturday of the First Week of Lent",
+    first:  { type: "First Reading", ref: "Deuteronomy 26:16–19", passages: ["deuteronomy 26:16-19"] },
+    psalm:  { ref: "Psalm 119:1–2, 4–5, 7–8", response: "Blessed are they who follow the law of the Lord!", passages: ["psalm 119:1-8"], stanzas: ["Blessed are those whose way is blameless,\nwho walk by the teaching of the Lord.\nBlessed are those who keep his testimonies,\nwho seek him with all their heart.", "You have given the command to keep your precepts\nwith care.\nMay my ways be firm\nin the observance of your statutes!", "I will praise you with sincere heart\nas I study your just rules.\nI will keep your statutes;\ndo not leave me all alone."] },
+    gospel: { ref: "Matthew 5:43–48", passages: ["matthew 5:43-48"] }
+  },
+  "3-1": {
+    title: "Second Sunday of Lent",
+    first:  { type: "First Reading",  ref: "Genesis 15:5–12, 17–18", passages: ["genesis 15:5-12", "genesis 15:17-18"] },
+    psalm:  { ref: "Psalm 27:1, 7–8, 8–9, 13–14", response: "The Lord is my light and my salvation.", passages: ["psalm 27:1", "psalm 27:7-14"], stanzas: ["The Lord is my light and my salvation;\nwhom do I fear?\nThe Lord is my life's refuge;\nof whom am I afraid?", "Hear my voice, Lord, when I call;\nhave mercy on me and answer me.\nOf you my heart speaks; you my glance seeks;\nyour presence, Lord, I seek.", "Do not hide your face from me;\ndo not repel your servant in anger.\nYou are my helper; do not cast me off;\ndo not forsake me, God my savior!", "I believe I shall enjoy the Lord's goodness\nin the land of the living.\nWait for the Lord, take courage;\nbe stouthearted, wait for the Lord!"] },
+    second: { type: "Second Reading", ref: "Philippians 3:17–4:1",   passages: ["philippians 3:17-21", "philippians 4:1"] },
+    gospel: { ref: "Luke 9:28b–36", passages: ["luke 9:28-36"] }
+  },
+  "3-2": {
+    title: "Monday of the Second Week of Lent",
+    first:  { type: "First Reading", ref: "Daniel 9:4b–10", passages: ["daniel 9:4-10"] },
+    psalm:  { ref: "Psalm 79:8, 9, 11, 13", response: "Lord, do not deal with us according to our sins.", passages: ["psalm 79:8-9", "psalm 79:11", "psalm 79:13"], stanzas: ["Do not remember against us the iniquities of our forebears;\nmay your compassion quickly come to us,\nfor we have been brought very low.", "Help us, God our savior,\nfor the glory of your name.\nForgive us our sins for your name's sake.", "Let the groaning of the imprisoned come before you;\nwith your great power free those doomed to die.\nThen we, your people and sheep of your pasture,\nwill give thanks to you forever."] },
+    gospel: { ref: "Luke 6:36–38", passages: ["luke 6:36-38"] }
+  },
+  "3-3": {
+    title: "Tuesday of the Second Week of Lent",
+    first:  { type: "First Reading", ref: "Isaiah 1:10, 16–20", passages: ["isaiah 1:10", "isaiah 1:16-20"] },
+    psalm:  { ref: "Psalm 50:8–9, 16bc–17, 21, 23", response: "To the upright I will show the saving power of God.", passages: ["psalm 50:8-9", "psalm 50:16-17", "psalm 50:21-23"], stanzas: ["Not for your sacrifices do I rebuke you,\nyour burnt offerings are before me always.\nI need no bull from your fields,\nno goats from your stalls.", "Why do you recite my commandments\nand profess my covenant with your mouth?\nYou hate discipline;\nyou cast my words behind you!", "Whoever offers the sacrifice of praise glorifies me;\nand to those who go the right way\nI will show the salvation of God."] },
+    gospel: { ref: "Matthew 23:1–12", passages: ["matthew 23:1-12"] }
+  },
+  "3-4": {
+    title: "Wednesday of the Second Week of Lent",
+    first:  { type: "First Reading", ref: "Jeremiah 18:18–20", passages: ["jeremiah 18:18-20"] },
+    psalm:  { ref: "Psalm 31:5–6, 14, 15–16", response: "Save me, O Lord, in your kindness.", passages: ["psalm 31:5-6", "psalm 31:14-16"], stanzas: ["In you, Lord, I take refuge;\nlet me never be put to shame.\nIn your righteousness deliver me;\nincline your ear to me; make haste to rescue me!", "Be my rock of refuge,\na stronghold to save me.\nYou are my rock and my fortress;\nfor your name's sake lead and guide me.", "But my trust is in you, Lord;\nI say, 'You are my God.'\nMy destiny is in your hands;\ndeliver me from my enemies.", "Let your face shine on your servant;\nsave me in your mercy.\nBe strong and take heart,\nall who hope in the Lord."] },
+    gospel: { ref: "Matthew 20:17–28", passages: ["matthew 20:17-28"] }
+  },
+  "3-5": {
+    title: "Thursday of the Second Week of Lent",
+    first:  { type: "First Reading", ref: "Jeremiah 17:5–10", passages: ["jeremiah 17:5-10"] },
+    psalm:  { ref: "Psalm 1:1–2, 3, 4, 6", response: "Blessed are they who hope in the Lord.", passages: ["psalm 1:1-6"], stanzas: ["Blessed are they who trust in the Lord;\nthe Lord is their hope.\nThey are like a tree planted beside the waters\nthat stretches out its roots to the stream.", "It does not fear heat when it comes;\nits leaves stay green.\nIn the year of drought it shows no distress,\nbut still produces fruit.", "I, the Lord, alone probe the mind\nand test the heart,\nTo reward everyone according to his ways,\naccording to the merit of his deeds."] },
+    gospel: { ref: "Luke 16:19–31", passages: ["luke 16:19-31"] }
+  },
+  "3-6": {
+    title: "Friday of the Second Week of Lent",
+    isFasting: true, fastNote: "Fridays in Lent are days of abstinence from meat.",
+    first:  { type: "First Reading", ref: "Genesis 37:3–4, 12–13a, 17b–28a", passages: ["genesis 37:3-4", "genesis 37:12-13", "genesis 37:17-28"] },
+    psalm:  { ref: "Psalm 105:16–17, 18–19, 20–21", response: "Remember the marvels the Lord has done.", passages: ["psalm 105:16-21"], stanzas: ["Give praise to the Lord, invoke his name;\nmake known among the peoples his deeds!\nSing to him, sing his praise,\nproclaim all his wondrous deeds.", "He called down famine on the land;\nhe deprived them of all food.\nHe had sent a man before them,\nJoseph, sold as a slave.", "They had weighed him down with fetters,\nput him in irons,\ntill his prediction came to pass\nand the word of the Lord proved him true.", "The king sent and released him;\nthe ruler of peoples set him free.\nHe made him master of his house,\nruler of all his possessions."] },
+    gospel: { ref: "Matthew 21:33–43, 45–46", passages: ["matthew 21:33-43", "matthew 21:45-46"] }
+  },
+  "3-7": {
+    title: "Saturday of the Second Week of Lent",
+    first:  { type: "First Reading", ref: "Micah 7:14–15, 18–20", passages: ["micah 7:14-15", "micah 7:18-20"] },
+    psalm:  { ref: "Psalm 103:1–2, 3–4, 9–10, 11–12", response: "The Lord is kind and merciful.", passages: ["psalm 103:1-4", "psalm 103:9-12"], stanzas: ["Bless the Lord, my soul;\nall my being, bless his holy name!\nBless the Lord, my soul;\ndo not forget all the gifts of God.", "Who pardons all your sins,\nheals all your ills,\ndelivers your life from the pit,\nsurrounds you with mercy and compassion.", "God does not deal with us as our sins merit,\nnor repay us as our deeds deserve.\nAs far as the east is from the west,\nso far have our sins been removed from us.", "As a father has compassion on his children,\nso the Lord has compassion on the faithful.\nBless the Lord, all his creatures,\neverywhere in his domain."] },
+    gospel: { ref: "Luke 15:1–3, 11–32", passages: ["luke 15:1-3", "luke 15:11-32"] }
+  },
+  "3-8": {
+    title: "Third Sunday of Lent",
+    first:  { type: "First Reading",  ref: "Exodus 3:1–8a, 13–15",   passages: ["exodus 3:1-8", "exodus 3:13-15"] },
+    psalm:  { ref: "Psalm 103:1–2, 3–4, 6–7, 8, 11", response: "The Lord is kind and merciful.", passages: ["psalm 103:1-4", "psalm 103:6-8", "psalm 103:11"], stanzas: ["Bless the Lord, my soul;\nall my being, bless his holy name!\nBless the Lord, my soul;\ndo not forget all the gifts of God.", "Who pardons all your sins,\nheals all your ills,\ndelivers your life from the pit,\nsurrounds you with mercy and compassion.", "The Lord does righteous deeds,\nbrings justice to all the oppressed.\nHe made known his ways to Moses,\nto the Israelites his deeds.", "Merciful and gracious is the Lord,\nslow to anger, abounding in mercy.\nHis mercy is not removed from those who fear him."] },
+    second: { type: "Second Reading", ref: "1 Corinthians 10:1–6, 10–12", passages: ["1 corinthians 10:1-6", "1 corinthians 10:10-12"] },
+    gospel: { ref: "Luke 13:1–9", passages: ["luke 13:1-9"] }
+  },
+  "3-9": {
+    title: "Monday of the Third Week of Lent",
+    first:  { type: "First Reading", ref: "2 Kings 5:1–15ab", passages: ["2 kings 5:1-15"] },
+    psalm:  { ref: "Psalm 42:2, 3; 43:3, 4", response: "Athirst is my soul for the living God.", passages: ["psalm 42:2-3", "psalm 43:3-4"], stanzas: ["As the deer longs for streams of water,\nso my soul longs for you, O God.\nMy being thirsts for God, the living God.\nWhen can I go and see the face of God?", "Send your light and your fidelity,\nthat they may be my guide\nand bring me to your holy mountain,\nto the place of your dwelling.", "Then I will go to the altar of God,\nGod, my joy, my delight.\nThen I will praise you with the harp,\nO God, my God."] },
+    gospel: { ref: "Luke 4:24–30", passages: ["luke 4:24-30"] }
+  },
+  "3-10": {
+    title: "Tuesday of the Third Week of Lent",
+    first:  { type: "First Reading", ref: "Daniel 3:25, 34–43", passages: ["daniel 3:25", "daniel 3:34-43"] },
+    psalm:  { ref: "Psalm 25:4–5ab, 6–7bc, 8–9", response: "Remember your mercies, O Lord.", passages: ["psalm 25:4-9"], stanzas: ["Your ways, Lord, make known to me;\nteach me your paths.\nGuide me in your truth and teach me,\nfor you are God my savior.", "Remember your compassion and mercy, O Lord;\nthey are ages old.\nIn your kindness remember me,\nbecause of your goodness, Lord.", "Good and upright is the Lord,\nwho shows sinners the way,\nguides the humble rightly\nand teaches the humble the way."] },
+    gospel: { ref: "Matthew 18:21–35", passages: ["matthew 18:21-35"] }
+  },
+  "3-11": {
+    title: "Wednesday of the Third Week of Lent",
+    first:  { type: "First Reading", ref: "Deuteronomy 4:1, 5–9", passages: ["deuteronomy 4:1", "deuteronomy 4:5-9"] },
+    psalm:  { ref: "Psalm 147:12–13, 15–16, 19–20", response: "Praise the Lord, Jerusalem.", passages: ["psalm 147:12-13", "psalm 147:15-16", "psalm 147:19-20"], stanzas: ["Glorify the Lord, Jerusalem;\nZion, offer praise to your God.\nFor he has strengthened the bars of your gates,\nblessed your children within you.", "God sends his word to earth;\nhis command runs swiftly!\nHe spreads snow like wool;\nfrosts he strews like ashes.", "He announces his word to Jacob,\nstatutes and rules to Israel.\nGod has not done this for other nations;\nof such rules they know nothing."] },
+    gospel: { ref: "Matthew 5:17–19", passages: ["matthew 5:17-19"] }
+  },
+  "3-12": {
+    title: "Thursday of the Third Week of Lent",
+    first:  { type: "First Reading", ref: "Jeremiah 7:23–28", passages: ["jeremiah 7:23-28"] },
+    psalm:  { ref: "Psalm 95:1–2, 6–7, 8–9", response: "If today you hear his voice, harden not your hearts.", passages: ["psalm 95:1-2", "psalm 95:6-9"], stanzas: ["Come, let us sing joyfully to the Lord;\ncry out to the rock of our salvation.\nLet us greet him with a song of praise,\njoyfully sing out our psalms.", "Come, let us bow down and worship;\nlet us kneel before the Lord who made us.\nFor he is our God;\nwe are the people he shepherds.", "Oh, that today you would hear his voice:\nDo not harden your hearts as at Meribah,\nas on the day of Massah in the desert."] },
+    gospel: { ref: "Luke 11:14–23", passages: ["luke 11:14-23"] }
+  },
+  "3-13": {
+    title: "Friday of the Third Week of Lent",
+    isFasting: true, fastNote: "Fridays in Lent are days of abstinence from meat.",
+    first:  { type: "First Reading", ref: "Hosea 14:2–10", passages: ["hosea 14:2-10"] },
+    psalm:  { ref: "Psalm 81:6c–8a, 8bc–9, 10–11ab, 14, 17", response: "I am the Lord your God: hear my voice.", passages: ["psalm 81:6-11", "psalm 81:14", "psalm 81:17"], stanzas: ["Sing joyfully to God our strength;\nshout in triumph to the God of Jacob!\nTake up a melody, sound the timbrel,\nthe sweet-sounding harp and lute.", "There shall be no strange god among you\nnor shall you worship any alien god.\nI, the Lord, am your God\nwho led you forth from Egypt.", "If only my people would listen to me,\nIsrael would walk in my ways.\nI would feed them with the best of wheat\nand with honey from the rock."] },
+    gospel: { ref: "Mark 12:28–34", passages: ["mark 12:28-34"] }
+  },
+  "3-14": {
+    title: "Saturday of the Third Week of Lent",
+    first:  { type: "First Reading", ref: "Hosea 6:1–6", passages: ["hosea 6:1-6"] },
+    psalm:  { ref: "Psalm 51:3–4, 18–19, 20–21ab", response: "It is mercy I desire, and not sacrifice.", passages: ["psalm 51:3-4", "psalm 51:18-21"], stanzas: ["Have mercy on me, God, in your goodness;\nin your abundant compassion blot out my offense.\nWash away all my guilt;\nfrom my sin cleanse me.", "For you do not desire sacrifice;\na burnt offering you would not accept.\nMy sacrifice, God, is a broken spirit;\nGod, do not spurn a broken, humbled heart.", "Be pleased to grant Zion your favor,\nLord, that you may rebuild the walls of Jerusalem.\nThen you will desire sacrifice in good faith;\nburnt offerings and whole offerings."] },
+    gospel: { ref: "Luke 18:9–14", passages: ["luke 18:9-14"] }
+  },
+  "3-15": {
+    title: "Fourth Sunday of Lent — Laetare Sunday",
+    first:  { type: "First Reading",  ref: "Joshua 5:9a, 10–12",        passages: ["joshua 5:9-12"] },
+    psalm:  { ref: "Psalm 34:2–3, 4–5, 6–7", response: "Taste and see the goodness of the Lord.", passages: ["psalm 34:2-7"], stanzas: ["I will bless the Lord at all times;\npraise shall always be in my mouth.\nMy soul will glory in the Lord;\nlet the poor hear and be glad.", "Look to God that you may be radiant with joy\nand your faces may not blush for shame.\nThe poor one called and the Lord heard,\nand from all his troubles he was saved.", "The angel of the Lord, who encamps with them,\ndelivers all who fear God.\nLearn to savor how good the Lord is;\nhappy are those who take refuge in him."] },
+    second: { type: "Second Reading", ref: "2 Corinthians 5:17–21",     passages: ["2 corinthians 5:17-21"] },
+    gospel: { ref: "Luke 15:1–3, 11–32", passages: ["luke 15:1-3", "luke 15:11-32"] }
+  },
+  "3-16": {
+    title: "Monday of the Fourth Week of Lent",
+    first:  { type: "First Reading", ref: "Isaiah 65:17–21", passages: ["isaiah 65:17-21"] },
+    psalm:  { ref: "Psalm 30:2, 4, 5–6, 11–12a, 13b", response: "I will praise you, Lord, for you have rescued me.", passages: ["psalm 30:2", "psalm 30:4-6", "psalm 30:11-13"], stanzas: ["I praise you, Lord, for you raised me up\nand did not let my enemies rejoice over me.\nLord, you brought me up from Sheol;\nyou kept me from going down to the pit.", "Sing praise to the Lord, you faithful;\ngive thanks to his holy name.\nFor his anger lasts but a moment;\nhis favor a lifetime.", "At dusk weeping comes for the night;\nbut at dawn there is rejoicing.\nYou changed my mourning into dancing;\nLord, my God, forever will I thank you."] },
+    gospel: { ref: "John 4:43–54", passages: ["john 4:43-54"] }
+  },
+  "3-17": {
+    title: "Tuesday of the Fourth Week of Lent — St. Patrick",
+    first:  { type: "First Reading", ref: "Ezekiel 47:1–9, 12", passages: ["ezekiel 47:1-9", "ezekiel 47:12"] },
+    psalm:  { ref: "Psalm 46:2–3, 5–6, 8–9", response: "The Lord of hosts is with us; our stronghold is the God of Jacob.", passages: ["psalm 46:2-3", "psalm 46:5-6", "psalm 46:8-9"], stanzas: ["Praise the Lord, all you nations!\nGive glory, all you peoples!\nThe Lord's mercy is strong upon us;\nhis faithfulness lasts forever."] },
+    gospel: { ref: "John 5:1–16", passages: ["john 5:1-16"] }
+  },
+  "3-18": {
+    title: "Wednesday of the Fourth Week of Lent",
+    first:  { type: "First Reading", ref: "Isaiah 49:8–15", passages: ["isaiah 49:8-15"] },
+    psalm:  { ref: "Psalm 145:8–9, 13cd–14, 17–18", response: "The Lord is gracious and merciful.", passages: ["psalm 145:8-9", "psalm 145:13-14", "psalm 145:17-18"], stanzas: ["The Lord is gracious and merciful,\nslow to anger and abounding in mercy.\nThe Lord is good to all,\ncompassionate toward all his works.", "The Lord is faithful in all his words\nand holy in all his works.\nThe Lord lifts up all who are falling\nand raises up all who are bowed down.", "The Lord is just in all his ways\nand merciful in all his works.\nThe Lord is near to all who call upon him,\nto all who call upon him in truth."] },
+    gospel: { ref: "John 5:17–30", passages: ["john 5:17-30"] }
+  },
+  "3-19": {
+    title: "Solemnity of Saint Joseph",
+    first:  { type: "First Reading",  ref: "2 Samuel 7:4–5a, 12–14a, 16", passages: ["2 samuel 7:4-5", "2 samuel 7:12-14", "2 samuel 7:16"] },
+    psalm:  { ref: "Psalm 89:2–3, 4–5, 27, 29", response: "The son of David will live for ever.", passages: ["psalm 89:2-5", "psalm 89:27", "psalm 89:29"], stanzas: ["Forever I will sing the goodness of the Lord;\nthrough all generations my mouth will proclaim your faithfulness.\nFor I said, 'My mercy is established forever;\nmy faithfulness will stand as long as the heavens.'", "'I have made a covenant with my chosen one;\nI have sworn to David my servant:\nForever I will confirm your descendants\nand establish your throne for all generations.'", "He shall cry to me, 'You are my father,\nmy God, the Rock of my salvation!'\nForever I will maintain my mercy for him;\nmy covenant with him stands firm."] },
+    second: { type: "Second Reading", ref: "Romans 4:13, 16–18, 22",       passages: ["romans 4:13", "romans 4:16-18", "romans 4:22"] },
+    gospel: { ref: "Matthew 1:16, 18–21, 24a", passages: ["matthew 1:16", "matthew 1:18-21", "matthew 1:24"] }
+  },
+  "3-20": {
+    title: "Friday of the Fourth Week of Lent",
+    isFasting: true, fastNote: "Fridays in Lent are days of abstinence from meat.",
+    first:  { type: "First Reading", ref: "Wisdom 2:1a, 12–22", passages: ["wisdom 2:1", "wisdom 2:12-22"] },
+    psalm:  { ref: "Psalm 34:17–18, 19–20, 21, 23", response: "The Lord is close to the brokenhearted.", passages: ["psalm 34:17-23"], stanzas: ["The Lord confronts the evildoers\nto destroy remembrance of them from the earth.\nWhen the just cry out, the Lord hears them,\nand from all their afflictions he rescues them.", "The Lord is close to the brokenhearted,\nsaves those whose spirit is crushed.\nMany are the troubles of the just,\nbut the Lord delivers from them all.", "The Lord redeems loyal servants;\nnone are condemned who take refuge in him."] },
+    gospel: { ref: "John 7:1–2, 10, 25–30", passages: ["john 7:1-2", "john 7:10", "john 7:25-30"] }
+  },
+  "3-21": {
+    title: "Saturday of the Fourth Week of Lent",
+    first:  { type: "First Reading", ref: "Jeremiah 11:18–20", passages: ["jeremiah 11:18-20"] },
+    psalm:  { ref: "Psalm 7:2–3, 9bc–10, 11–12", response: "O Lord, my God, in you I take refuge.", passages: ["psalm 7:2-3", "psalm 7:9-12"], stanzas: ["Lord my God, in you I take refuge;\nsave me; rescue me from all who pursue me.\nLest they maul me like lions,\ntearing me apart with no one to rescue me.", "Lord, let my justice come before you;\nlook on my integrity.\nPut an end to the malice of the wicked;\nuphold the just.", "A shield before me is God\nwho saves the honest heart.\nGod is a just judge,\nwho rebukes in anger every day."] },
+    gospel: { ref: "John 7:40–53", passages: ["john 7:40-53"] }
+  },
+  "3-22": {
+    title: "Fifth Sunday of Lent",
+    first:  { type: "First Reading",  ref: "Isaiah 43:16–21",    passages: ["isaiah 43:16-21"] },
+    psalm:  { ref: "Psalm 126:1–2ab, 2cd–3, 4–5, 6", response: "The Lord has done great things for us; we are filled with joy.", passages: ["psalm 126:1-6"], stanzas: ["When the Lord restored the fortunes of Zion,\nwe thought we were dreaming.\nThen our mouths were filled with laughter;\nour tongues sang for joy.", "Then it was said among the nations,\n'The Lord had done great things for them.'\nThe Lord has done great things for us;\noh, how happy we were!", "Restore our fortunes, Lord,\nlike the dry stream beds of the Negeb.\nThose who sow in tears\nwill reap with cries of joy.", "Those who go forth weeping,\ncarrying sacks of seed,\nwill return with cries of joy,\ncarrying their bundled sheaves."] },
+    second: { type: "Second Reading", ref: "Philippians 3:8–14", passages: ["philippians 3:8-14"] },
+    gospel: { ref: "John 8:1–11", passages: ["john 8:1-11"] }
+  },
+  "3-23": {
+    title: "Monday of the Fifth Week of Lent",
+    first:  { type: "First Reading", ref: "Daniel 13:1–9, 15–17, 19–30, 33–62", passages: ["daniel 13:1-9", "daniel 13:15-17", "daniel 13:19-30", "daniel 13:33-62"] },
+    psalm:  { ref: "Psalm 23:1–3a, 3b–4, 5, 6", response: "Even though I walk in the dark valley, I fear no evil, for you are with me.", passages: ["psalm 23:1-6"], stanzas: ["The Lord is my shepherd;\nthere is nothing I lack.\nIn green pastures he makes me lie down;\nto still waters he leads me.", "He restores my soul.\nHe guides me along right paths\nfor the sake of his name.\nEven though I walk through the valley of the shadow of death,\nI will fear no evil, for you are with me.", "You set a table before me\nin front of my enemies.\nYou anoint my head with oil;\nmy cup overflows.", "Indeed, goodness and mercy will pursue me\nall the days of my life;\nI will dwell in the house of the Lord\nfor endless days."] },
+    gospel: { ref: "John 8:12–20", passages: ["john 8:12-20"] }
+  },
+  "3-24": {
+    title: "Tuesday of the Fifth Week of Lent",
+    first:  { type: "First Reading", ref: "Numbers 21:4–9", passages: ["numbers 21:4-9"] },
+    psalm:  { ref: "Psalm 102:2–3, 16–18, 19–21", response: "O Lord, hear my prayer, and let my cry come to you.", passages: ["psalm 102:2-3", "psalm 102:16-21"], stanzas: ["Lord, hear my prayer;\nlet my cry come to you.\nDo not hide your face from me\nin the day of my distress.", "The nations shall revere your name, Lord,\nall the kings of the earth your glory,\nwhen the Lord has rebuilt Zion\nand appeared in his glory.", "The Lord looked down from his holy height,\nviewed the earth from heaven,\nto attend to the groaning of the prisoners,\nto release those doomed to die."] },
+    gospel: { ref: "John 8:21–30", passages: ["john 8:21-30"] }
+  },
+  "3-25": {
+    title: "Solemnity of the Annunciation of the Lord",
+    first:  { type: "First Reading",  ref: "Isaiah 7:10–14; 8:10",     passages: ["isaiah 7:10-14", "isaiah 8:10"] },
+    psalm:  { ref: "Psalm 40:7–8a, 8b–9, 10, 11", response: "Here I am, Lord; I come to do your will.", passages: ["psalm 40:7-11"], stanzas: ["Sacrifice and offering you do not want;\nbut ears open to obedience you gave me.\nBurnt offering and sin offering\nyou do not require.", "Then I said, 'See, I come;\nmy deeds are recorded in the scroll.\nTo do your will, my God, is my delight;\nyour law is in my heart!'", "I announced your righteousness in the great assembly;\nI did not restrain my lips;\nyou, Lord, are my witness.", "Your righteousness I did not hide in my heart;\nyour salvation I have spoken of;\nI did not conceal your mercy and faithfulness\nfrom the great assembly."] },
+    second: { type: "Second Reading", ref: "Hebrews 10:4–10",           passages: ["hebrews 10:4-10"] },
+    gospel: { ref: "Luke 1:26–38", passages: ["luke 1:26-38"] }
+  },
+  "3-26": {
+    title: "Thursday of the Fifth Week of Lent",
+    first:  { type: "First Reading", ref: "Genesis 17:3–9", passages: ["genesis 17:3-9"] },
+    psalm:  { ref: "Psalm 105:4–5, 6–7, 8–9", response: "The Lord remembers his covenant for ever.", passages: ["psalm 105:4-9"], stanzas: ["Look to the Lord in his strength;\nseek to serve him constantly.\nRecall the wondrous deeds he has done,\nhis signs and his words of judgment.", "You descendants of Abraham his servant,\nyou children of Jacob his chosen ones!\nHe, the Lord, is our God;\nwho rules the whole earth.", "He remembers forever his covenant,\nthe word he commanded for a thousand generations,\nwhich he made with Abraham,\nand swore to Isaac."] },
+    gospel: { ref: "John 8:51–59", passages: ["john 8:51-59"] }
+  },
+  "3-27": {
+    title: "Friday of the Fifth Week of Lent",
+    isFasting: true, fastNote: "Fridays in Lent are days of abstinence from meat.",
+    first:  { type: "First Reading", ref: "Jeremiah 20:10–13", passages: ["jeremiah 20:10-13"] },
+    psalm:  { ref: "Psalm 18:2–3a, 3bc–4, 5–6, 7", response: "In my distress I called upon the Lord, and he heard my voice.", passages: ["psalm 18:2-7"], stanzas: ["I love you, Lord, my strength,\nmy rock, my fortress, my deliverer.\nMy God, my rock of refuge,\nmy shield, my saving horn, my stronghold!", "Praised be the Lord, I exclaim!\nI am delivered from my enemies.\nThe breakers of death surged round about me;\nthe destroying floods overwhelmed me.", "In my distress I called out: Lord!\nI cried out to my God.\nFrom his temple he heard my voice;\nmy cry to him reached his ears."] },
+    gospel: { ref: "John 10:31–42", passages: ["john 10:31-42"] }
+  },
+  "3-28": {
+    title: "Saturday of the Fifth Week of Lent",
+    first:  { type: "First Reading", ref: "Ezekiel 37:21–28", passages: ["ezekiel 37:21-28"] },
+    psalm:  { ref: "Jeremiah 31:10, 11–12abcd, 13", response: "The Lord will guard us, as a shepherd guards his flock.", passages: ["jeremiah 31:10-13"], stanzas: ["The Lord will guard us\nas a shepherd guards his flock.\nHear the word of the Lord, O nations,\nproclaim it on distant coasts.", "He who scattered Israel, now gathers them together;\nhe guards them as a shepherd his flock.\nThe Lord shall ransom Jacob,\nredeems him from the hand of his conqueror.", "They shall come and shout for joy on Mount Zion,\nthey shall stream to the blessings of the Lord:\nthe grain, the wine, and the oil,\nthe flocks and the herds."] },
+    gospel: { ref: "John 11:45–56", passages: ["john 11:45-56"] }
+  },
+  "3-29": {
+    title: "Palm Sunday of the Lord's Passion",
+    first:  { type: "First Reading",  ref: "Isaiah 50:4–7",      passages: ["isaiah 50:4-7"] },
+    psalm:  { ref: "Psalm 22:8–9, 17–18, 19–20, 23–24", response: "My God, my God, why have you abandoned me?", passages: ["psalm 22:8-9", "psalm 22:17-20", "psalm 22:23-24"], stanzas: ["All who see me mock me;\nthey curl their lips and jeer;\nthey shake their heads at me:\n'He relied on the Lord \u2014 let him deliver him;\nif he loves him, let him rescue him.'", "Indeed, many dogs surround me;\na pack of evildoers closes in on me.\nSo wasted are my hands and feet\nthat I can count all my bones.", "They divide my garments among them;\nfor my clothing they cast lots.\nBut you, Lord, do not stay far off;\nmy strength, come quickly to help me.", "I will proclaim your name to my brethren;\nin the midst of the assembly I will praise you:\n'You who fear the Lord, give praise!\nAll descendants of Jacob, give honor!'"] },
+    second: { type: "Second Reading", ref: "Philippians 2:6–11", passages: ["philippians 2:6-11"] },
+    gospel: { ref: "Luke 22:14–23:56", passages: ["luke 22:14-71", "luke 23:1-56"] }
+  },
+  "3-30": {
+    title: "Monday of Holy Week",
+    first:  { type: "First Reading", ref: "Isaiah 42:1–7", passages: ["isaiah 42:1-7"] },
+    psalm:  { ref: "Psalm 27:1, 2, 3, 13–14", response: "The Lord is my light and my salvation.", passages: ["psalm 27:1-3", "psalm 27:13-14"], stanzas: ["The Lord is my light and my salvation;\nwhom do I fear?\nThe Lord is my life's refuge;\nof whom am I afraid?", "Though an army encamp against me,\nmy heart does not fear;\nthough war be waged against me,\neven then do I trust.", "Wait for the Lord, take courage;\nbe stouthearted, wait for the Lord!\nI believe I shall enjoy the Lord's goodness\nin the land of the living."] },
+    gospel: { ref: "John 12:1–11", passages: ["john 12:1-11"] }
+  },
+  "3-31": {
+    title: "Tuesday of Holy Week",
+    first:  { type: "First Reading", ref: "Isaiah 49:1–6", passages: ["isaiah 49:1-6"] },
+    psalm:  { ref: "Psalm 71:1–2, 3–4a, 5–6ab, 15, 17", response: "I will sing of your salvation.", passages: ["psalm 71:1-6", "psalm 71:15", "psalm 71:17"], stanzas: ["In you, Lord, I take refuge;\nlet me never be put to shame.\nIn your righteousness deliver me;\nincline your ear to me; make haste to rescue me!", "Be my rock of refuge,\na stronghold to save me.\nYou are my rock and my fortress;\nfor your name's sake lead and guide me.", "For you are my hope, Lord;\nmy trust, God, from my youth.\nOn you I depend since birth;\nfrom my mother's womb you are my strength.", "My mouth shall declare your righteousness,\nday after day your salvation.\nI will announce your mighty deeds, Lord;\nI will proclaim your righteousness, yours alone."] },
+    gospel: { ref: "John 13:21–33, 36–38", passages: ["john 13:21-33", "john 13:36-38"] }
+  },
+  "4-1": {
+    title: "Wednesday of Holy Week — Spy Wednesday",
+    first:  { type: "First Reading", ref: "Isaiah 50:4–9a", passages: ["isaiah 50:4-9"] },
+    psalm:  { ref: "Psalm 69:8–10, 21–22, 31, 33–34", response: "Lord, in your great love, answer me.", passages: ["psalm 69:8-10", "psalm 69:21-22", "psalm 69:31", "psalm 69:33-34"], stanzas: ["For your sake I bear insult,\nand shame covers my face.\nI have become an outcast to my kin,\na stranger to my mother's children.", "Insult has broken my heart, and I am weak;\nI looked for compassion, but there was none,\nfor comforters, but found none.\nRather they put gall in my food;\nfor my thirst they gave me vinegar.", "I will praise the name of God in song;\nI will magnify him with thanksgiving.\nThe Lord hears the poor,\ndoes not spurn those in bondage."] },
+    gospel: { ref: "Matthew 26:14–25", passages: ["matthew 26:14-25"] }
+  },
+  "4-2": {
+    title: "Holy Thursday — Mass of the Lord's Supper",
+    first:  { type: "First Reading",  ref: "Exodus 12:1–8, 11–14",     passages: ["exodus 12:1-8", "exodus 12:11-14"] },
+    psalm:  { ref: "Psalm 116:12–13, 15–16bc, 17–18", response: "Our blessing-cup is a communion with the Blood of Christ.", passages: ["psalm 116:12-13", "psalm 116:15-18"], stanzas: ["How shall I make a return to the Lord\nfor all the good he has done for me?\nThe cup of salvation I will take up,\nand I will call upon the name of the Lord.", "Precious in the eyes of the Lord\nis the death of his faithful.\nI am your servant, the son of your handmaid;\nyou have loosed my bonds.", "To you I will offer sacrifice of thanksgiving,\nand I will call upon the name of the Lord.\nMy vows to the Lord I will pay\nin the presence of all his people."] },
+    second: { type: "Second Reading", ref: "1 Corinthians 11:23–26",   passages: ["1 corinthians 11:23-26"] },
+    gospel: { ref: "John 13:1–15", passages: ["john 13:1-15"] }
+  },
+  "4-3": {
+    title: "Good Friday — Passion of the Lord",
+    isFasting: true, fastNote: "Good Friday is a day of fasting and abstinence. The Church is silent — there is no Mass today.",
+    first:  { type: "First Reading",  ref: "Isaiah 52:13–53:12",   passages: ["isaiah 52:13-15", "isaiah 53:1-12"] },
+    psalm:  { ref: "Psalm 31:2, 6, 12–13, 15–16, 17, 25", response: "Father, into your hands I commend my spirit.", passages: ["psalm 31:2", "psalm 31:6", "psalm 31:12-13", "psalm 31:15-17", "psalm 31:25"], stanzas: ["In you, Lord, I take refuge;\nlet me never be put to shame.\nIn your justice rescue me.\nInto your hands I commend my spirit;\nyou will redeem me, Lord, faithful God.", "For I hear the whispers of the crowd;\nfear is all around me.\nThey conspire together against me;\nthey plot to take my life.", "But my trust is in you, Lord;\nI say, 'You are my God.'\nMy destiny is in your hands;\ndeliver me from my enemies.", "Take courage and be stouthearted,\nall you who hope in the Lord."] },
+    second: { type: "Second Reading", ref: "Hebrews 4:14–16; 5:7–9", passages: ["hebrews 4:14-16", "hebrews 5:7-9"] },
+    gospel: { ref: "John 18:1–19:42", passages: ["john 18:1-40", "john 19:1-42"] }
+  },
+  "4-4": {
+    title: "Holy Saturday — The Easter Vigil",
+    isFasting: true, fastNote: "Holy Saturday: a day of quiet waiting. The Easter Vigil begins after nightfall.",
+    first:  { type: "First Reading",  ref: "Genesis 1:1–2:2",           passages: ["genesis 1:1-31", "genesis 2:1-2"] },
+    psalm:  { ref: "Psalm 118:1–2, 16–17, 22–23", response: "Alleluia, alleluia, alleluia.", passages: ["psalm 118:1-2", "psalm 118:16-17", "psalm 118:22-23"], stanzas: ["Give thanks to the Lord, for he is good;\nhis mercy endures forever.\nLet the house of Israel say:\nhis mercy endures forever.", "The right hand of the Lord is exalted;\nthe right hand of the Lord does mighty deeds.\nI shall not die but live\nand declare the works of the Lord.", "The stone the builders rejected\nhas become the cornerstone.\nBy the Lord has this been done;\nit is wonderful in our eyes."] },
+    second: { type: "Second Reading", ref: "Romans 6:3–11",              passages: ["romans 6:3-11"] },
+    gospel: { ref: "Luke 24:1–12", passages: ["luke 24:1-12"] }
+  }
+};
+
+// ============================================================
+// BIBLE API — fetch full passage text
+// Primary:  scripture.api.bible (API.Bible) — proper CORS support
+// Fallback: bible-api.com (WEB translation)
+// ============================================================
+
+const passageCache = {};
+
+// API.Bible key — NABRE (New American Bible, Revised Edition)
+const APIBIBLE_KEY = '3e0dc1b41be9a61cde1ca8da5e9dee3d';
+const APIBIBLE_BIBLE_ID = '55212e3cf5d04d49-01'; // NABRE
+
+// Convert "john 3:16-17" → "JHN.3.16-JHN.3.17" format for API.Bible
+function toApiBibleRef(ref) {
+  const bookMap = {
+    'genesis':'GEN','exodus':'EXO','leviticus':'LEV','numbers':'NUM','deuteronomy':'DEU',
+    'joshua':'JOS','judges':'JDG','ruth':'RUT','1 samuel':'1SA','2 samuel':'2SA',
+    '1 kings':'1KI','2 kings':'2KI','1 chronicles':'1CH','2 chronicles':'2CH',
+    'ezra':'EZR','nehemiah':'NEH','esther':'EST','job':'JOB','psalm':'PSA','psalms':'PSA',
+    'proverbs':'PRO','ecclesiastes':'ECC','song of solomon':'SNG','isaiah':'ISA',
+    'jeremiah':'JER','lamentations':'LAM','ezekiel':'EZK','daniel':'DAN','hosea':'HOS',
+    'joel':'JOL','amos':'AMO','obadiah':'OBA','jonah':'JON','micah':'MIC','nahum':'NAM',
+    'habakkuk':'HAB','zephaniah':'ZEP','haggai':'HAG','zechariah':'ZEC','malachi':'MAL',
+    'matthew':'MAT','mark':'MRK','luke':'LUK','john':'JHN','acts':'ACT','romans':'ROM',
+    '1 corinthians':'1CO','2 corinthians':'2CO','galatians':'GAL','ephesians':'EPH',
+    'philippians':'PHP','colossians':'COL','1 thessalonians':'1TH','2 thessalonians':'2TH',
+    '1 timothy':'1TI','2 timothy':'2TI','titus':'TIT','philemon':'PHM','hebrews':'HEB',
+    'james':'JAS','1 peter':'1PE','2 peter':'2PE','1 john':'1JN','2 john':'2JN',
+    '3 john':'3JN','jude':'JUD','revelation':'REV','wisdom':'WIS','sirach':'SIR',
+    'tobit':'TOB','judith':'JDT','1 maccabees':'1MA','2 maccabees':'2MA','baruch':'BAR'
+  };
+
+  const clean = ref.trim().toLowerCase();
+  let bookCode = null;
+  let rest = '';
+
+  // Try longest match first
+  const sortedKeys = Object.keys(bookMap).sort((a,b) => b.length - a.length);
+  for (const k of sortedKeys) {
+    if (clean.startsWith(k)) {
+      bookCode = bookMap[k];
+      rest = clean.slice(k.length).trim();
+      break;
+    }
+  }
+  if (!bookCode) return null;
+
+  // rest = "3:16-17" or "3:16" or "3"
+  const parts = rest.split(':');
+  if (parts.length < 2) return `${bookCode}.${parts[0].trim()}`;
+  const chapter = parts[0].trim();
+  const versePart = parts[1].trim();
+
+  if (versePart.includes('-')) {
+    const [v1, v2] = versePart.split('-');
+    return `${bookCode}.${chapter}.${v1.trim()}-${bookCode}.${chapter}.${v2.trim()}`;
+  }
+  return `${bookCode}.${chapter}.${versePart}`;
+}
+
+async function fetchFromApiBible(passageRef) {
+  const id = toApiBibleRef(passageRef);
+  if (!id) return null;
+  const url = `https://api.scripture.api.bible/v1/bibles/${APIBIBLE_BIBLE_ID}/passages/${encodeURIComponent(id)}?content-type=text&include-notes=false&include-titles=false&include-chapter-numbers=false&include-verse-numbers=false`;
+  const res = await fetch(url, {
+    headers: { 'api-key': APIBIBLE_KEY }
+  });
+  if (!res.ok) throw new Error(`API.Bible HTTP ${res.status}`);
+  const data = await res.json();
+  const text = data.data?.content?.trim().replace(/\s+/g, ' ') || '';
+  return text || null;
+}
+
+async function fetchFromBibleApi(passageRef) {
+  const encoded = encodeURIComponent(passageRef);
+  const url = `https://bible-api.com/${encoded}?translation=web`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`bible-api HTTP ${res.status}`);
+  const data = await res.json();
+  return data.text ? data.text.trim().replace(/\n+/g, ' ') : null;
+}
+
+async function fetchPassage(passageRef) {
+  if (passageCache[passageRef]) return passageCache[passageRef];
+  let text = null;
+
+  // Try API.Bible first
+  try {
+    text = await fetchFromApiBible(passageRef);
+  } catch(e) {
+    console.warn('API.Bible failed for', passageRef, e.message, '— trying fallback');
+  }
+
+  // Fallback to bible-api.com
+  if (!text) {
+    try {
+      text = await fetchFromBibleApi(passageRef);
+    } catch(e) {
+      console.warn('bible-api.com also failed for', passageRef, e.message);
+    }
+  }
+
+  if (text) passageCache[passageRef] = text;
+  return text || null;
+}
+
+async function fetchReadingText(passages) {
+  const parts = await Promise.all(passages.map(p => fetchPassage(p)));
+  return parts.filter(Boolean).join(' ');
+}
+
+// Returns an array of stanza strings (one per passage entry) for psalm formatting
+async function fetchPsalmStanzas(passages) {
+  const stanzas = await Promise.all(passages.map(p => fetchPassage(p)));
+  return stanzas.filter(Boolean);
+}
+
+function getDayTitle(date, dayNum) {
+  const dow = dayOfWeek(date);
+  const weekNum = Math.ceil((dayNum + 1) / 7);
+  const weekNames = ['', 'First', 'Second', 'Third', 'Fourth', 'Fifth'];
+  const wn = weekNames[weekNum] || `Week ${weekNum}`;
+  if (date.getDay() === 0) return `${wn} Sunday of Lent`;
+  return `${dow} of the ${wn} Week of Lent`;
+}
+
+function getLectionaryEntry(date) {
+  const key = `${date.getMonth()+1}-${date.getDate()}`;
+  return LECTIONARY[key] || null;
+}
+
+// ============================================================
+// SAINTS DATA
+// ============================================================
+
+const SAINTS = {
+  "2-18": { name: "Saint Bernadette of Lourdes", dates: "1844–1879", icon: "🌹",
+    bio: "Bernadette Soubirous was a simple French girl from Lourdes who received eighteen apparitions of the Virgin Mary in 1858. Despite ridicule and questioning from both Church and civil authorities, she remained steadfast in her testimony. She later became a nun and died at 35, her body remaining incorrupt to this day.",
+    feast: "Feast: April 16" },
+  "2-19": { name: "Saint Conrad of Piacenza", dates: "1290–1351", icon: "🌾",
+    bio: "A nobleman who accidentally caused a forest fire while hunting. When a peasant was blamed, Conrad confessed, sold all his possessions to pay the damages, and became a Franciscan tertiary hermit. He lived in prayer and penance for the rest of his life, developing a reputation for miraculous healings.",
+    feast: "Feast: February 19" },
+  "2-20": { name: "Saint Eucherius of Orleans", dates: "687–743", icon: "✝",
+    bio: "Born of a noble Frankish family, Eucherius became a monk at Jumièges before being appointed Bishop of Orleans. He was exiled by Charles Martel for opposing his confiscation of Church properties. He died in exile, peacefully, and was venerated for his holiness and courage.",
+    feast: "Feast: February 20" },
+  "2-21": { name: "Saint Peter Damian", dates: "1007–1072", icon: "📜",
+    bio: "A Doctor of the Church, Peter Damian was orphaned young and raised by an abusive brother before being educated by another. He became a Benedictine hermit and eventually Prior at Fonte Avellana. He became Cardinal-Bishop of Ostia and was a fierce reformer of clerical abuses.",
+    feast: "Feast: February 21" },
+  "2-22": { name: "Chair of Saint Peter", dates: "Apostle, †c.68 AD", icon: "⛪",
+    bio: "This feast celebrates the authority given by Christ to Peter and his successors. 'You are Peter, and upon this rock I will build my Church.' The Chair (Cathedra) of Peter represents the teaching authority of the Pope, successor of Peter in guiding the universal Church.",
+    feast: "Feast: February 22" },
+};
+
+function getSaint(date) {
+  const key = `${date.getMonth()+1}-${date.getDate()}`;
+  if (SAINTS[key]) return SAINTS[key];
+  // Rotating saints for other days
+  const rotating = [
+    { name: "Saint Thomas Aquinas", dates: "1225–1274", icon: "📖",
+      bio: "The 'Angelic Doctor' and greatest theologian of the Catholic Church. His Summa Theologiae remains foundational to Catholic thought. He combined faith and reason magnificently, showing that philosophy and theology are not enemies but partners in the pursuit of truth.",
+      feast: "Feast: January 28" },
+    { name: "Saint Francis of Assisi", dates: "1181–1226", icon: "🕊",
+      bio: "Son of a wealthy merchant, Francis renounced his inheritance to embrace radical poverty and service to the poor. He founded the Franciscan Order and received the stigmata — the wounds of Christ — on Mount La Verna. His Canticle of the Sun is among the most beautiful prayers ever written.",
+      feast: "Feast: October 4" },
+    { name: "Saint Teresa of Ávila", dates: "1515–1582", icon: "🏰",
+      bio: "A Doctor of the Church and reformer of the Carmelite Order. Her spiritual masterpiece, The Interior Castle, maps the soul's journey toward union with God through seven 'dwelling places' of prayer. She experienced visions and mystical union with God and was the first woman named a Doctor of the Church.",
+      feast: "Feast: October 15" },
+    { name: "Saint Augustine of Hippo", dates: "354–430", icon: "✍",
+      bio: "After years of restless searching through philosophy and pleasure, Augustine was converted through the prayers of his mother Monica and the preaching of Ambrose. His Confessions remain one of the greatest spiritual autobiographies ever written. 'Our heart is restless until it rests in Thee.'",
+      feast: "Feast: August 28" },
+    { name: "Saint John Henry Newman", dates: "1801–1890", icon: "🕯",
+      bio: "An Oxford scholar and Anglican priest, Newman converted to Catholicism in 1845 after years of study and prayer. He was made a Cardinal in 1879. His motto — Cor ad Cor Loquitur ('Heart speaks to heart') — captures his vision of faith as personal encounter, not mere doctrine.",
+      feast: "Feast: October 9" },
+    { name: "Saint Faustina Kowalska", dates: "1905–1938", icon: "💛",
+      bio: "A Polish nun who received visions of Jesus and was asked to spread devotion to Divine Mercy. Jesus appeared with rays of red and white light emanating from his heart, saying: 'I desire that this image be venerated throughout the world.' She died at 33 and was canonized in 2000.",
+      feast: "Feast: October 5" },
+    { name: "Saint Padre Pio", dates: "1887–1968", icon: "🙏",
+      bio: "Francesco Forgione, known as Padre Pio, was a Capuchin priest who bore the stigmata for fifty years. He was renowned for his ability to read souls in the confessional and for bi-location. Millions sought his counsel and prayers. He was canonized in 2002.",
+      feast: "Feast: September 23" },
+  ];
+  const idx = lentDay(date) % rotating.length;
+  return rotating[idx];
+}
+
+// ============================================================
+// MEDITATIONS DATA
+// ============================================================
+
+const MEDITATIONS = [
+  { quote: "You have made us for yourself, O Lord, and our heart is restless until it rests in You.", author: "Saint Augustine", context: "Confessions, Book I" },
+  { quote: "Fasting is the soul of prayer; mercy is the lifeblood of fasting. Let no one try to separate them; they cannot be separated.", author: "Saint Peter Chrysologus", context: "On Fasting" },
+  { quote: "He who sings prays twice.", author: "Saint Augustine", context: "Commentary on the Psalms" },
+  { quote: "The Passion of Christ covers all the sins of man.", author: "Saint John Vianney", context: "The Curé d'Ars" },
+  { quote: "We know that God is everywhere; but in a special way He is present in those places where His servants meet to sing His praises.", author: "Saint Benedict of Nursia", context: "Rule of Saint Benedict" },
+  { quote: "To fall in love with God is the greatest romance; to seek him the greatest adventure; to find him, the greatest human achievement.", author: "Saint Augustine", context: "Sermons" },
+  { quote: "The purpose of Lent is not merely to make us feel sorry for Christ's sufferings, but to make us reproduce those sufferings in our own life.", author: "Thomas Merton", context: "No Man Is an Island" },
+  { quote: "Lent is a time to ponder the depths of God's love.", author: "Pope Francis", context: "Lenten Message" },
+  { quote: "Grant me, O Lord my God, a mind to know you, a heart to seek you, wisdom to find you, conduct pleasing to you, faithful perseverance in waiting for you, and a hope of finally embracing you.", author: "Saint Thomas Aquinas", context: "Prayer of Saint Thomas" },
+  { quote: "The more we empty ourselves, the more room we give God to fill us.", author: "Saint Augustine", context: "Sermons" },
+  { quote: "Lent is a school — a school of prayer, fasting, and almsgiving.", author: "Pope Benedict XVI", context: "Lenten Address, 2008" },
+  { quote: "We are not the sum of our weaknesses and failures; we are the sum of the Father's love for us.", author: "Saint John Paul II", context: "World Youth Day, 2002" },
+  { quote: "The cross is the school of love.", author: "Saint Maximilian Kolbe", context: "Writings" },
+  { quote: "True fasting is to turn from sin. Free those oppressed, then your light shall break forth.", author: "Isaiah 58:6–8", context: "Sacred Scripture" },
+  { quote: "Prayer is the inner bath of love into which the soul plunges itself.", author: "Saint John Vianney", context: "Catechism" },
+  { quote: "The beginning of wisdom is to know thyself as a sinner.", author: "Saint Bernard of Clairvaux", context: "On Humility" },
+  { quote: "Jesus did not come to explain away suffering or remove it. He came to fill it with his presence.", author: "Paul Claudel", context: "Writings" },
+  { quote: "Man cannot live without love. He remains a being that is incomprehensible for himself, his life is senseless, if love is not revealed to him.", author: "Saint John Paul II", context: "Redemptor Hominis" },
+  { quote: "Come to me, all you who are weary and burdened, and I will give you rest.", author: "Jesus Christ", context: "Matthew 11:28" },
+  { quote: "God writes straight with crooked lines.", author: "Portuguese Proverb", context: "Traditional Saying" },
+  { quote: "The Rosary is the weapon for these times.", author: "Padre Pio", context: "Letters" },
+  { quote: "Our Lord does not come down from Heaven every day to lie in a golden ciborium. He comes to find another heaven which is infinitely dearer — the heaven of our souls.", author: "Saint Thérèse of Lisieux", context: "Story of a Soul" },
+  { quote: "Do small things with great love.", author: "Saint Teresa of Calcutta", context: "Teachings" },
+  { quote: "Let nothing disturb thee, let nothing dismay thee; all things pass. God never changes.", author: "Saint Teresa of Ávila", context: "Bookmark Prayer" },
+  { quote: "Unless you eat the flesh of the Son of Man and drink his blood, you do not have life within you.", author: "Jesus Christ", context: "John 6:53" },
+  { quote: "The greatest love story of all time is contained in a tiny white host.", author: "Archbishop Fulton J. Sheen", context: "Life of Christ" },
+  { quote: "In the dark night of the soul, bright flows the river of God.", author: "Saint John of the Cross", context: "Dark Night of the Soul" },
+  { quote: "The things that we love tell us what we are.", author: "Saint Thomas Aquinas", context: "Summa Theologiae" },
+  { quote: "Trust in the LORD with all your heart and lean not on your own understanding.", author: "Solomon", context: "Proverbs 3:5" },
+  { quote: "Here is a rule for everyday life: Do not do anything that you cannot offer to God.", author: "Saint John Vianney", context: "Sermons" },
+  { quote: "Carve your name on hearts, not on marble.", author: "Charles Spurgeon", context: "Morning and Evening" },
+  { quote: "The soul that gives itself to prayer, either frequently or for long periods, cannot be accompanied by the Devil.", author: "Saint Teresa of Ávila", context: "Interior Castle" },
+  { quote: "We shall never learn to know ourselves except by endeavoring to know God.", author: "Saint Teresa of Ávila", context: "Interior Castle" },
+  { quote: "Prayer is to our soul what rain is to the soil. Fertilize the soil ever so richly; it will remain barren unless fed by frequent rains.", author: "Saint John Vianney", context: "Catechism" },
+  { quote: "The Eucharist is the source and summit of the Christian life.", author: "Lumen Gentium", context: "Second Vatican Council" },
+  { quote: "When you look at the Crucifix, you understand how much Jesus loved you then. When you look at the Sacred Host, you understand how much Jesus loves you now.", author: "Saint Teresa of Calcutta", context: "Teachings" },
+  { quote: "Easter is not a passport to escape the tragedy of Lent. It is a prize for entering into it.", author: "Fulton J. Sheen", context: "Life of Christ" },
+  { quote: "They will look on the one they have pierced, and they will mourn for him as one mourns for an only child.", author: "Zechariah 12:10", context: "Sacred Scripture" },
+  { quote: "He was wounded for our transgressions, he was bruised for our iniquities; upon him was the chastisement that made us whole.", author: "Isaiah 53:5", context: "Sacred Scripture" },
+  { quote: "It is consummated. Then bowing his head, he gave up his spirit.", author: "Jesus Christ", context: "John 19:30" },
+];
+
+function getMeditation(dayNum) {
+  return MEDITATIONS[dayNum % MEDITATIONS.length];
+}
+
+// ============================================================
+// PRAYERS DATA
+// ============================================================
+
+const PRAYERS = [
+  { title: "Ash Wednesday Prayer", text: "Lord God, you have formed me from the dust of the earth. Grant that with holy fasting I may so restrain my inclinations that, strengthened for good, I may be deserving of your remedies. Turn my heart to seek you with my whole soul. Through Christ our Lord. Amen." },
+  { title: "Prayer of St. Francis", text: "Lord, make me an instrument of your peace. Where there is hatred, let me sow love; where there is injury, pardon; where there is doubt, faith; where there is despair, hope; where there is darkness, light; where there is sadness, joy. O Divine Master, grant that I may not so much seek to be consoled as to console, to be understood as to understand, to be loved as to love. Amen." },
+  { title: "Anima Christi", text: "Soul of Christ, sanctify me. Body of Christ, save me. Blood of Christ, inebriate me. Water from the side of Christ, wash me. Passion of Christ, strengthen me. O good Jesus, hear me. Within your wounds, hide me. Let me not be separated from you. From the malicious enemy, defend me. In the hour of my death, call me. And bid me come to you, that with your Saints I may praise you for ever and ever. Amen." },
+  { title: "Act of Contrition", text: "O my God, I am heartily sorry for having offended Thee, and I detest all my sins because of Thy just punishment, but most of all because they offend Thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of Thy grace, to sin no more and to avoid the near occasions of sin. Amen." },
+  { title: "Prayer Before the Crucifix", text: "Behold, O good and sweetest Jesus, I cast myself upon my knees in Thy sight, and with the most fervent desire of my soul I pray and beseech Thee that Thou wouldst impress upon my heart lively sentiments of faith, hope and charity, with true contrition of my sins, and a firm purpose of amendment. Amen." },
+  { title: "Prayer of Cardinal Newman", text: "God, You are the light of the minds that know You, the life of the souls that love You, and the strength of the souls that serve You. Help us to know You that we may truly love You, so to love You that we may fully serve You, whom to serve is perfect freedom. Amen." },
+  { title: "Lenten Prayer of Surrender", text: "Lord Jesus, strip away from me all that is not of You. In this holy season, let me fast from pride and feast on humility. Let me fast from bitterness and feast on forgiveness. Let me fast from self-concern and feast on compassion. Let me fast from comfort and feast on You. Amen." },
+  { title: "Prayer to the Holy Spirit", text: "Come Holy Spirit, fill the hearts of your faithful and kindle in them the fire of your love. Send forth your Spirit and they shall be created. And you shall renew the face of the earth. O God, who by the light of the Holy Spirit did instruct the hearts of the faithful, grant that by the same Holy Spirit we may be truly wise and ever enjoy his consolations. Through Christ our Lord. Amen." },
+  { title: "Sub Tuum Praesidium", text: "We fly to thy patronage, O holy Mother of God; despise not our petitions in our necessities, but deliver us always from all dangers, O glorious and blessed Virgin. Amen." },
+  { title: "Divine Mercy Chaplet Prayer", text: "Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world. For the sake of His sorrowful Passion, have mercy on us and on the whole world. Amen." },
+];
+
+function getPrayer(dayNum) {
+  return PRAYERS[dayNum % PRAYERS.length];
+}
+
+// ============================================================
+// STATIONS OF THE CROSS
+// Each station includes: text (description), scripture (ref + verse),
+// meditation (focused reflection prompt), and closing prayer
+// ============================================================
+
+const STATIONS = [
+  {
+    num: "I",
+    title: "Jesus is condemned to death",
+    text: "Pilate, wishing to satisfy the crowd, released Barabbas and handed Jesus over to be crucified. He who is Justice itself stands condemned by human injustice. Though innocent of every charge, Jesus accepts the sentence in silence — for love of us.",
+    scripture: {
+      ref: "Matthew 27:22–24",
+      text: "Pilate said to them, 'What then shall I do with Jesus who is called Christ?' They all said, 'Let him be crucified!' And he said, 'Why, what evil has he done?' But they shouted all the more, 'Let him be crucified!' So when Pilate saw that he was gaining nothing, but rather that a riot was beginning, he took water and washed his hands before the crowd, saying, 'I am innocent of this man's blood.'"
+    },
+    meditation: "When have I condemned someone unjustly — through gossip, assumption, or silence? When have I washed my hands of a situation I should have confronted? Ask Jesus, who accepted condemnation to free you from yours, to give you the courage to speak truth and bear injustice with peace.",
+    prayer: "Lord Jesus, you were condemned to death though innocent. Help me to accept with patience the unjust judgments of others, and never to condemn the innocent. When I face accusations or ridicule for doing what is right, let me not flee from the cross you call me to carry. Amen."
+  },
+  {
+    num: "II",
+    title: "Jesus takes up his cross",
+    text: "The soldiers place the heavy wooden cross upon the shoulders of Jesus. He who made the universe now carries the instrument of execution. The weight of the cross is the weight of our sin, and he bears it willingly. This is love that counts no cost.",
+    scripture: {
+      ref: "John 19:16–17",
+      text: "So he delivered him over to them to be crucified. So they took Jesus, and he went out, bearing his own cross, to the place called The Place of a Skull, which in Aramaic is called Golgotha."
+    },
+    meditation: "What cross has God placed on your shoulders in this season? A difficult relationship, a physical suffering, a humiliation, a failure? Jesus did not ask for the cross to be removed — he embraced it. Bring your cross to this station and lay it alongside his. What would it mean to stop fighting it and to carry it willingly?",
+    prayer: "Lord Jesus, you embraced the cross for love of me. Help me to accept my cross — my sufferings, frustrations, and failures — and carry it willingly in union with yours. May my daily crosses become a path of love rather than a burden of resentment. Amen."
+  },
+  {
+    num: "III",
+    title: "Jesus falls the first time",
+    text: "The weight of the cross and the exhaustion of a night without sleep cause Jesus to collapse beneath the wood. He falls to the ground. Yet he rises. In this station we see Christ in our every fall from grace — he understands our weakness because he has lived it.",
+    scripture: {
+      ref: "Lamentations 3:1–2, 16",
+      text: "I am the man who has seen affliction by the rod of his wrath. He has driven me away and made me walk in darkness rather than light... He has broken my teeth with gravel; he has trampled me in the dust."
+    },
+    meditation: "What sin do you keep falling into, no matter how many times you resolve to stop? Do you believe that Jesus understands that weight — not from outside, but from beneath it? He fell, and he rose. His falling is his solidarity with you. His rising is his promise to you. Bring your repeated failures here and let him meet you in them.",
+    prayer: "Lord Jesus, you fell under the weight of the cross. When I fall into sin, let me not remain there in despair, but rise again trusting in your mercy. You did not stay on the ground — give me the grace to get up, again and again, and follow you. Amen."
+  },
+  {
+    num: "IV",
+    title: "Jesus meets his afflicted Mother",
+    text: "Mary sees her Son in his agony, carrying the cross toward death. Their eyes meet in a silence deeper than words. The sword Simeon foretold now pierces her heart. In this station we contemplate two loves: a Son who will not spare his mother this grief because it serves a greater love, and a mother who stays.",
+    scripture: {
+      ref: "Luke 2:34–35",
+      text: "And Simeon blessed them and said to Mary his mother, 'Behold, this child is appointed for the fall and rising of many in Israel, and for a sign that is opposed — and a sword will pierce through your own soul also — so that thoughts from many hearts may be revealed.'"
+    },
+    meditation: "Have you ever watched someone you love suffer, and been powerless to stop it? Mary did not run. She stayed. She is a model not only of grief but of faithful presence. Who in your life is carrying a cross right now? What would it mean to stay with them — not to fix it, but simply to be there? Ask Mary to teach you how to stand at the foot of the cross.",
+    prayer: "Lord Jesus, you let your mother suffer out of love for us. Mary, Sorrowful Mother, teach me to stay present to those who suffer. When I feel helpless before another's pain, give me your grace to stand firm in love as you stood on Calvary. Amen."
+  },
+  {
+    num: "V",
+    title: "Simon of Cyrene helps Jesus carry the cross",
+    text: "Simon was pulled from the crowd, forced to help carry the cross. He did not volunteer — he was compelled. He likely resented it. Yet this unwilling service became the great grace of his life: he carried the cross of the Son of God. What we receive as burden may be gift in disguise.",
+    scripture: {
+      ref: "Mark 15:21",
+      text: "And they compelled a passerby, Simon of Cyrene, who was coming in from the country, the father of Alexander and Rufus, to carry his cross."
+    },
+    meditation: "Think of the obligations in your life that feel imposed — the caregiving, the difficult colleague, the work you didn't ask for. Simon didn't choose this. Neither did you. But Simon carried the cross of Christ. What if the burden you resent most is the closest you've ever been to Jesus? Ask for the grace to see your unwanted duties through the eyes of faith.",
+    prayer: "Lord Jesus, help me to see you in those who are suffering, and to carry their crosses willingly — even when it is inconvenient, even when I feel compelled rather than chosen. Make my reluctant service into an act of love. Amen."
+  },
+  {
+    num: "VI",
+    title: "Veronica wipes the face of Jesus",
+    text: "A woman steps through the hostile crowd and wipes the blood and sweat from the face of Jesus with her veil. His image is imprinted upon it. This gesture of compassion — small, practical, tender — tells us that love always finds a way to reach the suffering. And Christ imprints himself on every soul that reaches out to him.",
+    scripture: {
+      ref: "Isaiah 53:2–3",
+      text: "He had no form or majesty that we should look at him, and no beauty that we should desire him. He was despised and rejected by men, a man of sorrows and acquainted with grief; and as one from whom men hide their faces he was despised, and we esteemed him not."
+    },
+    meditation: "Veronica didn't save Jesus. She couldn't stop the crucifixion. But she did what she could, in that moment, for the person in front of her. Who is the suffering face of Christ in your daily life? The coworker in crisis, the lonely neighbor, the family member no one visits? You may not be able to fix their situation — but you can wipe their face. What small gesture of compassion is God asking of you today?",
+    prayer: "Lord Jesus, your face is imprinted on every human soul. Help me to see your face in those who suffer, and to tend to you in them — not waiting for a grand gesture, but doing what I can, where I am. Amen."
+  },
+  {
+    num: "VII",
+    title: "Jesus falls a second time",
+    text: "Again Jesus falls beneath the cross. His body is failing under the combined weight of torture, blood loss, and the sins of the world. Yet he rises again. For us he endures every indignity, every exhaustion. We are worth this to him — every single one of us.",
+    scripture: {
+      ref: "Psalm 37:23–24",
+      text: "The steps of a man are established by the Lord, when he delights in his way; though he fall, he shall not be cast headlong, for the Lord upholds his hand."
+    },
+    meditation: "This is the second fall. There will be a third. Jesus knows what it is to fail repeatedly before finally reaching the end. He did not give up in shame or despair. Is there an area of your life where you feel like you keep falling — the same argument, the same temptation, the same discouragement — and you're tempted to give up? You are not too far gone. Jesus fell here for you.",
+    prayer: "Lord Jesus, I too fall repeatedly into the same sins. Grant me the grace to rise again, and again, and again — always returning to you. May each fall teach me humility, and each rising teach me mercy. Amen."
+  },
+  {
+    num: "VIII",
+    title: "Jesus meets the women of Jerusalem",
+    text: "Jesus, in his agony, stops to speak to the weeping women of Jerusalem. 'Do not weep for me,' he says, 'weep for yourselves and for your children.' Even in his passion, Jesus looks outward. His concern is not for himself but for those who are lost. This is love in its purest form: self-forgetfulness.",
+    scripture: {
+      ref: "Luke 23:27–28",
+      text: "And there followed him a great multitude of the people and of women who were mourning and lamenting for him. But turning to them Jesus said, 'Daughters of Jerusalem, do not weep for me, but weep for yourselves and for your children.'"
+    },
+    meditation: "When you are suffering, how much of your energy goes inward? Jesus, in the worst suffering in human history, turned outward to console others. He calls us not to indifference to our own pain, but to the freedom that comes from not being imprisoned by it. In your current trial, is there someone God is asking you to look toward — someone whose need might actually draw you out of yourself and into grace?",
+    prayer: "Lord Jesus, in my own suffering help me not to become self-absorbed, but to remain open to the needs of others. Give me your heart, which even in agony turned toward the lost and grieving. Amen."
+  },
+  {
+    num: "IX",
+    title: "Jesus falls the third time",
+    text: "For the third time Jesus falls. He is near Calvary now. His body is at the absolute limit of what flesh can endure. Yet he rises once more. In this third fall we see the bottomless love of God — a love that will crawl if it must, that will not stop, that cannot stop, because it is love.",
+    scripture: {
+      ref: "Isaiah 53:4–5",
+      text: "Surely he has borne our griefs and carried our sorrows; yet we esteemed him stricken, smitten by God, and afflicted. But he was pierced for our transgressions; he was crushed for our iniquities; upon him was the chastisement that brought us peace, and with his wounds we are healed."
+    },
+    meditation: "Three falls. Three risings. The number three in Scripture suggests completion — he has fallen as far as a human being can fall, and each time he has gotten up. If you feel that you have fallen too many times, that God must be tired of you by now, look at this station. He fell three times on the way to dying for you. His mercy is not exhausted. It is the one inexhaustible thing in the universe.",
+    prayer: "Lord Jesus, when I feel I cannot rise again, remind me that you fell three times and rose each time. Your mercy is greater than my weakness, your love deeper than my sin. Lift me up once more. Amen."
+  },
+  {
+    num: "X",
+    title: "Jesus is stripped of his garments",
+    text: "The soldiers strip Jesus of his garments, leaving him with nothing. He who clothes the lilies of the field is left exposed and humiliated before the crowd. In this station we contemplate the complete self-emptying of the Son of God — not just of possessions, but of dignity, of privacy, of every human protection.",
+    scripture: {
+      ref: "Philippians 2:6–8",
+      text: "Though he was in the form of God, he did not count equality with God a thing to be grasped, but emptied himself, by taking the form of a servant, being born in the likeness of men. And being found in human form, he humbled himself by becoming obedient to the point of death, even death on a cross."
+    },
+    meditation: "What do you cling to for security — your reputation, your image, your possessions, your control? Jesus was stripped of everything. In what ways does God seem to be asking you to let go of something during this Lent? Stripping is painful, but it is often the condition for receiving what is infinitely greater. Ask Jesus to show you what He is gently trying to remove from your grip.",
+    prayer: "Lord Jesus, strip me of my pride, my self-sufficiency, and my attachment to everything that is not you. Clothe me instead in your humility and mercy. Let me hold the things of this world loosely, and hold you alone tightly. Amen."
+  },
+  {
+    num: "XI",
+    title: "Jesus is nailed to the cross",
+    text: "They nail Jesus to the wood of the cross. With each blow of the hammer, the nails are driven through flesh and bone. And his first words in this agony are not of pain or anger but of intercession: 'Father, forgive them, for they know not what they do.' The worst sin in human history is met with the greatest mercy.",
+    scripture: {
+      ref: "Luke 23:33–34",
+      text: "And when they came to the place that is called The Skull, there they crucified him, and the criminals, one on his right and one on his left. And Jesus said, 'Father, forgive them, for they know not what they do.'"
+    },
+    meditation: "His hands are nailed open — incapable of grasping, of striking back, of pushing away. Open hands are the posture of the beggar and the posture of the giver. Is there someone you have not forgiven? Whose name comes to mind as you look at these open, nailed hands? Forgiveness does not mean the offense didn't matter. It means you are willing to release the debt. Ask Jesus to begin that work in you.",
+    prayer: "Lord Jesus, you were nailed to the cross for my sins, and your first word was forgiveness. Help me to offer my own sufferings in union with yours, and to forgive those who have wounded me — not by my own strength, which is insufficient, but by the grace that flows from your open hands. Amen."
+  },
+  {
+    num: "XII",
+    title: "Jesus dies on the cross",
+    text: "'It is finished.' The Son of God breathes his last and bows his head. The earth shakes, the veil of the Temple is torn in two, the dead rise from their tombs. In this death, all death is conquered. The Creator surrenders his created life so that every creature might receive divine life. There is no other explanation but love.",
+    scripture: {
+      ref: "John 19:28–30",
+      text: "After this, Jesus, knowing that all was now finished, said (to fulfill the Scripture), 'I thirst.' A jar full of sour wine stood there, so they put a sponge full of the sour wine on a hyssop branch and held it to his mouth. When Jesus had received the sour wine, he said, 'It is finished,' and he bowed his head and gave up his spirit."
+    },
+    meditation: "It is finished. These words are not defeat — they are accomplishment. The work the Father sent him to do is complete. Every sin of every human being who has ever lived or will ever live has been addressed in this moment. Your sin is included. Spend time here in silence. Let the weight of what happened on this cross settle into your heart. What does it change about how you see yourself? About how you see God?",
+    prayer: "Lord Jesus, you died for love of me. Let me never take lightly what you endured. May the cross become for me not a piece of jewelry but a window into the heart of God. When I die, receive me into your mercy. Amen."
+  },
+  {
+    num: "XIII",
+    title: "Jesus is taken down from the cross",
+    text: "Joseph of Arimathea and Nicodemus take the body of Jesus down from the cross with reverent hands. Mary receives her Son into her arms — the image of the Pietà, a grief beyond words. She who once cradled him as an infant now cradles him in death. This is not the end of the story. But it is the moment before the end, and it is real.",
+    scripture: {
+      ref: "John 19:38–40",
+      text: "After these things Joseph of Arimathea, who was a disciple of Jesus but secretly for fear of the Jews, asked Pilate that he might take away the body of Jesus, and Pilate gave him permission. So he came and took away his body. Nicodemus also, who earlier had come to Jesus by night, came bringing a mixture of myrrh and aloes, about seventy-five pounds in weight. So they took the body of Jesus and bound it in linen cloths with the spices."
+    },
+    meditation: "Mary held the broken body of her Son and did not run from the grief. She sat with it. Sometimes our spiritual lives move too quickly past loss, past darkness, past the Saturday between the cross and the resurrection. What grief are you carrying that you haven't allowed yourself to truly sit with? Bring it here, to the arms of Our Lady of Sorrows, and let her show you how to hold what cannot be fixed.",
+    prayer: "Mary, as you held your Son in your arms, hold me in my grief and suffering. Teach me to remain present to darkness without despair, trusting that the story is not yet finished. May I find in your arms the peace that only God can give. Amen."
+  },
+  {
+    num: "XIV",
+    title: "Jesus is laid in the tomb",
+    text: "They lay Jesus in a borrowed tomb and roll the great stone. It is silent. It seems finished — and not in the triumphant sense of Station XII. This is the silence of defeat, of grief, of unanswered questions. But in this darkness, unseen by any human eye, the greatest victory in all of history is being prepared. Sunday is coming.",
+    scripture: {
+      ref: "Matthew 27:59–61",
+      text: "And Joseph took the body and wrapped it in a clean linen shroud and laid it in his own new tomb, which he had cut in the rock. And he rolled a great stone to the entrance of the tomb and went away. Mary Magdalene and the other Mary were there, sitting opposite the tomb."
+    },
+    meditation: "The women sat opposite the tomb. They didn't leave. They stayed in the darkness, not knowing what Sunday would bring. Where in your life does it feel like the stone has been rolled shut — over a relationship, a hope, a prayer that hasn't been answered? Can you sit across from that tomb as those women did, not with easy answers, but with faithful waiting? The Resurrection does not come to those who have given up. It comes to those who stay.",
+    prayer: "Lord Jesus, you entered the darkness of death so that I might walk in the light of resurrection. Help me to trust you in my darkest moments, knowing that you are already at work even when I cannot see it. May Holy Saturday teach me how to wait with faith. Amen."
+  },
+];
+
+
+function populateDaySelect() {
+  const select = document.getElementById('day-select');
+  const totalDays = Math.round((LENT_END - LENT_START) / 86400000) + 1;
+  for (let i = 0; i < totalDays; i++) {
+    const d = new Date(LENT_START.getTime() + i * 86400000);
+    const entry = getLectionaryEntry(d);
+    const label = entry ? entry.title : getDayTitle(d, i);
+    const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${dateStr} — ${label}`;
+    if (i === currentDay) opt.selected = true;
+    select.appendChild(opt);
+  }
+}
+
+async function jumpToDay(val) {
+  if (val === '') return;
+  const totalDays = Math.round((LENT_END - LENT_START) / 86400000) + 1;
+  currentDay = Math.max(0, Math.min(totalDays - 1, parseInt(val)));
+  document.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
+  await renderDay();
+  // Sync dropdown
+  document.getElementById('day-select').value = currentDay;
+  document.getElementById('readings').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Keep dropdown in sync when using prev/next buttons
+function syncDaySelect() {
+  const select = document.getElementById('day-select');
+  if (select) select.value = currentDay;
+}
+
+// ============================================================
+// EMAIL TEMPLATE GENERATOR
+// Generates a complete, inline-styled HTML email for subscribers
+// Compatible with all major email clients
+// ============================================================
+
+async function generateEmailHTML(dayOffset) {
+  const date = new Date(LENT_START.getTime() + dayOffset * 86400000);
+  const entry = getLectionaryEntry(date);
+  const dayLabel = entry ? entry.title : getDayTitle(date, dayOffset);
+  const dateStr = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  const saint = getSaint(date);
+  const meditation = getMeditation(dayOffset);
+  const prayer = getPrayer(dayOffset);
+
+  // Fetch readings
+  let firstText = '', psalmText = '', secondText = '', gospelText = '';
+  if (entry) {
+    [firstText, psalmText, secondText, gospelText] = await Promise.all([
+      entry.first  ? fetchReadingText(entry.first.passages)  : Promise.resolve(''),
+      entry.psalm  ? fetchReadingText(entry.psalm.passages)  : Promise.resolve(''),
+      entry.second ? fetchReadingText(entry.second.passages) : Promise.resolve(''),
+      entry.gospel ? fetchReadingText(entry.gospel.passages) : Promise.resolve(''),
+    ]);
+  }
+
+  const fastBanner = (entry && entry.isFasting) ? `
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+      <tr>
+        <td style="background:#5c1a1a;padding:14px 20px;border-radius:4px;">
+          <span style="font-family:Georgia,serif;font-size:13px;color:#f5e8c0;font-weight:bold;">🔔 FASTING &amp; ABSTINENCE</span><br>
+          <span style="font-family:Georgia,serif;font-size:14px;color:#f5e8c0;">${entry.fastNote}</span>
+        </td>
+      </tr>
+    </table>` : '';
+
+  function readingBlock(type, ref, text) {
+    if (!text) return '';
+    return `
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="border-left:3px solid #c9a84c;padding:16px 20px;background:#ffffff;">
+          <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a2525;margin-bottom:4px;">${type}</div>
+          <div style="font-family:Georgia,serif;font-size:16px;font-style:italic;font-weight:bold;color:#2a1f1f;margin-bottom:10px;">${ref}</div>
+          <div style="font-family:Georgia,serif;font-size:15px;color:#5a4040;line-height:1.75;">${text}</div>
+        </td>
+      </tr>
+    </table>`;
+  }
+
+  function gospelBlock(ref, text) {
+    if (!text) return '';
+    return `
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#3d0f0f;padding:20px;border-radius:4px;">
+          <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c9a84c;margin-bottom:4px;">✝ Holy Gospel</div>
+          <div style="font-family:Georgia,serif;font-size:16px;font-style:italic;font-weight:bold;color:#e8c97a;margin-bottom:10px;">${ref}</div>
+          <div style="font-family:Georgia,serif;font-size:15px;color:rgba(245,232,192,0.92);line-height:1.75;">${text}</div>
+        </td>
+      </tr>
+    </table>`;
+  }
+
+  const psalmBlock = entry && entry.psalm && psalmText ? `
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="border-left:3px solid #c9a84c;padding:16px 20px;background:#ffffff;">
+          <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7a2525;margin-bottom:4px;">Responsorial Psalm</div>
+          <div style="font-family:Georgia,serif;font-size:16px;font-style:italic;font-weight:bold;color:#2a1f1f;margin-bottom:10px;">${entry.psalm.ref}</div>
+          <div style="font-family:Georgia,serif;font-size:15px;color:#5a4040;line-height:1.75;">${psalmText}</div>
+          <div style="margin-top:10px;padding:8px 14px;background:#f5e8c0;border-radius:3px;font-family:Georgia,serif;font-size:14px;font-style:italic;color:#3d0f0f;">℟ ${entry.psalm.response}</div>
+        </td>
+      </tr>
+    </table>` : '';
+
+  function sectionHeader(label, title) {
+    return `
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin:32px 0 16px;">
+      <tr>
+        <td>
+          <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#c9a84c;margin-bottom:4px;">${label}</div>
+          <div style="font-family:Georgia,serif;font-size:22px;font-weight:bold;color:#5c1a1a;line-height:1.2;">${title}</div>
+          <div style="height:1px;background:linear-gradient(90deg,#c9a84c,transparent);margin-top:10px;"></div>
+        </td>
+      </tr>
+    </table>`;
+  }
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lenten Journey — ${dateStr}</title>
+</head>
+<body style="margin:0;padding:0;background:#f2ead8;font-family:Georgia,serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f2ead8;">
+<tr><td align="center" style="padding:24px 16px;">
+
+  <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+    <!-- HEADER -->
+    <tr>
+      <td style="background:#3d0f0f;text-align:center;padding:36px 24px;border-radius:6px 6px 0 0;">
+        <div style="font-family:Georgia,serif;font-size:28px;color:#c9a84c;margin-bottom:4px;">✝</div>
+        <div style="font-family:Georgia,serif;font-size:26px;font-weight:bold;color:#e8c97a;letter-spacing:2px;">LENTEN JOURNEY</div>
+        <div style="font-family:Georgia,serif;font-size:13px;color:#bdb4a0;font-style:italic;margin-top:4px;">A Season of Repentance, Reflection &amp; Renewal</div>
+        <div style="height:1px;background:rgba(201,168,76,0.3);margin:16px auto;max-width:300px;"></div>
+        <div style="font-family:Georgia,serif;font-size:12px;color:#c9a84c;letter-spacing:3px;text-transform:uppercase;">Day ${dayOffset + 1} of Lent</div>
+        <div style="font-family:Georgia,serif;font-size:20px;font-weight:bold;color:#f5e8c0;margin-top:6px;">${dayLabel}</div>
+        <div style="font-family:Georgia,serif;font-size:13px;color:#8a8070;font-style:italic;margin-top:4px;">${dateStr}</div>
+      </td>
+    </tr>
+
+    <!-- BODY -->
+    <tr>
+      <td style="background:#faf6ee;padding:28px 28px;border-radius:0 0 6px 6px;">
+
+        ${fastBanner}
+
+        ${sectionHeader('Sacred Liturgy', `Mass Readings — ${dayLabel}`)}
+        ${entry ? readingBlock(entry.first ? entry.first.type : 'First Reading', entry.first ? entry.first.ref : '', firstText) : ''}
+        ${psalmBlock}
+        ${entry && entry.second ? readingBlock(entry.second.type, entry.second.ref, secondText) : ''}
+        ${entry ? gospelBlock(entry.gospel ? entry.gospel.ref : '', gospelText) : ''}
+        <p style="text-align:right;font-size:12px;color:#bdb4a0;font-style:italic;">Readings: New American Bible, Revised Edition (NABRE)</p>
+
+        ${sectionHeader('Communion of Saints', 'Saint of the Day')}
+        <table width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:4px;margin-bottom:8px;">
+          <tr>
+            <td width="80" valign="top" style="padding:16px 0 16px 16px;">
+              <div style="width:70px;height:70px;background:#3d0f0f;border-radius:50%;text-align:center;line-height:70px;font-size:28px;border:3px solid #c9a84c;">${saint.icon}</div>
+            </td>
+            <td style="padding:16px;">
+              <div style="font-family:Georgia,serif;font-size:17px;font-weight:bold;color:#5c1a1a;">${saint.name}</div>
+              <div style="font-family:Georgia,serif;font-size:13px;color:#8a7060;font-style:italic;margin-bottom:8px;">${saint.dates}</div>
+              <div style="font-family:Georgia,serif;font-size:14px;color:#5a4040;line-height:1.65;">${saint.bio}</div>
+              <div style="display:inline-block;margin-top:8px;padding:3px 10px;background:#f5e8c0;border:1px solid #c9a84c;border-radius:20px;font-family:Georgia,serif;font-size:11px;color:#5c1a1a;letter-spacing:1px;text-transform:uppercase;">${saint.feast}</div>
+            </td>
+          </tr>
+        </table>
+
+        ${sectionHeader('Lectio Divina', 'Meditation for Today')}
+        <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+          <tr>
+            <td style="background:linear-gradient(135deg,#f2ead8,#fff);padding:24px;border-radius:4px;border-top:3px solid #c9a84c;">
+              <div style="font-family:Georgia,serif;font-size:20px;font-style:italic;color:#2a1f1f;line-height:1.55;margin-bottom:12px;">"${meditation.quote}"</div>
+              <div style="font-family:Georgia,serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#5c1a1a;">— ${meditation.author}</div>
+              <div style="font-family:Georgia,serif;font-size:13px;font-style:italic;color:#8a7060;margin-top:2px;">${meditation.context}</div>
+            </td>
+          </tr>
+        </table>
+        <p style="font-family:Georgia,serif;font-size:14px;color:#5a4040;font-style:italic;line-height:1.8;">Sit with these words for a few minutes. Let them move from your mind into your heart. What is the Lord speaking to you personally today?</p>
+
+        ${sectionHeader('Daily Prayer', prayer.title)}
+        <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+          <tr>
+            <td style="background:#ffffff;border-top:3px solid #5c1a1a;padding:20px;border-radius:4px;">
+              <div style="font-family:Georgia,serif;font-size:15px;color:#5a4040;font-style:italic;line-height:1.85;">${prayer.text}</div>
+            </td>
+          </tr>
+        </table>
+
+        <!-- FOOTER -->
+        <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;border-top:1px solid rgba(201,168,76,0.3);padding-top:20px;">
+          <tr>
+            <td style="text-align:center;">
+              <div style="font-family:Georgia,serif;font-size:12px;color:#8a8070;letter-spacing:2px;text-transform:uppercase;">✝ &nbsp; Lenten Journey 2026 &nbsp; ✝</div>
+              <div style="font-family:Georgia,serif;font-size:13px;color:#8a7060;font-style:italic;margin-top:6px;">"Return to me with your whole heart." — Joel 2:12</div>
+              <div style="margin-top:12px;font-family:Georgia,serif;font-size:11px;color:#bdb4a0;">
+                Visit the full site: <a href="https://www.sandwichtodd.com" style="color:#c9a84c;">sandwichtodd.com</a> &nbsp;|&nbsp;
+                <a href="{{unsubscribe_link}}" style="color:#bdb4a0;">Unsubscribe</a>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+
+  </table>
+</td></tr>
+</table>
+</body>
+</html>`;
+}
+
+
+let currentDay = 0;
+
+function getCurrentDate() {
+  return new Date(LENT_START.getTime() + currentDay * 86400000);
+}
+
+// ============================================================
+// RENDER FUNCTIONS
+// ============================================================
+
+function loadingReadingsHTML() {
+  return `
+    <div class="reading-block" style="text-align:center;padding:2.5rem;">
+      <div style="font-family:Cinzel,serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--ash);text-transform:uppercase;">
+        Loading Scripture…
+      </div>
+      <div style="margin-top:1rem;color:var(--ash-light);font-style:italic;font-size:0.95rem;">
+        Fetching today's readings from Sacred Scripture
+      </div>
+    </div>`;
+}
+
+async function renderDay() {
+  const date = getCurrentDate();
+  const dayNum = currentDay;
+  const entry = getLectionaryEntry(date);
+  const dayLabel = entry ? entry.title : getDayTitle(date, dayNum);
+  const saint = getSaint(date);
+  const meditation = getMeditation(dayNum);
+  const prayer = getPrayer(dayNum);
+  const totalDays = Math.round((LENT_END - LENT_START) / 86400000) + 1;
+
+  // Update nav
+  document.getElementById('nav-day-name').textContent = dayLabel;
+  document.getElementById('nav-date-full').textContent = shortDate(date);
+  document.getElementById('nav-lent-label').textContent = `Day ${dayNum + 1} of Lent`;
+
+  // Update hero date
+  document.getElementById('hero-date').textContent = formatDate(date);
+  document.getElementById('progress-label').textContent = `Day ${dayNum + 1} of 40`;
+  const pct = ((dayNum) / 39) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  // Prev/Next buttons
+  document.getElementById('prev-btn').disabled = (dayNum <= 0);
+  document.getElementById('next-btn').disabled = (dayNum >= totalDays - 1);
+
+  // Reading title
+  document.getElementById('readings-title').textContent = `Mass Readings — ${dayLabel}`;
+
+  // Fast banner
+  const fastWrap = document.getElementById('fast-banner-wrap');
+  if (entry && entry.isFasting) {
+    fastWrap.innerHTML = `
+      <div class="fast-banner" style="margin-bottom:1.5rem;">
+        <div class="fast-icon">🔔</div>
+        <div>
+          <strong>Fasting &amp; Abstinence</strong>
+          ${entry.fastNote}
+        </div>
+      </div>`;
+  } else {
+    fastWrap.innerHTML = '';
+  }
+
+  // Show loading state immediately
+  document.getElementById('readings-container').innerHTML = loadingReadingsHTML();
+
+  // Saint, Meditation, Prayer (no async needed)
+  document.getElementById('saint-container').innerHTML = `
+    <div class="saint-card">
+      <div class="saint-icon">${saint.icon}</div>
+      <div>
+        <div class="saint-name">${saint.name}</div>
+        <div class="saint-dates">${saint.dates}</div>
+        <div class="saint-bio">${saint.bio}</div>
+        <span class="saint-feast">${saint.feast}</span>
+      </div>
+    </div>`;
+
+  document.getElementById('meditation-container').innerHTML = `
+    <div class="meditation-quote">
+      <div class="quote-text">${meditation.quote}</div>
+      <div class="quote-attribution">— ${meditation.author}<br><span style="font-family:Crimson Text;font-size:0.9rem;font-style:italic;letter-spacing:0;text-transform:none;font-weight:400;color:var(--text-light)">${meditation.context}</span></div>
+    </div>
+    <div class="ornament">✦ &nbsp; ✝ &nbsp; ✦</div>
+    <p style="color:var(--text-mid);font-style:italic;line-height:1.8;font-size:1rem;">
+      Sit with these words for a few minutes. Let them move from your mind into your heart. 
+      What is the Lord speaking to you personally today?
+    </p>`;
+
+  document.getElementById('prayer-container').innerHTML = `
+    <div class="prayer-text">
+      <div style="font-family:Cinzel,serif;font-size:0.7rem;letter-spacing:0.15em;color:var(--burgundy);text-transform:uppercase;font-style:normal;margin-bottom:0.8rem;">${prayer.title}</div>
+      ${prayer.text}
+    </div>`;
+
+  // Trigger reveal animations for non-reading sections
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }, 50);
+
+  // Now fetch and render readings asynchronously
+  if (!entry) {
+    document.getElementById('readings-container').innerHTML = `
+      <div class="reading-block" style="text-align:center;padding:2rem;">
+        <div style="color:var(--ash);font-style:italic;">No lectionary data available for this date.</div>
+      </div>`;
+    return;
+  }
+
+  try {
+    // Fetch all passages in parallel
+    // Use hardcoded psalm stanzas (NABRE) — no API needed
+    const psalmStanzas = (entry.psalm && entry.psalm.stanzas) ? entry.psalm.stanzas : [];
+
+    const [firstText, secondText, gospelText] = await Promise.all([
+      entry.first  ? fetchReadingText(entry.first.passages)   : Promise.resolve(null),
+      entry.second ? fetchReadingText(entry.second.passages)  : Promise.resolve(null),
+      entry.gospel ? fetchReadingText(entry.gospel.passages)  : Promise.resolve(null),
+    ]);
+
+    let readingsHTML = '';
+
+    if (entry.first && firstText) {
+      readingsHTML += `
+        <div class="reading-block">
+          <div class="reading-type">${entry.first.type}</div>
+          <div class="reading-ref">${entry.first.ref}</div>
+          <div class="reading-text">${firstText}</div>
+        </div>`;
+    }
+
+    if (entry.psalm && psalmStanzas && psalmStanzas.length > 0) {
+      // USCCB-style: R. first, then each stanza followed by R.
+      let psalmInner = `<div class="psalm-response">${entry.psalm.response}</div>`;
+      psalmStanzas.forEach((stanza) => {
+        psalmInner += `<div class="reading-text psalm-stanza">${stanza.trim().replace(/\n/g,'<br>')}</div>`;
+        psalmInner += `<div class="psalm-response">${entry.psalm.response}</div>`;
+      });
+      readingsHTML += `
+        <div class="reading-block">
+          <div class="reading-type">Responsorial Psalm</div>
+          <div class="reading-ref">${entry.psalm.ref}</div>
+          ${psalmInner}
+        </div>`;
+    }
+
+    if (entry.second && secondText) {
+      readingsHTML += `
+        <div class="reading-block">
+          <div class="reading-type">${entry.second.type}</div>
+          <div class="reading-ref">${entry.second.ref}</div>
+          <div class="reading-text">${secondText}</div>
+        </div>`;
+    }
+
+    if (entry.gospel && gospelText) {
+      readingsHTML += `
+        <div class="gospel-block">
+          <div class="reading-type">✝ Holy Gospel</div>
+          <div class="reading-ref">${entry.gospel.ref}</div>
+          <div class="reading-text">${gospelText}</div>
+        </div>`;
+    }
+
+    if (!readingsHTML) {
+      readingsHTML = `<div class="reading-block" style="padding:2rem;text-align:center;color:var(--ash);font-style:italic;">
+        Unable to load readings. Please check your internet connection.
+      </div>`;
+    }
+
+    // Add WEB translation credit
+    readingsHTML += `<p style="text-align:right;font-size:0.8rem;color:var(--ash-light);font-style:italic;margin-top:0.5rem;">
+      Readings: New American Bible, Revised Edition (NABRE)
+    </p>`;
+
+    document.getElementById('readings-container').innerHTML = readingsHTML;
+
+  } catch (err) {
+    console.error('Failed to load readings:', err);
+    document.getElementById('readings-container').innerHTML = `
+      <div class="reading-block" style="padding:2rem;text-align:center;color:var(--ash);font-style:italic;">
+        Unable to load readings at this time. Please try refreshing the page.
+      </div>`;
+  }
+}
+
+function renderStations() {
+  const grid = document.getElementById('stations-grid');
+  grid.innerHTML = STATIONS.map((s, i) => `
+    <div class="station-item" onclick="openStation(${i})">
+      <div class="station-num">${s.num}</div>
+      <div class="station-title">${s.title}</div>
+    </div>
+  `).join('');
+}
+
+async function changeDay(delta) {
+  const totalDays = Math.round((LENT_END - LENT_START) / 86400000) + 1;
+  currentDay = Math.max(0, Math.min(totalDays - 1, currentDay + delta));
+
+  // Reset reveals
+  document.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
+  syncDaySelect();
+  await renderDay();
+
+  // Scroll to readings smoothly
+  document.getElementById('readings').scrollIntoView({ behavior: 'smooth' });
+}
+
+function openStation(idx) {
+  const s = STATIONS[idx];
+  document.getElementById('modal-station-num').textContent = `Station ${s.num}`;
+  document.getElementById('modal-station-title').textContent = s.title;
+  document.getElementById('modal-station-text').textContent = s.text;
+  document.getElementById('modal-station-scripture').innerHTML = `
+    <span class="modal-scripture-label">📖 Scripture</span>
+    <span class="modal-scripture-ref">${s.scripture.ref}</span>
+    ${s.scripture.text}
+  `;
+  document.getElementById('modal-station-meditation').innerHTML = `
+    <span class="modal-meditation-label">✦ Meditation</span>
+    ${s.meditation}
+  `;
+  document.getElementById('modal-station-prayer').innerHTML = `
+    <strong style="font-family:Cinzel,serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--burgundy);display:block;margin-bottom:0.5rem;">🙏 Prayer</strong>
+    ${s.prayer}
+  `;
+  document.getElementById('station-modal').classList.add('active');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('station-modal')) {
+    document.getElementById('station-modal').classList.remove('active');
+  }
+}
+
+// ============================================================
+// EMAILOCTOPUS SUBSCRIPTION
+// Adds subscribers to your EmailOctopus list via their API
+// ============================================================
+
+const EO_API_KEY  = 'eo_9f888e88c96bf860f913340be023f4ca28992d340d48ec3d1c3f00ce569f09b0';
+const EO_LIST_ID  = '4d4d8140-0d30-11f1-b03f-07697c2a729d';
+
+async function handleSubscribe(e) {
+  e.preventDefault();
+  const email = document.getElementById('email-input').value.trim();
+  const btn   = document.querySelector('.subscribe-btn');
+  const form  = document.querySelector('.subscribe-form');
+  const successEl = document.getElementById('sub-success');
+
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  btn.textContent = 'Subscribing…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(
+      `https://emailoctopus.com/api/1.2/lists/${EO_LIST_ID}/contacts`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key:       EO_API_KEY,
+          email_address: email,
+          status:        'subscribed',
+          tags:          ['lenten-journey-2026']
+        })
+      }
+    );
+
+    const data = await res.json();
+
+    form.style.opacity      = '0.4';
+    form.style.pointerEvents = 'none';
+
+    if (res.ok) {
+      successEl.innerHTML = '✝ &nbsp; You are now enrolled in the Lenten Journey. Check your inbox.';
+    } else if (data.error && data.error.code === 'MEMBER_EXISTS_WITH_EMAIL_ADDRESS') {
+      successEl.innerHTML = '✝ &nbsp; You\'re already subscribed — God bless you on your Lenten journey.';
+    } else {
+      successEl.innerHTML = `✝ &nbsp; ${data.error?.message || 'Something went wrong. Please try again.'}`;
+    }
+
+    successEl.style.display = 'block';
+
+  } catch (err) {
+    console.error('EmailOctopus error:', err);
+    successEl.innerHTML = '✝ &nbsp; Connection error. Please try again in a moment.';
+    successEl.style.display = 'block';
+    btn.textContent = 'Subscribe';
+    btn.disabled    = false;
+  }
+}
+
+let cachedEmailHTML = '';
+
+async function previewEmail() {
+  const modal = document.getElementById('email-preview-modal');
+  const frame = document.getElementById('email-preview-frame');
+  modal.classList.add('active');
+  frame.srcdoc = '<div style="font-family:Georgia,serif;padding:40px;text-align:center;color:#8a8070;font-style:italic;">Generating email preview — fetching scripture readings…</div>';
+
+  cachedEmailHTML = await generateEmailHTML(currentDay);
+  frame.srcdoc = cachedEmailHTML;
+}
+
+function copyEmailHTML() {
+  if (!cachedEmailHTML) return;
+  navigator.clipboard.writeText(cachedEmailHTML).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+function openEmailInTab() {
+  if (!cachedEmailHTML) return;
+  const blob = new Blob([cachedEmailHTML], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}
+
+function initReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// Set current day based on today's date
+function initCurrentDay() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const start = new Date(LENT_START);
+  start.setHours(0,0,0,0);
+  const diff = Math.round((today - start) / 86400000);
+  const totalDays = Math.round((LENT_END - LENT_START) / 86400000) + 1;
+
+  if (diff >= 0 && diff < totalDays) {
+    currentDay = diff;
+  } else if (diff < 0) {
+    currentDay = 0; // Before Lent starts, show Ash Wednesday
+  } else {
+    currentDay = totalDays - 1; // After Lent, show Holy Saturday
+  }
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', async () => {
+  initCurrentDay();
+  populateDaySelect();
+  await renderDay();
+  renderStations();
+  initReveal();
+
+  // Animate progress bar after load
+  setTimeout(() => {
+    const pct = (currentDay / 39) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  }, 1600);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Liturgical Year — sandwichtodd.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06050a;
+  --stone: #1a1712;
+  --stone-light: #2a2520;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim: rgba(201,168,76,0.15);
+  --text-faint: rgba(255,255,255,0.2);
+  --text-dim: rgba(255,255,255,0.4);
+  --text-mid: rgba(255,255,255,0.6);
+  --text-bright: rgba(255,255,255,0.9);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Crimson Text',Georgia,serif;
+  background:var(--bg);
+  color:var(--text-bright);
+  overflow-x:hidden;
+}
+
+/* ================================================= */
+/* CATHEDRAL NAVE — Full viewport experience         */
+/* ================================================= */
+.cathedral-nave {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  overflow: hidden;
+}
+
+/* Stone wall texture background */
+.cathedral-nave::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* Subtle stone block pattern */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 120px,
+      rgba(201,168,76,0.015) 120px,
+      rgba(201,168,76,0.015) 121px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 200px,
+      rgba(201,168,76,0.01) 200px,
+      rgba(201,168,76,0.01) 201px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Cathedral light — colored light from stained glass above */
+.cathedral-nave::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* Central golden shaft of light */
+    radial-gradient(ellipse 30% 60% at 50% 20%, rgba(201,168,76,0.08) 0%, transparent 100%),
+    /* Purple from left transept */
+    radial-gradient(ellipse 25% 40% at 15% 15%, rgba(100,50,150,0.06) 0%, transparent 100%),
+    /* Blue from right transept */
+    radial-gradient(ellipse 25% 40% at 85% 15%, rgba(40,80,160,0.05) 0%, transparent 100%),
+    /* Red accent */
+    radial-gradient(ellipse 15% 30% at 30% 10%, rgba(180,40,40,0.03) 0%, transparent 100%),
+    /* Green accent */
+    radial-gradient(ellipse 15% 30% at 70% 10%, rgba(40,120,60,0.03) 0%, transparent 100%),
+    /* Floor reflection */
+    linear-gradient(0deg, rgba(201,168,76,0.02) 0%, transparent 20%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cathedral-nave > * { position: relative; z-index: 2; }
+
+/* ================================================= */
+/* GOTHIC ARCHWAY — frames the entire viewport       */
+/* ================================================= */
+.archway {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Left pillar */
+.archway::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 60px;
+  background: linear-gradient(90deg, 
+    rgba(20,18,14,0.95) 0%,
+    rgba(20,18,14,0.7) 50%,
+    transparent 100%
+  );
+  border-right: 1px solid rgba(201,168,76,0.06);
+}
+/* Right pillar */
+.archway::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 60px;
+  background: linear-gradient(-90deg,
+    rgba(20,18,14,0.95) 0%,
+    rgba(20,18,14,0.7) 50%,
+    transparent 100%
+  );
+  border-left: 1px solid rgba(201,168,76,0.06);
+}
+
+/* Gothic pointed arch at top */
+.arch-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 120px;
+  z-index: 1;
+  pointer-events: none;
+}
+.arch-top svg {
+  width: 100%;
+  height: 120px;
+}
+
+/* Pillar decorative capitals */
+.pillar-capital {
+  position: absolute;
+  top: 100px;
+  width: 50px;
+  height: 30px;
+  z-index: 2;
+}
+.pillar-capital.left { left: 10px; }
+.pillar-capital.right { right: 10px; }
+
+/* ================================================= */
+/* CORNER EMBLEMS                                    */
+/* ================================================= */
+.emblem-corner {
+  position: absolute;
+  z-index: 5;
+  opacity: 0;
+  animation: fadeIn 1.5s ease 0.3s forwards;
+}
+.emblem-corner.left {
+  top: 1.8rem; left: 1.8rem;
+}
+.emblem-corner.right {
+  top: 1.8rem; right: 1.8rem;
+}
+.emblem-corner img {
+  height: 85px;
+  width: auto;
+  opacity: 0.3;
+  filter: brightness(1.3) sepia(30%) saturate(200%) hue-rotate(-10deg);
+  transition: opacity 0.5s, filter 0.5s;
+}
+.emblem-corner.left img:hover { opacity: 0.55; }
+.emblem-corner.right img {
+  mix-blend-mode: lighten;
+  filter: brightness(2) contrast(3) sepia(50%) saturate(400%) hue-rotate(-15deg);
+  opacity: 0.25;
+}
+.emblem-corner.right img:hover { opacity: 0.45; }
+.emblem-corner-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.4rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.25);
+  text-align: center;
+  margin-top: 0.3rem;
+}
+
+/* ================================================= */
+/* TITLE AREA                                        */
+/* ================================================= */
+.title-area {
+  margin-bottom: 1.5rem;
+}
+
+.ornamental-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeIn 1s ease 0.4s forwards;
+}
+.ornamental-line::before, .ornamental-line::after {
+  content: '';
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.ornamental-line::after {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.ornamental-line .fleuron {
+  color: var(--gold);
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.main-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.8rem, 4.8vw, 3.8rem);
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  text-shadow: 0 2px 30px rgba(201,168,76,0.2), 0 0 80px rgba(201,168,76,0.06);
+  opacity: 0; animation: fadeIn 1s ease 0.6s forwards;
+}
+
+.main-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.95rem, 2vw, 1.3rem);
+  color: var(--text-mid);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  margin-top: 0.4rem;
+  opacity: 0; animation: fadeIn 1s ease 0.8s forwards;
+}
+
+.season-indicator {
+  margin-top: 1.5rem;
+  opacity: 0; animation: fadeIn 1s ease 1s forwards;
+}
+.season-indicator-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.season-indicator-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  color: var(--text-bright);
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+
+/* ================================================= */
+/* ROSE WINDOW                                       */
+/* ================================================= */
+.rose-wrap {
+  margin: 1.5rem 0 0;
+  opacity: 0; animation: roseReveal 2s ease 1.2s forwards;
+}
+
+.rose-svg {
+  width: min(480px, 85vw);
+  height: min(480px, 85vw);
+}
+
+/* Stone tracery lines */
+.tracery { stroke: rgba(201,168,76,0.18); fill: none; stroke-width: 0.6; }
+.tracery-thick { stroke: rgba(201,168,76,0.25); fill: none; stroke-width: 1.2; }
+.tracery-fine { stroke: rgba(201,168,76,0.1); fill: none; stroke-width: 0.4; }
+
+/* Stained glass panes — each season gets its own filled wedge */
+.glass-pane {
+  opacity: 0.5;
+  transition: opacity 0.5s, filter 0.3s;
+  cursor: pointer;
+}
+.glass-pane:hover {
+  opacity: 0.75;
+  filter: brightness(1.3);
+}
+.glass-pane.current-pane {
+  opacity: 0.85;
+  filter: brightness(1.2) saturate(1.3);
+  animation: glassPulse 4s ease-in-out infinite;
+}
+
+/* Stained glass colors — rich, jewel-toned like real windows */
+.glass-advent { fill: #6B3FA0; }     /* Deep amethyst purple */
+.glass-christmas { fill: #B8860B; }  /* Rich gold/amber */
+.glass-ordinary { fill: #2D7A3A; }   /* Forest green */
+.glass-lent { fill: #8B2252; }       /* Deep rose/burgundy */
+.glass-easter { fill: #1E4D8C; }     /* Sapphire blue */
+.glass-ordinary2 { fill: #2E8B4A; }  /* Emerald green */
+
+/* Rose window labels */
+.rose-label {
+  font-family: 'Cinzel', serif;
+  font-size: 5.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: rgba(255,255,255,0.55);
+  text-anchor: middle;
+  pointer-events: none;
+}
+.rose-label.current-label {
+  fill: var(--gold-light);
+  font-weight: 700;
+  font-size: 6.5px;
+}
+
+/* Center medallion */
+.center-stone { fill: rgba(12,10,8,0.95); stroke: rgba(201,168,76,0.3); stroke-width: 0.8; }
+.center-ring { fill: none; stroke: rgba(201,168,76,0.15); stroke-width: 0.5; }
+
+/* Crucifix in center */
+.crucifix-body { stroke: rgba(201,168,76,0.55); fill: none; stroke-width: 0.5; stroke-linecap: round; }
+.crucifix-cross { stroke: rgba(160,120,50,0.6); fill: none; stroke-width: 1.5; stroke-linecap: butt; }
+.crucifix-halo { fill: none; stroke: rgba(201,168,76,0.25); stroke-width: 0.3; }
+
+/* Anno Domini text — below the crucifix, not overlapping */
+.anno-text {
+  font-family: 'Cinzel', serif;
+  fill: rgba(201,168,76,0.45);
+  text-anchor: middle;
+  font-size: 4.5px;
+  letter-spacing: 0.2em;
+}
+
+/* Current season marker */
+.season-marker {
+  fill: var(--gold);
+  filter: drop-shadow(0 0 4px rgba(201,168,76,0.6));
+}
+
+/* Scroll cue */
+.scroll-cue {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  opacity: 0; animation: fadeIn 1s ease 2.5s forwards; z-index: 2;
+}
+.scroll-cue span {
+  font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+}
+.scroll-cue-arrow {
+  width: 12px; height: 12px;
+  border-right: 1px solid rgba(201,168,76,0.35);
+  border-bottom: 1px solid rgba(201,168,76,0.35);
+  transform: rotate(45deg);
+  animation: bounce 2s infinite;
+}
+
+/* ================================================= */
+/* SEASON CARDS (kept from v2 — you liked these)     */
+/* ================================================= */
+.seasons-section {
+  padding: 4rem 1.5rem 5rem;
+  position: relative; z-index: 2;
+  background: linear-gradient(180deg, var(--bg) 0%, #0c0b10 15%, #0c0b10 85%, var(--bg) 100%);
+}
+.seasons-header { text-align: center; margin-bottom: 3rem; }
+.seasons-header-label {
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em;
+  text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.seasons-header-label::before, .seasons-header-label::after {
+  content: ''; width: 50px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3));
+}
+.seasons-header-label::after { background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent); }
+.seasons-header-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--text-bright); font-weight: 400; letter-spacing: 0.1em;
+}
+
+.seasons-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.5rem;
+}
+
+.s-card {
+  position: relative; border-radius: 4px; overflow: hidden; min-height: 300px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  opacity: 0; animation: cardUp 0.8s ease forwards;
+}
+.s-card:nth-child(1){animation-delay:0.1s;} .s-card:nth-child(2){animation-delay:0.2s;}
+.s-card:nth-child(3){animation-delay:0.3s;} .s-card:nth-child(4){animation-delay:0.4s;}
+.s-card:nth-child(5){animation-delay:0.5s;} .s-card:nth-child(6){animation-delay:0.6s;}
+
+.s-card.live:hover, .s-card.now:hover {
+  transform: translateY(-8px); box-shadow: 0 30px 80px rgba(0,0,0,0.6); cursor: pointer;
+}
+.s-bg { position: absolute; inset: 0; opacity: 0.1; transition: opacity 0.5s; }
+.s-card.live:hover .s-bg, .s-card.now:hover .s-bg { opacity: 0.18; }
+.s-border {
+  position: absolute; inset: 0; border-radius: 4px;
+  border: 1px solid rgba(201,168,76,0.08);
+  transition: all 0.5s; pointer-events: none; z-index: 3;
+}
+.s-card.now .s-border {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 40px rgba(201,168,76,0.06), 0 0 20px rgba(201,168,76,0.05);
+}
+.s-card.live:hover .s-border {
+  border-color: rgba(201,168,76,0.4); box-shadow: inset 0 0 30px rgba(201,168,76,0.04);
+}
+.s-content {
+  position: relative; z-index: 2; padding: 2rem 1.8rem;
+  display: flex; flex-direction: column; justify-content: flex-end; min-height: 300px;
+}
+.s-badge {
+  position: absolute; top: 1rem; right: 1rem;
+  font-family: 'Cinzel', serif; font-size: 0.5rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.3rem 0.7rem; border-radius: 2px; z-index: 4;
+}
+.s-badge-now { background: var(--gold); color: var(--bg); font-weight: 700; }
+.s-badge-live { background: rgba(255,255,255,0.06); color: var(--text-dim); border: 1px solid rgba(255,255,255,0.1); }
+.s-badge-soon { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.05); }
+.s-icon { font-size: 2.5rem; margin-bottom: 0.6rem; opacity: 0.85; }
+.s-name { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+.s-dates { font-family: 'Crimson Text', serif; font-size: 0.9rem; font-style: italic; opacity: 0.5; margin-bottom: 0.7rem; }
+.s-desc { font-family: 'Crimson Text', serif; font-size: 0.95rem; line-height: 1.65; opacity: 0.6; margin-bottom: 1.2rem; }
+.s-btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; text-decoration: none; padding: 0.6rem 1.3rem;
+  border-radius: 3px; transition: all 0.3s; width: fit-content;
+}
+.s-btn-live { border: 1px solid var(--gold); color: var(--gold); background: transparent; }
+.s-btn-live:hover { background: var(--gold); color: var(--bg); }
+.s-btn-soon { border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.18); pointer-events: none; }
+.s-btn-arrow { font-size: 0.75rem; transition: transform 0.3s; }
+.s-btn-live:hover .s-btn-arrow { transform: translateX(4px); }
+.s-card.soon .s-content { opacity: 0.35; }
+.s-card.soon .s-bg { opacity: 0.04; }
+
+/* Season palettes */
+.s-advent .s-bg{background:linear-gradient(135deg,#2d1b4e,#4a2873,#1a0a2e);}
+.s-advent .s-name{color:#c9a0e8;} .s-advent .s-icon{color:#9b7dc9;}
+.s-christmas .s-bg{background:linear-gradient(135deg,#3d1a1a,#5c2020,#2a0f0f);}
+.s-christmas .s-name{color:#f5d5a0;} .s-christmas .s-icon{color:#e8b84c;}
+.s-ordinary .s-bg{background:linear-gradient(135deg,#0a2e1a,#1a4a2d,#0a1f12);}
+.s-ordinary .s-name{color:#8cc9a0;} .s-ordinary .s-icon{color:#5a9e70;}
+.s-lent .s-bg{background:linear-gradient(135deg,#2e0a1a,#5c1a1a,#1f0a15);}
+.s-lent .s-name{color:#d4a0a0;} .s-lent .s-icon{color:#c97070;}
+.s-lent.now .s-border{border-color:#c97070;box-shadow:inset 0 0 40px rgba(201,112,112,0.08);}
+.s-easter .s-bg{background:linear-gradient(135deg,#0f1a3d,#1a2a5c,#0a1230);}
+.s-easter .s-name{color:#a0c0e8;} .s-easter .s-icon{color:#6090c9;}
+.s-ordinary2 .s-bg{background:linear-gradient(135deg,#0f2e1a,#1a4a30,#0a1f10);}
+.s-ordinary2 .s-name{color:#90c9a8;} .s-ordinary2 .s-icon{color:#5a9e75;}
+
+/* ================================================= */
+/* FOOTER                                            */
+/* ================================================= */
+.landing-footer {
+  text-align: center; padding: 3.5rem 1.5rem;
+  border-top: 1px solid rgba(201,168,76,0.06);
+  position: relative; z-index: 2;
+}
+.footer-ornament { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.8rem; opacity: 0.25; margin-bottom: 1.5rem; }
+.footer-quote {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic;
+  color: var(--text-dim); max-width: 550px; margin: 0 auto 0.8rem; line-height: 1.6;
+}
+.footer-attr { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
+.footer-copy { font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.12); margin-top: 2rem; text-transform: uppercase; }
+
+/* ================================================= */
+/* ANIMATIONS                                        */
+/* ================================================= */
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@keyframes cardUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bounce { 0%,100% { transform:rotate(45deg) translateY(0); } 50% { transform:rotate(45deg) translateY(4px); } }
+@keyframes glassPulse { 0%,100% { opacity:0.8; } 50% { opacity:0.95; } }
+@keyframes roseReveal { from { opacity:0; transform:scale(0.9) rotate(-5deg); } to { opacity:1; transform:scale(1) rotate(0deg); } }
+
+@media (max-width:700px) {
+  .seasons-grid { grid-template-columns:1fr; max-width:420px; }
+  .emblem-corner.left { top:0.8rem; left:0.8rem; }
+  .emblem-corner.right { top:0.8rem; right:0.8rem; }
+  .emblem-corner img { height: 50px; }
+  .archway::before, .archway::after { width: 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================= -->
+<!-- CATHEDRAL NAVE                                    -->
+<!-- ================================================= -->
+<section class="cathedral-nave" id="top">
+
+  <!-- Gothic Archway frame -->
+  <div class="archway">
+    <svg class="arch-top" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <!-- Gothic pointed arch -->
+      <path d="M0,120 L0,40 Q0,0 60,0 L540,0 Q600,-30 600,-30 Q600,-30 660,0 L1140,0 Q1200,0 1200,40 L1200,120"
+        fill="rgba(16,14,10,0.92)" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+      <!-- Arch keystone ornament -->
+      <circle cx="600" cy="8" r="5" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="0.5"/>
+      <line x1="600" y1="3" x2="600" y2="13" stroke="rgba(201,168,76,0.12)" stroke-width="0.5"/>
+      <line x1="595" y1="6" x2="605" y2="6" stroke="rgba(201,168,76,0.12)" stroke-width="0.5"/>
+    </svg>
+  </div>
+
+  <!-- Corner Emblems -->
+  <div class="emblem-corner left">
+    <a href="https://www.vatican.va" target="_blank" rel="noopener" title="The Holy See">
+      <img src="holysee.png" alt="Emblem of the Holy See">
+    </a>
+    <div class="emblem-corner-label">The Holy See</div>
+  </div>
+  <div class="emblem-corner right">
+    <a href="https://www.jesuits.org" target="_blank" rel="noopener" title="Society of Jesus">
+      <img src="jesuit.png" alt="IHS — Society of Jesus">
+    </a>
+    <div class="emblem-corner-label">Society of Jesus</div>
+  </div>
+
+  <!-- Title -->
+  <div class="title-area">
+    <div class="ornamental-line"><span class="fleuron">&#10022;</span></div>
+    <h1 class="main-title">The Liturgical Year</h1>
+    <p class="main-subtitle">A journey through the sacred seasons of the Catholic Church</p>
+    <div class="season-indicator">
+      <div class="season-indicator-label">You Are Here</div>
+      <div class="season-indicator-name" id="current-season-name">Lent</div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ROSE WINDOW SVG                               -->
+  <!-- ============================================= -->
+  <div class="rose-wrap">
+    <svg class="rose-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glassGlow">
+          <feGaussianBlur stdDeviation="1.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <!-- Clip paths for each season wedge — proper pie slices, no overlap -->
+        <!-- Angles: Advent 0°-27.6°, Christmas 27.6°-47.3°, OrdinaryI 47.3°-83.8°, Lent 83.8°-129.1°, Easter 129.1°-178.4°, OrdinaryII 178.4°-360° -->
+        <!-- All measured clockwise from top (12 o'clock) -->
+        <clipPath id="clip-advent">
+          <path d="M100,100 L100,18 A82,82 0 0,1 138.1,25.5 Z"/>
+        </clipPath>
+        <clipPath id="clip-christmas">
+          <path d="M100,100 L138.1,25.5 A82,82 0 0,1 160.8,40.5 Z"/>
+        </clipPath>
+        <clipPath id="clip-ordinary">
+          <path d="M100,100 L160.8,40.5 A82,82 0 0,1 181.2,91.5 Z"/>
+        </clipPath>
+        <clipPath id="clip-lent">
+          <path d="M100,100 L181.2,91.5 A82,82 0 0,1 153.2,168.5 Z"/>
+        </clipPath>
+        <clipPath id="clip-easter">
+          <path d="M100,100 L153.2,168.5 A82,82 0 0,1 99.8,182 Z"/>
+        </clipPath>
+        <clipPath id="clip-ordinary2">
+          <path d="M100,100 L99.8,182 A82,82 0 1,1 100,18 Z"/>
+        </clipPath>
+      </defs>
+
+      <!-- OUTER STONE FRAME — multiple decorative rings -->
+      <circle class="tracery-thick" cx="100" cy="100" r="97"/>
+      <circle class="tracery" cx="100" cy="100" r="95"/>
+      <circle class="tracery" cx="100" cy="100" r="84"/>
+      <circle class="tracery-fine" cx="100" cy="100" r="68"/>
+
+      <!-- 12 RADIATING TRACERY SPOKES — like cathedral stone ribs -->
+      <g>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(0,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(30,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(60,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(90,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(120,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(150,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(180,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(210,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(240,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(270,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(300,100,100)"/>
+        <line class="tracery-fine" x1="100" y1="16" x2="100" y2="68" transform="rotate(330,100,100)"/>
+      </g>
+
+      <!-- STAINED GLASS RING — colored season wedges between r=68 and r=95 -->
+      <!-- Each is a filled annular sector (pie wedge with hole) -->
+
+      <!-- Advent — amethyst purple -->
+      <path class="glass-pane glass-advent" id="pane-advent"
+        d="M100,5 A95,95 0 0,1 144,12 L132,34 A66,66 0 0,0 100,34 Z"
+        onclick="scrollToSeason('advent')"/>
+
+      <!-- Christmas — rich gold -->
+      <path class="glass-pane glass-christmas" id="pane-christmas"
+        d="M144,12 A95,95 0 0,1 171,32 L150,50 A66,66 0 0,0 132,34 Z"
+        onclick="scrollToSeason('christmas')"/>
+
+      <!-- Ordinary Time I — forest green -->
+      <path class="glass-pane glass-ordinary" id="pane-ordinary"
+        d="M171,32 A95,95 0 0,1 194,88 L160,88 A66,66 0 0,0 150,50 Z"
+        onclick="scrollToSeason('ordinary')"/>
+
+      <!-- Lent — deep rose burgundy -->
+      <path class="glass-pane glass-lent" id="pane-lent"
+        d="M194,88 A95,95 0 0,1 157,176 L141,155 A66,66 0 0,0 160,88 Z"
+        onclick="scrollToSeason('lent')"/>
+
+      <!-- Easter — sapphire blue -->
+      <path class="glass-pane glass-easter" id="pane-easter"
+        d="M157,176 A95,95 0 0,1 100,195 L100,166 A66,66 0 0,0 141,155 Z"
+        onclick="scrollToSeason('easter')"/>
+
+      <!-- Ordinary Time II — emerald green (largest) -->
+      <path class="glass-pane glass-ordinary2" id="pane-ordinary2"
+        d="M100,195 A95,95 0 1,1 100,5 L100,34 A66,66 0 1,0 100,166 Z"
+        onclick="scrollToSeason('ordinary2')"/>
+
+      <!-- TRACERY DIVIDERS between seasons (thicker gold lines between panes) -->
+      <!-- These are the "lead came" separating stained glass panes -->
+      <line class="tracery" x1="100" y1="5" x2="100" y2="34" stroke="rgba(201,168,76,0.35)"/>
+      <!-- Advent/Christmas boundary: ~27.6° -->
+      <line class="tracery" x1="144" y1="12" x2="132" y2="34" stroke="rgba(201,168,76,0.35)"/>
+      <!-- Christmas/Ordinary boundary: ~47.3° -->
+      <line class="tracery" x1="171" y1="32" x2="150" y2="50" stroke="rgba(201,168,76,0.35)"/>
+      <!-- Ordinary/Lent boundary: ~83.8° -->
+      <line class="tracery" x1="194" y1="88" x2="160" y2="88" stroke="rgba(201,168,76,0.35)"/>
+      <!-- Lent/Easter boundary: ~129.1° -->
+      <line class="tracery" x1="157" y1="176" x2="141" y2="155" stroke="rgba(201,168,76,0.35)"/>
+      <!-- Easter/OrdinaryII boundary: ~178.4° -->
+      <line class="tracery" x1="100" y1="195" x2="100" y2="166" stroke="rgba(201,168,76,0.35)"/>
+
+      <!-- DECORATIVE TREFOILS at outer ring intersections -->
+      <g opacity="0.3">
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(30,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(60,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(90,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(120,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(150,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(180,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(210,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(240,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(270,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(300,100,100)"/>
+        <circle cx="100" cy="3" r="2" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="0.4" transform="rotate(330,100,100)"/>
+      </g>
+
+      <!-- INNER DECORATIVE RING — small Gothic arches (trefoil/quatrefoil pattern) -->
+      <g opacity="0.2">
+        <!-- 12 small Gothic arch shapes around the inner ring -->
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(0,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(30,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(60,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(90,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(120,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(150,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(180,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(210,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(240,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(270,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(300,100,100)"/>
+        <path d="M100,35 Q104,42 100,49 Q96,42 100,35 Z" fill="none" stroke="var(--gold)" stroke-width="0.3" transform="rotate(330,100,100)"/>
+      </g>
+
+      <!-- SEASON LABELS (positioned in the middle of each glass pane) -->
+      <text class="rose-label" id="label-advent" transform="rotate(14,100,100)"><tspan x="100" y="22">Advent</tspan></text>
+      <text class="rose-label" id="label-christmas" transform="rotate(37,100,100)"><tspan x="100" y="22">Christmas</tspan></text>
+      <text class="rose-label" id="label-ordinary" transform="rotate(66,100,100)"><tspan x="100" y="22">Ordinary</tspan></text>
+      <text class="rose-label" id="label-lent" transform="rotate(106,100,100)"><tspan x="100" y="22">Lent</tspan></text>
+      <text class="rose-label" id="label-easter" transform="rotate(154,100,100)"><tspan x="100" y="22">Easter</tspan></text>
+      <text class="rose-label" id="label-ordinary2" transform="rotate(269,100,100)"><tspan x="100" y="22">Ordinary Time</tspan></text>
+
+      <!-- CENTER MEDALLION -->
+      <circle class="center-stone" cx="100" cy="100" r="30"/>
+      <circle class="center-ring" cx="100" cy="100" r="28"/>
+
+      <!-- CRUCIFIX — stylized depiction of Christ on the Cross -->
+      <!-- San Damiano / Cimabue crucifix inspired -->
+      <g class="crucifix-group">
+        <!-- Cross beam -->
+        <line class="crucifix-cross" x1="100" y1="80" x2="100" y2="108"/>
+        <line class="crucifix-cross" x1="91" y1="86" x2="109" y2="86"/>
+        <!-- INRI tablet -->
+        <rect x="96" y="80" width="8" height="3" fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="0.3"/>
+        <text x="100" y="82.3" font-family="Cinzel" font-size="1.8" fill="rgba(201,168,76,0.5)" text-anchor="middle">INRI</text>
+        <!-- Halo/nimbus -->
+        <circle class="crucifix-halo" cx="100" cy="84" r="3"/>
+        <!-- Head -->
+        <circle cx="100" cy="84.2" r="1.3" fill="none" stroke="rgba(201,168,76,0.45)" stroke-width="0.4"/>
+        <!-- Head tilted slightly -->
+        <line x1="99.3" y1="84.8" x2="100.7" y2="84.5" stroke="rgba(201,168,76,0.3)" stroke-width="0.2"/>
+        <!-- Torso -->
+        <line x1="100" y1="85.5" x2="100" y2="97" stroke="rgba(201,168,76,0.4)" stroke-width="0.4"/>
+        <!-- Arms stretched on crossbeam -->
+        <line x1="92" y1="86.5" x2="100" y2="87.5" stroke="rgba(201,168,76,0.35)" stroke-width="0.35" stroke-linecap="round"/>
+        <line x1="108" y1="86.5" x2="100" y2="87.5" stroke="rgba(201,168,76,0.35)" stroke-width="0.35" stroke-linecap="round"/>
+        <!-- Legs -->
+        <line x1="100" y1="97" x2="99" y2="105" stroke="rgba(201,168,76,0.35)" stroke-width="0.35"/>
+        <line x1="100" y1="97" x2="101" y2="105" stroke="rgba(201,168,76,0.35)" stroke-width="0.35"/>
+        <!-- Feet (nailed) -->
+        <circle cx="100" cy="106" r="0.5" fill="rgba(201,168,76,0.35)"/>
+        <!-- Loincloth suggestion -->
+        <path d="M97,95 Q100,97 103,95" fill="none" stroke="rgba(201,168,76,0.25)" stroke-width="0.3"/>
+      </g>
+
+      <!-- ANNO DOMINI — clearly below the crucifix, no overlap -->
+      <text class="anno-text" x="100" y="115" letter-spacing="0.15em">ANNO DOMINI</text>
+      <text class="anno-text" x="100" y="120" font-size="3.5" letter-spacing="0.1em" fill="rgba(201,168,76,0.3)">MMXXVI</text>
+
+      <!-- Current season marker dot -->
+      <circle class="season-marker" id="wheel-marker" cx="100" cy="14" r="3" filter="url(#glow)">
+        <animate attributeName="r" values="3;4.5;3" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+
+    </svg>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Explore the Seasons</span>
+    <div class="scroll-cue-arrow"></div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- SEASON CARDS                                      -->
+<!-- ================================================= -->
+<section class="seasons-section" id="seasons">
+  <div class="seasons-header">
+    <div class="seasons-header-label">The Seasons of Grace</div>
+    <h2 class="seasons-header-title">Enter a Season</h2>
+  </div>
+  <div class="seasons-grid">
+    <div class="s-card soon s-advent" id="card-advent">
+      <div class="s-bg"></div><div class="s-border"></div>
+      <div class="s-badge s-badge-soon">Coming Soon</div>
+      <div class="s-content">
+        <div class="s-icon">&#x1F56F;</div>
+        <div class="s-name">Advent</div>
+        <div class="s-dates">Nov 29 &mdash; Dec 24, 2026</div>
+        <div class="s-desc">A season of joyful expectation and preparation for the coming of Christ &mdash; in history, in mystery, and in glory.</div>
+        <span class="s-btn s-btn-soon">Coming Advent 2026 <span class="s-btn-arrow">&rarr;</span></span>
+      </div>
+    </div>
+    <div class="s-card soon s-christmas" id="card-christmas">
+      <div class="s-bg"></div><div class="s-border"></div>
+      <div class="s-badge s-badge-soon">Coming Soon</div>
+      <div class="s-content">
+        <div class="s-icon">&#11088;</div>
+        <div class="s-name">Christmas</div>
+        <div class="s-dates">Dec 25, 2026 &mdash; Jan 10, 2027</div>
+        <div class="s-desc">The Word became flesh and dwelt among us. We celebrate the Nativity, the Holy Family, and the Epiphany of the Lord.</div>
+        <span class="s-btn s-btn-soon">Coming Christmas 2026 <span class="s-btn-arrow">&rarr;</span></span>
+      </div>
+    </div>
+    <div class="s-card soon s-ordinary" id="card-ordinary">
+      <div class="s-bg"></div><div class="s-border"></div>
+      <div class="s-badge s-badge-soon">Coming Soon</div>
+      <div class="s-content">
+        <div class="s-icon">&#127807;</div>
+        <div class="s-name">Ordinary Time</div>
+        <div class="s-dates">Jan 11 &mdash; Feb 17, 2026</div>
+        <div class="s-desc">In the &ldquo;ordered&rdquo; time of the year, we walk with Christ through His public ministry, miracles, and teaching.</div>
+        <span class="s-btn s-btn-soon">Coming 2027 <span class="s-btn-arrow">&rarr;</span></span>
+      </div>
+    </div>
+    <div class="s-card live s-lent" id="card-lent">
+      <div class="s-bg"></div><div class="s-border"></div>
+      <div class="s-badge s-badge-live">Available</div>
+      <div class="s-content">
+        <div class="s-icon">&#10013;</div>
+        <div class="s-name">Lent</div>
+        <div class="s-dates">Feb 18 &mdash; Apr 4, 2026</div>
+        <div class="s-desc">Forty days of repentance, prayer, and fasting as we journey with Christ toward the Cross and the promise of Easter.</div>
+        <a href="/lent/" class="s-btn s-btn-live">Enter Lenten Journey <span class="s-btn-arrow">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="s-card live s-easter" id="card-easter">
+      <div class="s-bg"></div><div class="s-border"></div>
+      <div class="s-badge s-badge-live">Available</div>
+      <div class="s-content">
+        <div class="s-icon">&#9769;</div>
+        <div class="s-name">Easter</div>
+        <div class="s-dates">Apr 5 &mdash; May 24, 2026</div>
+        <div class="s-desc">Fifty days of Paschal joy &mdash; from the empty tomb to the fire of Pentecost. Alleluia! Christ is risen!</div>
+        <a href="/easter/" class="s-btn s-btn-live">Enter Easter Journey <span class="s-btn-arrow">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="s-card soon s-ordinary2" id="card-ordinary2">
+      <div class="s-bg"></div><div class="s-border"></div>
+      <div class="s-badge s-badge-soon">Coming Soon</div>
+      <div class="s-content">
+        <div class="s-icon">&#127811;</div>
+        <div class="s-name">Ordinary Time</div>
+        <div class="s-dates">May 25 &mdash; Nov 28, 2026</div>
+        <div class="s-desc">The longest season &mdash; a sustained pilgrimage of discipleship, growing deeper in the mysteries of Christ&rsquo;s life and teaching.</div>
+        <span class="s-btn s-btn-soon">Coming 2026 <span class="s-btn-arrow">&rarr;</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- FOOTER                                            -->
+<!-- ================================================= -->
+<footer class="landing-footer">
+  <div class="footer-ornament">&#10022; &nbsp; &#10022; &nbsp; &#10022;</div>
+  <div class="footer-quote">&ldquo;For everything there is a season, and a time for every matter under heaven.&rdquo;</div>
+  <div class="footer-attr">&mdash; Ecclesiastes 3:1</div>
+  <div class="footer-copy">&copy; 2026 sandwichtodd.com &nbsp;&middot;&nbsp; Ad Majorem Dei Gloriam</div>
+</footer>
+
+<script>
+function detectSeason(){
+  var today=new Date();today.setHours(0,0,0,0);
+  var s=[
+    {id:'advent',name:'Advent',start:new Date(2025,10,30),end:new Date(2025,11,24)},
+    {id:'christmas',name:'Christmastide',start:new Date(2025,11,25),end:new Date(2026,0,11)},
+    {id:'ordinary',name:'Ordinary Time',start:new Date(2026,0,12),end:new Date(2026,1,17)},
+    {id:'lent',name:'Lent',start:new Date(2026,1,18),end:new Date(2026,3,4)},
+    {id:'easter',name:'Eastertide',start:new Date(2026,3,5),end:new Date(2026,4,24)},
+    {id:'ordinary2',name:'Ordinary Time',start:new Date(2026,4,25),end:new Date(2026,10,28)},
+    {id:'advent',name:'Advent',start:new Date(2026,10,29),end:new Date(2026,11,24)},
+    {id:'christmas',name:'Christmastide',start:new Date(2026,11,25),end:new Date(2027,0,10)}
+  ];
+  for(var i=0;i<s.length;i++){
+    var st=new Date(s[i].start);st.setHours(0,0,0,0);
+    var en=new Date(s[i].end);en.setHours(23,59,59,999);
+    if(today>=st&&today<=en)return s[i];
+  }
+  return{id:'ordinary2',name:'Ordinary Time'};
+}
+
+function positionMarker(id){
+  // Midpoint angle for each season (degrees clockwise from top)
+  var a={advent:14,christmas:37,ordinary:66,lent:106,easter:154,ordinary2:269};
+  var deg=a[id]||0;
+  var rad=(deg-90)*Math.PI/180;
+  var r=90; // between inner and outer ring
+  var m=document.getElementById('wheel-marker');
+  if(m){m.setAttribute('cx',100+r*Math.cos(rad));m.setAttribute('cy',100+r*Math.sin(rad));}
+}
+
+function scrollToSeason(id){
+  var c=document.getElementById('card-'+id);
+  if(c){
+    c.scrollIntoView({behavior:'smooth',block:'center'});
+    c.style.transition='box-shadow 0.4s';
+    c.style.boxShadow='0 0 50px rgba(201,168,76,0.2)';
+    setTimeout(function(){c.style.boxShadow='';},2000);
+  }
+}
+
+function init(){
+  var cur=detectSeason();
+  document.getElementById('current-season-name').textContent=cur.name;
+
+  // Card highlight
+  var card=document.getElementById('card-'+cur.id);
+  if(card){
+    card.classList.remove('soon','live');card.classList.add('now');
+    var b=card.querySelector('.s-badge');
+    if(b){b.className='s-badge s-badge-now';b.textContent='Current Season';}
+  }
+
+  // Rose window highlight
+  var pane=document.getElementById('pane-'+cur.id);
+  if(pane) pane.classList.add('current-pane');
+
+  var lbl=document.getElementById('label-'+cur.id);
+  if(lbl) lbl.classList.add('current-label');
+
+  positionMarker(cur.id);
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

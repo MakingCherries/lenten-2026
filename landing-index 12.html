@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Liturgical Year — sandwichtodd.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+:root{
+  --bg:#04030a;
+  --stone:#14120e;
+  --stone-l:#1e1b16;
+  --gold:#c9a84c;
+  --gold-l:#e8c97a;
+  --gold-d:rgba(201,168,76,0.15);
+}
+body{font-family:'Crimson Text',Georgia,serif;background:var(--bg);color:rgba(255,255,255,0.88);overflow-x:hidden;}
+
+/* ================================================================ */
+/* THE CATHEDRAL NAVE — perspective entrance                        */
+/* ================================================================ */
+.nave{
+  position:relative;
+  min-height:100vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+/* === RIBBED VAULT CEILING === */
+/* Creates the gothic arched ceiling with perspective lines converging to vanishing point */
+.vault{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  overflow:hidden;
+}
+.vault-rib{
+  position:absolute;
+  background:linear-gradient(180deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02) 40%, transparent 70%);
+  width:1px;
+  top:0;
+  height:50%;
+  transform-origin:top center;
+}
+
+/* === STONE PILLARS — left and right columns receding === */
+.pillars{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
+
+/* Left pillar cluster */
+.pillar-col{
+  position:absolute;
+  top:0;bottom:0;
+  z-index:2;
+}
+.pillar-col.l1{left:0;width:100px;}
+.pillar-col.l2{left:100px;width:40px;opacity:0.6;}
+.pillar-col.l3{left:140px;width:20px;opacity:0.3;}
+.pillar-col.r1{right:0;width:100px;}
+.pillar-col.r2{right:100px;width:40px;opacity:0.6;}
+.pillar-col.r3{right:140px;width:20px;opacity:0.3;}
+
+.pillar-col.l1{background:linear-gradient(90deg,rgba(12,10,8,0.98) 0%,rgba(12,10,8,0.95) 60%,rgba(12,10,8,0.6) 85%,transparent 100%);border-right:1px solid rgba(201,168,76,0.04);}
+.pillar-col.l2{background:linear-gradient(90deg,rgba(12,10,8,0.5),transparent);border-right:1px solid rgba(201,168,76,0.025);}
+.pillar-col.l3{background:linear-gradient(90deg,rgba(12,10,8,0.3),transparent);}
+.pillar-col.r1{background:linear-gradient(-90deg,rgba(12,10,8,0.98) 0%,rgba(12,10,8,0.95) 60%,rgba(12,10,8,0.6) 85%,transparent 100%);border-left:1px solid rgba(201,168,76,0.04);}
+.pillar-col.r2{background:linear-gradient(-90deg,rgba(12,10,8,0.5),transparent);border-left:1px solid rgba(201,168,76,0.025);}
+.pillar-col.r3{background:linear-gradient(-90deg,rgba(12,10,8,0.3),transparent);}
+
+/* Pillar ribbing details */
+.pillar-col .rib-detail{
+  position:absolute;top:0;bottom:0;width:1px;
+  background:rgba(201,168,76,0.04);
+}
+.pillar-col.l1 .rib-detail{right:20px;}
+.pillar-col.r1 .rib-detail{left:20px;}
+.pillar-col .rib-detail2{
+  position:absolute;top:0;bottom:0;width:1px;
+  background:rgba(201,168,76,0.025);
+}
+.pillar-col.l1 .rib-detail2{right:40px;}
+.pillar-col.r1 .rib-detail2{left:40px;}
+
+/* Corinthian capital suggestion */
+.capital{
+  position:absolute;width:100%;height:25px;
+}
+.capital.top{top:90px;}
+.capital.mid{top:50%;}
+.pillar-col.l1 .capital{border-bottom:1px solid rgba(201,168,76,0.06);background:linear-gradient(180deg,transparent,rgba(201,168,76,0.02));}
+.pillar-col.r1 .capital{border-bottom:1px solid rgba(201,168,76,0.06);background:linear-gradient(180deg,transparent,rgba(201,168,76,0.02));}
+
+/* === GOTHIC POINTED ARCH — top of viewport === */
+.gothic-arch{
+  position:absolute;top:0;left:0;right:0;z-index:4;pointer-events:none;height:140px;
+}
+
+/* === STAINED GLASS LIGHT pouring from above === */
+.glass-light{
+  position:absolute;top:-5%;left:50%;transform:translateX(-50%);
+  width:100vw;height:65vh;z-index:1;pointer-events:none;
+  opacity:0.7;
+  filter:blur(50px);
+  animation:lightBreath 15s ease-in-out infinite alternate;
+}
+.glass-light-beam{
+  position:absolute;
+  top:0;
+  height:100%;
+  opacity:0.5;
+}
+/* Individual colored light beams from "windows" */
+.beam-gold{background:linear-gradient(180deg,rgba(201,168,76,0.15) 0%,rgba(201,168,76,0.03) 60%,transparent);width:12%;left:44%;}
+.beam-purple{background:linear-gradient(180deg,rgba(100,50,160,0.12) 0%,rgba(100,50,160,0.02) 50%,transparent);width:8%;left:22%;}
+.beam-blue{background:linear-gradient(180deg,rgba(30,70,180,0.1) 0%,rgba(30,70,180,0.02) 50%,transparent);width:9%;left:68%;}
+.beam-red{background:linear-gradient(180deg,rgba(160,30,50,0.07) 0%,transparent 45%);width:6%;left:12%;}
+.beam-green{background:linear-gradient(180deg,rgba(30,130,50,0.06) 0%,transparent 45%);width:7%;left:80%;}
+.beam-rose{background:linear-gradient(180deg,rgba(130,40,80,0.06) 0%,transparent 40%);width:5%;left:35%;}
+.beam-teal{background:linear-gradient(180deg,rgba(40,130,140,0.05) 0%,transparent 40%);width:5%;left:60%;}
+
+/* Dust motes */
+.motes{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 25% 20%,rgba(201,168,76,0.4),transparent),
+    radial-gradient(1px 1px at 55% 30%,rgba(255,255,255,0.2),transparent),
+    radial-gradient(1px 1px at 75% 15%,rgba(201,168,76,0.3),transparent),
+    radial-gradient(1px 1px at 40% 45%,rgba(255,255,255,0.15),transparent),
+    radial-gradient(1px 1px at 65% 25%,rgba(201,168,76,0.25),transparent),
+    radial-gradient(1px 1px at 30% 55%,rgba(201,168,76,0.2),transparent),
+    radial-gradient(1px 1px at 80% 40%,rgba(255,255,255,0.1),transparent);
+  animation:motesDrift 40s linear infinite;
+}
+
+/* === FLOOR — stone tile suggestion === */
+.floor{
+  position:absolute;bottom:0;left:0;right:0;height:15vh;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(0deg,rgba(12,10,8,0.95),transparent),
+    repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(201,168,76,0.015) 80px,rgba(201,168,76,0.015) 81px),
+    repeating-linear-gradient(45deg,transparent,transparent 80px,rgba(201,168,76,0.008) 80px,rgba(201,168,76,0.008) 81px);
+}
+
+/* ================================================================ */
+/* STAINED GLASS WINDOWS — along the walls (left & right)           */
+/* ================================================================ */
+.wall-windows{
+  position:absolute;top:15%;bottom:25%;z-index:3;pointer-events:none;
+}
+.wall-windows.left-wall{left:55px;width:50px;}
+.wall-windows.right-wall{right:55px;width:50px;}
+
+.wall-window{
+  position:absolute;
+  width:100%;
+  border-radius:50% 50% 3px 3px / 30% 30% 0 0;
+  opacity:0.3;
+  border:1px solid rgba(201,168,76,0.08);
+}
+/* Left wall windows — 3 windows */
+.wall-windows.left-wall .wall-window:nth-child(1){top:0;height:28%;background:linear-gradient(180deg,rgba(100,50,160,0.4),rgba(100,50,160,0.1));}
+.wall-windows.left-wall .wall-window:nth-child(2){top:35%;height:28%;background:linear-gradient(180deg,rgba(30,130,50,0.3),rgba(30,130,50,0.08));}
+.wall-windows.left-wall .wall-window:nth-child(3){top:70%;height:28%;background:linear-gradient(180deg,rgba(130,40,80,0.35),rgba(130,40,80,0.08));}
+/* Right wall windows — 3 windows */
+.wall-windows.right-wall .wall-window:nth-child(1){top:0;height:28%;background:linear-gradient(180deg,rgba(180,130,20,0.3),rgba(180,130,20,0.08));}
+.wall-windows.right-wall .wall-window:nth-child(2){top:35%;height:28%;background:linear-gradient(180deg,rgba(30,70,160,0.35),rgba(30,70,160,0.08));}
+.wall-windows.right-wall .wall-window:nth-child(3){top:70%;height:28%;background:linear-gradient(180deg,rgba(40,130,60,0.25),rgba(40,130,60,0.06));}
+
+/* ================================================================ */
+/* CONTENT — centered in the nave                                   */
+/* ================================================================ */
+.nave-content{
+  position:relative;z-index:5;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;
+  padding:2rem;
+  max-width:800px;
+}
+
+/* Emblems */
+.emblems-row{
+  display:flex;align-items:center;justify-content:center;gap:2rem;
+  margin-bottom:2rem;
+  opacity:0;animation:fadeIn 1.5s ease 0.3s forwards;
+}
+.emblem-wrap{display:flex;flex-direction:column;align-items:center;}
+.emblem-wrap img{height:75px;width:auto;opacity:0.3;filter:sepia(40%) saturate(200%) brightness(1.2) hue-rotate(-10deg);transition:opacity 0.4s;}
+.emblem-wrap img:hover{opacity:0.5;}
+.emblem-wrap .ihs-svg{height:75px;width:75px;opacity:0.3;transition:opacity 0.4s;}
+.emblem-wrap .ihs-svg:hover{opacity:0.5;}
+.emblem-label{font-family:'Cinzel',serif;font-size:0.38rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.22);margin-top:0.25rem;}
+.emblem-divider{width:1px;height:50px;background:linear-gradient(180deg,transparent,rgba(201,168,76,0.15),transparent);margin:0 0.5rem;}
+
+/* Title */
+.fleuron-line{
+  display:flex;align-items:center;justify-content:center;gap:0.8rem;
+  margin-bottom:1.2rem;opacity:0;animation:fadeIn 1s ease 0.6s forwards;
+}
+.fleuron-line::before,.fleuron-line::after{content:'';width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.35));}
+.fleuron-line::after{background:linear-gradient(90deg,rgba(201,168,76,0.35),transparent);}
+.fleuron-line span{color:var(--gold);font-size:0.85rem;opacity:0.4;}
+
+h1{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(2rem,5.5vw,4rem);
+  font-weight:700;color:var(--gold-l);
+  letter-spacing:0.14em;line-height:1.1;
+  text-shadow:0 2px 30px rgba(201,168,76,0.25),0 0 80px rgba(201,168,76,0.06);
+  opacity:0;animation:fadeIn 1.2s ease 0.8s forwards;
+}
+.subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2vw,1.3rem);
+  color:rgba(255,255,255,0.5);font-style:italic;font-weight:300;
+  letter-spacing:0.05em;margin-top:0.4rem;
+  opacity:0;animation:fadeIn 1s ease 1s forwards;
+}
+
+/* You Are Here */
+.yah{margin:1.8rem 0;opacity:0;animation:fadeIn 1s ease 1.2s forwards;}
+.yah-label{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);}
+.yah-name{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.8vw,1.8rem);color:rgba(255,255,255,0.9);font-weight:600;margin-top:0.15rem;}
+
+/* Season progress — simple elegant bar */
+.season-progress{
+  width:280px;height:3px;background:rgba(201,168,76,0.1);border-radius:2px;
+  margin:0.8rem 0 0;overflow:hidden;
+  opacity:0;animation:fadeIn 1s ease 1.3s forwards;
+}
+.season-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));border-radius:2px;transition:width 1s ease;}
+
+/* Enter buttons */
+.enter-buttons{
+  display:flex;gap:1.2rem;margin-top:2rem;flex-wrap:wrap;justify-content:center;
+  opacity:0;animation:fadeIn 1s ease 1.5s forwards;
+}
+.enter-btn{
+  font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;
+  text-transform:uppercase;text-decoration:none;
+  padding:0.7rem 1.5rem;border-radius:3px;
+  transition:all 0.3s;display:flex;align-items:center;gap:0.5rem;
+}
+.enter-btn.primary{
+  border:1px solid var(--gold);color:var(--gold);background:rgba(201,168,76,0.05);
+}
+.enter-btn.primary:hover{background:var(--gold);color:var(--bg);}
+.enter-btn.secondary{
+  border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);background:transparent;
+}
+.enter-btn.secondary:hover{border-color:rgba(255,255,255,0.25);color:rgba(255,255,255,0.6);}
+.enter-btn .arrow{transition:transform 0.3s;}
+.enter-btn:hover .arrow{transform:translateX(3px);}
+
+/* Quote */
+.nave-quote{
+  margin-top:2.5rem;max-width:480px;
+  opacity:0;animation:fadeIn 1s ease 1.8s forwards;
+}
+.nave-quote blockquote{
+  font-family:'Cormorant Garamond',serif;font-size:1.05rem;
+  font-style:italic;color:rgba(255,255,255,0.3);line-height:1.6;
+}
+.nave-quote cite{
+  display:block;font-family:'Cinzel',serif;font-size:0.45rem;
+  letter-spacing:0.2em;color:rgba(201,168,76,0.35);text-transform:uppercase;
+  margin-top:0.5rem;font-style:normal;
+}
+
+/* Scroll */
+.scroll-cue{
+  position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.3rem;
+  opacity:0;animation:fadeIn 1s ease 2.5s forwards;z-index:6;
+}
+.scroll-cue span{font-family:'Cinzel',serif;font-size:0.42rem;letter-spacing:0.25em;color:rgba(255,255,255,0.15);text-transform:uppercase;}
+.scroll-cue i{display:block;width:10px;height:10px;border-right:1px solid rgba(201,168,76,0.25);border-bottom:1px solid rgba(201,168,76,0.25);transform:rotate(45deg);animation:bob 2s infinite;}
+
+/* ================================================================ */
+/* CARDS — kept from what you liked                                 */
+/* ================================================================ */
+.seasons-section{padding:4rem 1.5rem 5rem;position:relative;z-index:2;background:linear-gradient(180deg,var(--bg) 0%,#0c0b10 15%,#0c0b10 85%,var(--bg) 100%);}
+.sh{text-align:center;margin-bottom:3rem;}
+.sh-label{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:0.5rem;}
+.sh-label::before,.sh-label::after{content:'';width:50px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3));}
+.sh-label::after{background:linear-gradient(90deg,rgba(201,168,76,0.3),transparent);}
+.sh-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.4rem,3vw,2rem);color:rgba(255,255,255,0.88);font-weight:400;letter-spacing:0.1em;}
+
+.sg{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:1.5rem;}
+.sc{position:relative;border-radius:4px;overflow:hidden;min-height:300px;transition:transform 0.5s,box-shadow 0.5s;opacity:0;animation:cardUp 0.8s ease forwards;}
+.sc:nth-child(1){animation-delay:.1s;}.sc:nth-child(2){animation-delay:.2s;}.sc:nth-child(3){animation-delay:.3s;}.sc:nth-child(4){animation-delay:.4s;}.sc:nth-child(5){animation-delay:.5s;}.sc:nth-child(6){animation-delay:.6s;}
+.sc.live:hover,.sc.now:hover{transform:translateY(-8px);box-shadow:0 30px 80px rgba(0,0,0,0.6);cursor:pointer;}
+.sc-bg{position:absolute;inset:0;opacity:0.1;transition:opacity 0.5s;}
+.sc.live:hover .sc-bg,.sc.now:hover .sc-bg{opacity:0.18;}
+.sc-bd{position:absolute;inset:0;border-radius:4px;border:1px solid rgba(201,168,76,0.08);transition:all 0.5s;pointer-events:none;z-index:3;}
+.sc.now .sc-bd{border-color:var(--gold);box-shadow:inset 0 0 40px rgba(201,168,76,0.06),0 0 20px rgba(201,168,76,0.05);}
+.sc.live:hover .sc-bd{border-color:rgba(201,168,76,0.4);box-shadow:inset 0 0 30px rgba(201,168,76,0.04);}
+.sc-c{position:relative;z-index:2;padding:2rem 1.8rem;display:flex;flex-direction:column;justify-content:flex-end;min-height:300px;}
+.sc-badge{position:absolute;top:1rem;right:1rem;font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:2px;z-index:4;}
+.badge-now{background:var(--gold);color:var(--bg);font-weight:700;}
+.badge-live{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.35);border:1px solid rgba(255,255,255,0.1);}
+.badge-soon{background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.05);}
+.sc-icon{font-size:2.5rem;margin-bottom:0.6rem;opacity:0.85;}
+.sc-name{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;letter-spacing:0.08em;margin-bottom:0.2rem;}
+.sc-dates{font-family:'Crimson Text',serif;font-size:0.9rem;font-style:italic;opacity:0.5;margin-bottom:0.7rem;}
+.sc-desc{font-family:'Crimson Text',serif;font-size:0.95rem;line-height:1.65;opacity:0.6;margin-bottom:1.2rem;}
+.sc-btn{display:inline-flex;align-items:center;gap:0.6rem;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;padding:0.6rem 1.3rem;border-radius:3px;transition:all 0.3s;width:fit-content;}
+.btn-live{border:1px solid var(--gold);color:var(--gold);background:transparent;}
+.btn-live:hover{background:var(--gold);color:var(--bg);}
+.btn-soon{border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.18);pointer-events:none;}
+.btn-arrow{font-size:0.75rem;transition:transform 0.3s;}
+.btn-live:hover .btn-arrow{transform:translateX(4px);}
+.sc.soon .sc-c{opacity:0.35;}.sc.soon .sc-bg{opacity:0.04;}
+.s-advent .sc-bg{background:linear-gradient(135deg,#2d1b4e,#4a2873,#1a0a2e);}.s-advent .sc-name{color:#c9a0e8;}.s-advent .sc-icon{color:#9b7dc9;}
+.s-christmas .sc-bg{background:linear-gradient(135deg,#3d1a1a,#5c2020,#2a0f0f);}.s-christmas .sc-name{color:#f5d5a0;}.s-christmas .sc-icon{color:#e8b84c;}
+.s-ordinary .sc-bg{background:linear-gradient(135deg,#0a2e1a,#1a4a2d,#0a1f12);}.s-ordinary .sc-name{color:#8cc9a0;}.s-ordinary .sc-icon{color:#5a9e70;}
+.s-lent .sc-bg{background:linear-gradient(135deg,#2e0a1a,#4a1525,#1f0a15);}.s-lent .sc-name{color:#d4a0a0;}.s-lent .sc-icon{color:#c97070;}
+.s-lent.now .sc-bd{border-color:#c97070;box-shadow:inset 0 0 40px rgba(201,112,112,0.08);}
+.s-easter .sc-bg{background:linear-gradient(135deg,#0f1a3d,#1a2a5c,#0a1230);}.s-easter .sc-name{color:#a0c0e8;}.s-easter .sc-icon{color:#6090c9;}
+.s-ordinary2 .sc-bg{background:linear-gradient(135deg,#0f2e1a,#1a4a30,#0a1f10);}.s-ordinary2 .sc-name{color:#90c9a8;}.s-ordinary2 .sc-icon{color:#5a9e75;}
+
+/* Footer */
+footer{text-align:center;padding:3.5rem 1.5rem;border-top:1px solid rgba(201,168,76,0.06);position:relative;z-index:2;}
+.f-orn{color:var(--gold);font-size:0.8rem;letter-spacing:0.8rem;opacity:0.2;margin-bottom:1.5rem;}
+.f-q{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:rgba(255,255,255,0.35);max-width:550px;margin:0 auto 0.8rem;line-height:1.6;}
+.f-a{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;}
+.f-c{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.15em;color:rgba(255,255,255,0.1);margin-top:2rem;text-transform:uppercase;}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bob{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(3px)}}
+@keyframes lightBreath{0%{opacity:0.5}100%{opacity:0.8}}
+@keyframes motesDrift{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-10px) translateX(5px)}100%{transform:translateY(-20px) translateX(0)}}
+
+@media(max-width:768px){
+  .sg{grid-template-columns:1fr;max-width:420px;}
+  .pillar-col.l1,.pillar-col.r1{width:50px;}
+  .pillar-col.l2,.pillar-col.r2,.pillar-col.l3,.pillar-col.r3{display:none;}
+  .wall-windows{display:none;}
+  .emblems-row{gap:1rem;}
+  .emblem-wrap img,.emblem-wrap .ihs-svg{height:50px!important;width:auto!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================ -->
+<!-- THE NAVE                                                        -->
+<!-- ================================================================ -->
+<section class="nave" id="top">
+
+  <!-- Colored light beams from stained glass -->
+  <div class="glass-light">
+    <div class="glass-light-beam beam-gold"></div>
+    <div class="glass-light-beam beam-purple"></div>
+    <div class="glass-light-beam beam-blue"></div>
+    <div class="glass-light-beam beam-red"></div>
+    <div class="glass-light-beam beam-green"></div>
+    <div class="glass-light-beam beam-rose"></div>
+    <div class="glass-light-beam beam-teal"></div>
+  </div>
+  <div class="motes"></div>
+
+  <!-- Ribbed vault lines converging to center top -->
+  <div class="vault">
+    <svg width="100%" height="50%" viewBox="0 0 1400 400" preserveAspectRatio="none" style="position:absolute;top:0;left:0;">
+      <!-- Vault ribs converging to vanishing point at center top -->
+      <line x1="700" y1="0" x2="0" y2="400" stroke="rgba(201,168,76,0.04)" stroke-width="1"/>
+      <line x1="700" y1="0" x2="100" y2="400" stroke="rgba(201,168,76,0.035)" stroke-width="0.8"/>
+      <line x1="700" y1="0" x2="200" y2="400" stroke="rgba(201,168,76,0.03)" stroke-width="0.7"/>
+      <line x1="700" y1="0" x2="350" y2="400" stroke="rgba(201,168,76,0.025)" stroke-width="0.6"/>
+      <line x1="700" y1="0" x2="500" y2="400" stroke="rgba(201,168,76,0.02)" stroke-width="0.5"/>
+      <line x1="700" y1="0" x2="1400" y2="400" stroke="rgba(201,168,76,0.04)" stroke-width="1"/>
+      <line x1="700" y1="0" x2="1300" y2="400" stroke="rgba(201,168,76,0.035)" stroke-width="0.8"/>
+      <line x1="700" y1="0" x2="1200" y2="400" stroke="rgba(201,168,76,0.03)" stroke-width="0.7"/>
+      <line x1="700" y1="0" x2="1050" y2="400" stroke="rgba(201,168,76,0.025)" stroke-width="0.6"/>
+      <line x1="700" y1="0" x2="900" y2="400" stroke="rgba(201,168,76,0.02)" stroke-width="0.5"/>
+      <!-- Cross ribs -->
+      <path d="M200,400 Q700,50 1200,400" fill="none" stroke="rgba(201,168,76,0.025)" stroke-width="0.7"/>
+      <path d="M300,400 Q700,100 1100,400" fill="none" stroke="rgba(201,168,76,0.02)" stroke-width="0.5"/>
+    </svg>
+  </div>
+
+  <!-- Gothic arch at top -->
+  <svg class="gothic-arch" viewBox="0 0 1400 140" preserveAspectRatio="none" style="position:absolute;top:0;left:0;right:0;z-index:4;pointer-events:none;">
+    <path d="M0,140 L0,50 Q0,5 80,5 L580,5 Q700,-30 700,-30 Q700,-30 820,5 L1320,5 Q1400,5 1400,50 L1400,140 L1200,140 L1200,50 Q1200,20 1150,15 L780,15 Q700,-10 700,-10 Q700,-10 620,15 L250,15 Q200,20 200,50 L200,140 Z"
+      fill="rgba(10,8,6,0.92)" stroke="none"/>
+    <!-- Inner arch line -->
+    <path d="M200,140 L200,50 Q200,20 250,15 L620,15 Q700,-10 700,-10 Q700,-10 780,15 L1150,15 Q1200,20 1200,50 L1200,140"
+      fill="none" stroke="rgba(201,168,76,0.06)" stroke-width="0.8"/>
+    <!-- Outer arch line -->
+    <path d="M0,140 L0,50 Q0,5 80,5 L580,5 Q700,-30 700,-30 Q700,-30 820,5 L1320,5 Q1400,5 1400,50 L1400,140"
+      fill="none" stroke="rgba(201,168,76,0.04)" stroke-width="0.5"/>
+    <!-- Keystone -->
+    <circle cx="700" cy="2" r="4" fill="none" stroke="rgba(201,168,76,0.1)" stroke-width="0.5"/>
+    <line x1="700" y1="-2" x2="700" y2="6" stroke="rgba(201,168,76,0.08)" stroke-width="0.5"/>
+    <line x1="696" y1="0" x2="704" y2="0" stroke="rgba(201,168,76,0.08)" stroke-width="0.5"/>
+  </svg>
+
+  <!-- Stone pillars -->
+  <div class="pillars">
+    <div class="pillar-col l1"><div class="rib-detail"></div><div class="rib-detail2"></div><div class="capital top"></div><div class="capital mid"></div></div>
+    <div class="pillar-col l2"></div>
+    <div class="pillar-col l3"></div>
+    <div class="pillar-col r1"><div class="rib-detail"></div><div class="rib-detail2"></div><div class="capital top"></div><div class="capital mid"></div></div>
+    <div class="pillar-col r2"></div>
+    <div class="pillar-col r3"></div>
+  </div>
+
+  <!-- Stained glass windows on walls -->
+  <div class="wall-windows left-wall">
+    <div class="wall-window"></div>
+    <div class="wall-window"></div>
+    <div class="wall-window"></div>
+  </div>
+  <div class="wall-windows right-wall">
+    <div class="wall-window"></div>
+    <div class="wall-window"></div>
+    <div class="wall-window"></div>
+  </div>
+
+  <div class="floor"></div>
+
+  <!-- CONTENT -->
+  <div class="nave-content">
+
+    <div class="emblems-row">
+      <div class="emblem-wrap">
+        <a href="https://www.vatican.va" target="_blank" rel="noopener"><img src="holysee.png" alt="The Holy See"></a>
+        <div class="emblem-label">The Holy See</div>
+      </div>
+      <div class="emblem-divider"></div>
+      <div class="emblem-wrap">
+        <a href="https://www.jesuits.org" target="_blank" rel="noopener">
+          <svg class="ihs-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="ig" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e8c97a"/><stop offset="50%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#a08030"/></linearGradient></defs>
+            <g stroke="url(#ig)" fill="none" opacity="0.8">
+              <line x1="100" y1="28" x2="100" y2="6" stroke-width="2.5"/>
+              <line x1="100" y1="172" x2="100" y2="194" stroke-width="2.5"/>
+              <line x1="28" y1="100" x2="6" y2="100" stroke-width="2.5"/>
+              <line x1="172" y1="100" x2="194" y2="100" stroke-width="2.5"/>
+              <line x1="49" y1="49" x2="33" y2="33" stroke-width="2"/>
+              <line x1="151" y1="49" x2="167" y2="33" stroke-width="2"/>
+              <line x1="49" y1="151" x2="33" y2="167" stroke-width="2"/>
+              <line x1="151" y1="151" x2="167" y2="167" stroke-width="2"/>
+              <path d="M86,30 Q80,16 84,5" stroke-width="1.3"/>
+              <path d="M114,30 Q120,16 116,5" stroke-width="1.3"/>
+              <path d="M30,86 Q16,80 5,84" stroke-width="1.3"/>
+              <path d="M170,86 Q184,80 195,84" stroke-width="1.3"/>
+              <path d="M30,114 Q16,120 5,116" stroke-width="1.3"/>
+              <path d="M170,114 Q184,120 195,116" stroke-width="1.3"/>
+              <path d="M86,170 Q80,184 84,195" stroke-width="1.3"/>
+              <path d="M114,170 Q120,184 116,195" stroke-width="1.3"/>
+              <line x1="72" y1="33" x2="60" y2="13" stroke-width="1.5"/>
+              <line x1="128" y1="33" x2="140" y2="13" stroke-width="1.5"/>
+              <line x1="33" y1="72" x2="13" y2="60" stroke-width="1.5"/>
+              <line x1="167" y1="72" x2="187" y2="60" stroke-width="1.5"/>
+              <line x1="33" y1="128" x2="13" y2="140" stroke-width="1.5"/>
+              <line x1="167" y1="128" x2="187" y2="140" stroke-width="1.5"/>
+              <line x1="72" y1="167" x2="60" y2="187" stroke-width="1.5"/>
+              <line x1="128" y1="167" x2="140" y2="187" stroke-width="1.5"/>
+            </g>
+            <circle cx="100" cy="100" r="65" fill="none" stroke="url(#ig)" stroke-width="3"/>
+            <text x="100" y="115" text-anchor="middle" font-family="'Cinzel',serif" font-size="48" font-weight="700" fill="url(#ig)">IHS</text>
+            <line x1="100" y1="56" x2="100" y2="76" stroke="url(#ig)" stroke-width="3"/>
+            <line x1="90" y1="64" x2="110" y2="64" stroke="url(#ig)" stroke-width="3"/>
+            <path d="M85,126 L88,120 L91,126 Z" fill="url(#ig)"/>
+            <path d="M97,126 L100,120 L103,126 Z" fill="url(#ig)"/>
+            <path d="M109,126 L112,120 L115,126 Z" fill="url(#ig)"/>
+          </svg>
+        </a>
+        <div class="emblem-label">Society of Jesus</div>
+      </div>
+    </div>
+
+    <div class="fleuron-line"><span>&#10022;</span></div>
+    <h1>The Liturgical Year</h1>
+    <p class="subtitle">A journey through the sacred seasons of the Catholic Church</p>
+
+    <div class="yah">
+      <div class="yah-label">You Are Here</div>
+      <div class="yah-name" id="cur-name">Lent</div>
+      <div class="season-progress"><div class="season-progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+
+    <div class="enter-buttons">
+      <a href="/lent/" class="enter-btn primary" id="btn-primary">Enter Lenten Journey <span class="arrow">&rarr;</span></a>
+      <a href="/easter/" class="enter-btn secondary" id="btn-secondary">Easter Journey <span class="arrow">&rarr;</span></a>
+    </div>
+
+    <div class="nave-quote">
+      <blockquote>&ldquo;For everything there is a season, and a time for every matter under heaven.&rdquo;</blockquote>
+      <cite>Ecclesiastes 3:1</cite>
+    </div>
+
+  </div>
+
+  <div class="scroll-cue"><span>Explore All Seasons</span><i></i></div>
+</section>
+
+<!-- CARDS -->
+<section class="seasons-section" id="seasons">
+  <div class="sh">
+    <div class="sh-label">The Seasons of Grace</div>
+    <h2 class="sh-title">Enter a Season</h2>
+  </div>
+  <div class="sg">
+    <div class="sc soon s-advent" id="card-advent"><div class="sc-bg"></div><div class="sc-bd"></div><div class="sc-badge badge-soon">Coming Soon</div><div class="sc-c"><div class="sc-icon">&#x1F56F;</div><div class="sc-name">Advent</div><div class="sc-dates">Nov 29 &mdash; Dec 24, 2026</div><div class="sc-desc">A season of joyful expectation and preparation for the coming of Christ &mdash; in history, in mystery, and in glory.</div><span class="sc-btn btn-soon">Coming Advent 2026 <span class="btn-arrow">&rarr;</span></span></div></div>
+    <div class="sc soon s-christmas" id="card-christmas"><div class="sc-bg"></div><div class="sc-bd"></div><div class="sc-badge badge-soon">Coming Soon</div><div class="sc-c"><div class="sc-icon">&#11088;</div><div class="sc-name">Christmas</div><div class="sc-dates">Dec 25, 2026 &mdash; Jan 10, 2027</div><div class="sc-desc">The Word became flesh and dwelt among us. We celebrate the Nativity, the Holy Family, and the Epiphany of the Lord.</div><span class="sc-btn btn-soon">Coming Christmas 2026 <span class="btn-arrow">&rarr;</span></span></div></div>
+    <div class="sc soon s-ordinary" id="card-ordinary"><div class="sc-bg"></div><div class="sc-bd"></div><div class="sc-badge badge-soon">Coming Soon</div><div class="sc-c"><div class="sc-icon">&#127807;</div><div class="sc-name">Ordinary Time</div><div class="sc-dates">Jan 11 &mdash; Feb 17, 2026</div><div class="sc-desc">In the &ldquo;ordered&rdquo; time of the year, we walk with Christ through His public ministry, miracles, and teaching.</div><span class="sc-btn btn-soon">Coming 2027 <span class="btn-arrow">&rarr;</span></span></div></div>
+    <div class="sc live s-lent" id="card-lent"><div class="sc-bg"></div><div class="sc-bd"></div><div class="sc-badge badge-live">Available</div><div class="sc-c"><div class="sc-icon">&#10013;</div><div class="sc-name">Lent</div><div class="sc-dates">Feb 18 &mdash; Apr 4, 2026</div><div class="sc-desc">Forty days of repentance, prayer, and fasting as we journey with Christ toward the Cross and the promise of Easter.</div><a href="/lent/" class="sc-btn btn-live">Enter Lenten Journey <span class="btn-arrow">&rarr;</span></a></div></div>
+    <div class="sc live s-easter" id="card-easter"><div class="sc-bg"></div><div class="sc-bd"></div><div class="sc-badge badge-live">Available</div><div class="sc-c"><div class="sc-icon">&#9769;</div><div class="sc-name">Easter</div><div class="sc-dates">Apr 5 &mdash; May 24, 2026</div><div class="sc-desc">Fifty days of Paschal joy &mdash; from the empty tomb to the fire of Pentecost. Alleluia! Christ is risen!</div><a href="/easter/" class="sc-btn btn-live">Enter Easter Journey <span class="btn-arrow">&rarr;</span></a></div></div>
+    <div class="sc live s-ordinary2" id="card-ordinary2"><div class="sc-bg"></div><div class="sc-bd"></div><div class="sc-badge badge-live">Available</div><div class="sc-c"><div class="sc-icon">&#127811;</div><div class="sc-name">Ordinary Time</div><div class="sc-dates">May 25 &mdash; Nov 28, 2026</div><div class="sc-desc">The longest season &mdash; a sustained pilgrimage of discipleship, growing deeper in the mysteries of Christ&rsquo;s life and teaching.</div><a href="/ordinary-time/" class="sc-btn btn-live">Enter Ordinary Time <span class="btn-arrow">&rarr;</span></a></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-orn">&#10022; &nbsp; &#10022; &nbsp; &#10022;</div>
+  <div class="f-q">&ldquo;For everything there is a season, and a time for every matter under heaven.&rdquo;</div>
+  <div class="f-a">&mdash; Ecclesiastes 3:1</div>
+  <div class="f-c">&copy; 2026 sandwichtodd.com &nbsp;&middot;&nbsp; Ad Majorem Dei Gloriam</div>
+</footer>
+
+<script>
+function detectSeason(){
+  var t=new Date();t.setHours(0,0,0,0);
+  var s=[
+    {id:'advent',n:'Advent',a:new Date(2025,10,30),b:new Date(2025,11,24),days:28},
+    {id:'christmas',n:'Christmastide',a:new Date(2025,11,25),b:new Date(2026,0,11),days:18},
+    {id:'ordinary',n:'Ordinary Time',a:new Date(2026,0,12),b:new Date(2026,1,17),days:37},
+    {id:'lent',n:'Lent',a:new Date(2026,1,18),b:new Date(2026,3,4),days:46},
+    {id:'easter',n:'Eastertide',a:new Date(2026,3,5),b:new Date(2026,4,24),days:50},
+    {id:'ordinary2',n:'Ordinary Time',a:new Date(2026,4,25),b:new Date(2026,10,28),days:188},
+    {id:'advent',n:'Advent',a:new Date(2026,10,29),b:new Date(2026,11,24),days:26},
+    {id:'christmas',n:'Christmastide',a:new Date(2026,11,25),b:new Date(2027,0,10),days:17}
+  ];
+  for(var i=0;i<s.length;i++){
+    var a=new Date(s[i].a);a.setHours(0,0,0,0);
+    var b=new Date(s[i].b);b.setHours(23,59,59,999);
+    if(t>=a&&t<=b){
+      var elapsed=Math.floor((t-a)/(1000*60*60*24))+1;
+      s[i].elapsed=elapsed;
+      s[i].pct=Math.round((elapsed/s[i].days)*100);
+      return s[i];
+    }
+  }
+  return{id:'ordinary2',n:'Ordinary Time',elapsed:1,days:188,pct:1};
+}
+function init(){
+  var c=detectSeason();
+  document.getElementById('cur-name').textContent=c.n;
+  document.getElementById('prog-fill').style.width=c.pct+'%';
+
+  // Highlight current card
+  var card=document.getElementById('card-'+c.id);
+  if(card){card.classList.remove('soon','live');card.classList.add('now');var b=card.querySelector('.sc-badge');if(b){b.className='sc-badge badge-now';b.textContent='Current Season';}}
+
+  // Update hero buttons based on season
+  var bp=document.getElementById('btn-primary');
+  var bs=document.getElementById('btn-secondary');
+  if(c.id==='lent'){
+    bp.href='/lent/';bp.innerHTML='Enter Lenten Journey <span class="arrow">&rarr;</span>';
+    bs.href='/easter/';bs.innerHTML='Easter Journey <span class="arrow">&rarr;</span>';
+  }else if(c.id==='easter'){
+    bp.href='/easter/';bp.innerHTML='Enter Easter Journey <span class="arrow">&rarr;</span>';
+    bs.href='/lent/';bs.innerHTML='Lenten Journey <span class="arrow">&rarr;</span>';
+  }else if(c.id==='ordinary2'){
+    bp.href='/ordinary-time/';bp.innerHTML='Enter Ordinary Time <span class="arrow">&rarr;</span>';
+    bs.href='/easter/';bs.innerHTML='Easter Journey <span class="arrow">&rarr;</span>';
+  }
+}
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

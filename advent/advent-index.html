@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advent Journey 2026 — Preparing the Way of the Lord</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #2d1b4e;
+    --forest-dark: #1a0a2e;
+    --forest-light: #4a2d6e;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e8c0;
+    --cream: #faf8f2;
+    --parchment: #f2eedf;
+    --ash: #8a7a8a;
+    --ash-light: #b8b0b8;
+    --text-dark: #1f1a2a;
+    --text-mid: #40404a;
+    --text-light: #605a70;
+    --shadow: rgba(30,20,40,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Text', Georgia, serif;
+    background-color: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  /* === HERO === */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: var(--forest-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .hero-painting {
+    position: absolute;
+    inset: 0;
+    background-image: url('annunciation.jpg');
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.30;
+    filter: sepia(10%) saturate(85%);
+  }
+
+  .hero-painting-credit {
+    position: absolute !important;
+    bottom: 5rem;
+    right: 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: rgba(201,168,76,0.5);
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.6;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(42,90,58,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 60%, rgba(201,168,76,0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero > *:not(.hero-painting):not(.hero-painting-credit) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-cross {
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeDown 1s ease 0.3s forwards;
+    filter: drop-shadow(0 0 30px rgba(201,168,76,0.5));
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+    color: var(--gold-light);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    opacity: 0;
+    animation: fadeDown 1s ease 0.5s forwards;
+    text-shadow: 0 2px 30px rgba(201,168,76,0.3);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    color: var(--ash-light);
+    margin-top: 0.8rem;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeDown 1s ease 0.7s forwards;
+  }
+
+  .hero-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fadeDown 1s ease 0.9s forwards;
+  }
+
+  .hero-progress-wrap {
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeDown 1s ease 1.1s forwards;
+    width: min(400px, 90%);
+  }
+
+  .hero-progress-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--ash);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .progress-bar-bg {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--forest-light), var(--gold));
+    border-radius: 2px;
+    transition: width 1.5s ease 1.5s;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeDown 1s ease 1.5s forwards;
+  }
+
+  .hero-scroll span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--ash);
+    text-transform: uppercase;
+  }
+
+  .scroll-chevron {
+    width: 20px;
+    height: 20px;
+    border-right: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    transform: rotate(45deg);
+    animation: bounce 1.8s infinite;
+    opacity: 0.6;
+  }
+
+  /* === NAV === */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,34,24,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0.8rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ash-light);
+    text-decoration: none;
+    padding: 0.4rem 0.7rem;
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  /* === MAIN LAYOUT === */
+  .main-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* === DATE NAVIGATOR === */
+  .date-nav-section {
+    background: var(--parchment);
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+    padding: 1.5rem;
+    position: sticky;
+    top: 53px;
+    z-index: 90;
+  }
+
+  .date-nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .date-nav-btn {
+    background: none;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .date-nav-btn:hover {
+    background: var(--gold);
+    color: var(--forest-dark);
+  }
+
+  .date-nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .date-nav-btn:disabled:hover { background: none; color: var(--gold); }
+
+  .date-nav-center { text-align: center; }
+
+  .date-nav-day {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--forest);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .date-nav-full {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  .date-nav-lent {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    color: var(--ash);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.1rem;
+  }
+
+  #day-select {
+    margin-top: 0.6rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--forest);
+    background: white;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 2px;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  #day-select:focus { border-color: var(--gold); }
+
+  /* === SECTIONS === */
+  section {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    color: var(--forest);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  /* === READINGS === */
+  .reading-block {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 2px 15px var(--shadow);
+  }
+
+  .reading-type {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--forest-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .reading-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+
+  .reading-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+  }
+
+  .psalm-response {
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    padding: 0.6rem 1rem;
+    background: var(--gold-pale);
+    border-radius: 4px;
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--forest-dark);
+  }
+
+  .psalm-stanza {
+    padding-left: 1rem;
+    border-left: 2px solid var(--gold);
+    margin: 0.5rem 0;
+  }
+
+  .gospel-block {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--forest-dark);
+    color: var(--gold-pale);
+    border-radius: 4px;
+    box-shadow: 0 2px 15px var(--shadow);
+  }
+
+  .gospel-block .reading-type { color: var(--gold); }
+  .gospel-block .reading-ref { color: var(--gold-light); }
+  .gospel-block .reading-text { color: rgba(245,232,192,0.92); }
+
+  /* === IGNATIAN CONTEMPLATION === */
+  .ignatian-block {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 40%, #1a0a2e 100%);
+    border-radius: 6px;
+    border-top: 3px solid #7b5ea7;
+    color: #e8d5f5;
+  }
+
+  .ignatian-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ignatian-ihs {
+    width: 40px; height: 40px;
+    background: #4a2d6e;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem; font-weight: 700;
+    color: #e8d5f5;
+    border: 2px solid #9b7dc9;
+    flex-shrink: 0;
+  }
+
+  .ignatian-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9b7dc9;
+  }
+
+  .ignatian-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: #e8d5f5;
+  }
+
+  .ignatian-step { margin-bottom: 1.2rem; }
+
+  .ignatian-step-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9b7dc9;
+    margin-bottom: 0.3rem;
+  }
+
+  .ignatian-step-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(232,213,245,0.88);
+    font-style: italic;
+  }
+
+  .ignatian-questions {
+    list-style: none; padding: 0;
+  }
+
+  .ignatian-questions li {
+    padding: 0.4rem 0 0.4rem 1.2rem;
+    position: relative;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem; line-height: 1.75;
+    color: rgba(232,213,245,0.88);
+  }
+
+  .ignatian-questions li::before {
+    content: '\2726';
+    position: absolute; left: 0;
+    color: #9b7dc9; font-size: 0.7rem; top: 0.6rem;
+  }
+
+  .ignatian-colloquy {
+    padding: 1rem 1.2rem;
+    background: rgba(123,94,167,0.12);
+    border-left: 3px solid #9b7dc9;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .ignatian-colloquy-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9b7dc9;
+    margin-bottom: 0.3rem;
+  }
+
+  .ignatian-colloquy-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem; line-height: 1.75;
+    color: #e8d5f5; font-style: italic;
+  }
+
+  /* === SAINT CARD === */
+  .saint-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 15px var(--shadow);
+    align-items: start;
+  }
+
+  .saint-icon {
+    width: 70px; height: 70px;
+    background: var(--forest-dark);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    border: 3px solid var(--gold);
+    flex-shrink: 0;
+  }
+
+  .saint-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 0.15rem;
+  }
+
+  .saint-dates {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .saint-bio {
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+
+  .saint-feast {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    background: var(--gold-pale);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--forest);
+    text-transform: uppercase;
+  }
+
+  /* === MEDITATION === */
+  .meditation-card {
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--parchment), white);
+    border-radius: 6px;
+    border-top: 3px solid var(--gold);
+    box-shadow: 0 2px 15px var(--shadow);
+  }
+
+  .meditation-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-style: italic;
+    color: var(--text-dark); line-height: 1.55;
+    margin-bottom: 0.8rem;
+  }
+
+  .meditation-author {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--forest);
+  }
+
+  .meditation-context {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  .meditation-prompt {
+    margin-top: 1.5rem;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    color: var(--text-mid);
+    font-style: italic;
+    line-height: 1.8;
+  }
+
+  /* === PRAYER === */
+  .prayer-card {
+    padding: 1.5rem;
+    background: var(--parchment);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .prayer-title-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .prayer-text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    line-height: 1.8;
+    font-style: italic;
+  }
+
+  /* === EMAIL SIGNUP === */
+  #subscribe {
+    background: var(--forest-dark);
+    color: var(--cream);
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+
+  #subscribe .section-label {
+    color: var(--gold);
+    justify-content: center;
+  }
+
+  #subscribe .section-label::after { display: none; }
+
+  .subscribe-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--gold-light);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .subscribe-desc {
+    color: var(--ash-light);
+    font-style: italic;
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    font-size: 1.05rem;
+  }
+
+  .subscribe-form {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 440px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .subscribe-input {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.7rem 1rem;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .subscribe-input::placeholder { color: var(--ash); }
+  .subscribe-input:focus { border-color: var(--gold); }
+
+  .subscribe-btn {
+    padding: 0.7rem 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--forest-dark);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .subscribe-btn:hover { background: var(--gold-light); }
+  .subscribe-btn:active { transform: scale(0.98); }
+
+  .subscribe-success {
+    display: none;
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .subscribe-note {
+    font-size: 0.85rem;
+    color: var(--ash);
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--forest-dark);
+    color: var(--ash);
+    text-align: center;
+    padding: 2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(6px); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 600px) {
+    .saint-card { grid-template-columns: 1fr; }
+    .saint-icon { margin: 0 auto; }
+    .nav-links { display: none; }
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+    margin: 1.5rem 0;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-painting" id="hero-painting"></div>
+
+  <h1>Advent Journey</h1>
+  <p class="hero-subtitle">Preparing the Way of the Lord</p>
+  <p class="hero-date" id="hero-date">Monday after Pentecost · May 25, 2026</p>
+
+  <div class="hero-progress-wrap">
+    <div class="hero-progress-label">
+      <span>Advent I</span>
+      <span id="progress-label">Day 1 of 188</span>
+      <span>Christmas</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-chevron"></div>
+  </div>
+
+  <div class="hero-painting-credit">
+    Leonardo da Vinci<br>
+    "Annunciation," c. 1472–1475<br>
+    Uffizi Gallery, Florence · Public Domain
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a class="nav-brand" href="#top">☧ Advent 2026</a>
+  <div class="nav-links">
+    <a href="#readings">Readings</a>
+    <a href="#saint">Saint</a>
+    <a href="#meditation">Meditation</a>
+    <a href="#prayer">Prayer</a>
+    <a href="#subscribe">Subscribe</a>
+  </div>
+  <a href="https://www.vatican.va" target="_blank" rel="noopener" class="holy-see-emblem" title="Emblem of the Holy See">
+    <img src="holysee.png" alt="Emblem of the Holy See" style="height:48px;width:auto;display:block;">
+  </a>
+</nav>
+
+<!-- DATE NAVIGATOR -->
+<div class="date-nav-section">
+  <div class="date-nav-inner">
+    <button class="date-nav-btn" id="prev-btn" onclick="changeDay(-1)">← Previous</button>
+    <div class="date-nav-center">
+      <div class="date-nav-day" id="nav-day-name">Ordinary Time</div>
+      <div class="date-nav-full" id="nav-date-full">May 25, 2026</div>
+      <div class="date-nav-lent" id="nav-lent-label">Day 1 of Ordinary Time</div>
+      <select id="day-select" onchange="jumpToDay(this.value)" aria-label="Jump to day">
+        <option value="">— Jump to a day —</option>
+      </select>
+    </div>
+    <button class="date-nav-btn" id="next-btn" onclick="changeDay(1)">Next →</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+  <!-- READINGS -->
+  <section id="readings">
+    <div class="section-label reveal">Sacred Liturgy</div>
+    <h2 class="section-title reveal" id="readings-title">Mass Readings</h2>
+    <div id="readings-container" class="reveal"></div>
+  </section>
+
+  <!-- SAINT -->
+  <section id="saint">
+    <div class="section-label reveal">Communion of Saints</div>
+    <h2 class="section-title reveal">Saint of the Day</h2>
+    <div id="saint-container" class="reveal"></div>
+  </section>
+
+  <!-- MEDITATION -->
+  <section id="meditation">
+    <div class="section-label reveal">Lectio Divina</div>
+    <h2 class="section-title reveal">Meditation for Today</h2>
+    <div id="meditation-container" class="reveal"></div>
+  </section>
+
+  <!-- PRAYER -->
+  <section id="prayer">
+    <div class="section-label reveal">Daily Prayer</div>
+    <h2 class="section-title reveal">Prayer of the Day</h2>
+    <div id="prayer-container" class="reveal"></div>
+  </section>
+
+</div><!-- end main-content -->
+
+<!-- SUBSCRIBE -->
+<section id="subscribe">
+  <div class="section-label">Daily Devotional</div>
+  <h2 class="subscribe-title">Walk with Christ Daily</h2>
+  <p class="subscribe-desc">
+    Each morning at 6:00 AM during Ordinary Time, receive the day's readings, saint, meditation, and prayer — a quiet moment of grace before your day begins.
+  </p>
+  <div class="subscribe-form" id="custom-subscribe-form">
+    <input class="subscribe-input" type="email" placeholder="Your email address" required id="email-input">
+    <button class="subscribe-btn" type="button" onclick="handleSubscribe()">Subscribe</button>
+  </div>
+  <div class="subscribe-success" id="sub-success"></div>
+  <p class="subscribe-note">Daily emails run from May 25 through November 28. No spam, ever.</p>
+
+  <!-- Hidden EmailOctopus form -->
+  <div id="eo-form-container" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
+    <script async src="https://eomail5.com/form/66376446-0eb6-11f1-a067-01e0dc411189.js" data-form="66376446-0eb6-11f1-a067-01e0dc411189"></script>
+  </div>
+
+  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(201,168,76,0.2);text-align:center;">
+    <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--ash);text-transform:uppercase;margin-bottom:0.8rem;">Email Preview Tool</div>
+    <p style="font-family:'Crimson Text',serif;font-size:0.95rem;color:var(--ash-light);font-style:italic;margin-bottom:1rem;">Preview the daily email as subscribers will receive it.</p>
+    <button class="subscribe-btn" onclick="previewEmail()" style="background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid var(--gold);">
+      Preview Today's Email
+    </button>
+  </div>
+</section>
+
+<!-- EMAIL PREVIEW MODAL -->
+<div class="modal-overlay" id="email-preview-modal" onclick="if(event.target===this)this.classList.remove('active')" style="position:fixed;inset:0;background:rgba(5,20,10,0.85);z-index:300;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity 0.3s;">
+  <div style="background:var(--cream);max-width:680px;width:100%;border-radius:6px;padding:2.5rem;position:relative;max-height:90vh;overflow-y:auto;transform:translateY(20px);transition:transform 0.3s;">
+    <button onclick="document.getElementById('email-preview-modal').classList.remove('active')" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;color:var(--ash);cursor:pointer;">✕</button>
+    <div style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem;">Email Preview</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--forest);margin-bottom:1rem;">Today's Subscriber Email</div>
+    <div style="display:flex;gap:0.6rem;margin-bottom:1rem;flex-wrap:wrap;">
+      <button onclick="copyEmailHTML()" style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;padding:0.4rem 0.8rem;background:var(--forest);color:var(--gold-pale);border:none;border-radius:2px;cursor:pointer;text-transform:uppercase;">Copy HTML</button>
+      <button onclick="openEmailInTab()" style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;padding:0.4rem 0.8rem;background:var(--gold);color:var(--forest-dark);border:none;border-radius:2px;cursor:pointer;text-transform:uppercase;">Open in New Tab</button>
+    </div>
+    <iframe id="email-preview-frame" style="width:100%;height:500px;border:1px solid rgba(201,168,76,0.3);border-radius:4px;"></iframe>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom:0.5rem;">☧ &nbsp; ORDINARY TIME 2026 &nbsp; ☧</div>
+  <div>"He was transfigured before them; his face shone like the sun." — Matthew 17:2</div>
+</footer>
+
+<script>
+const ADVENT_START = new Date(2026, 10, 29);
+const ADVENT_END = new Date(2026, 11, 24);
+const TOTAL_DAYS = 26;
+
+const READINGS = {
+  '11-29': {title: 'First Sunday of Advent', lectionary: '2', first: {ref: 'Isaiah 63:16b-17, 19b; 64:2-7', text: 'You, LORD, are our father,\nour redeemer you are named forever.\nWhy do you let us wander, O LORD, from your ways,\nand harden our hearts so that we fear you not?\nReturn for the sake of your servants,\nthe tribes of your heritage.\nOh, that you would rend the heavens and come down,\nwith the mountains quaking before you,\nwhile you wrought awesome deeds we could not hope for,\nsuch as they had not heard of from of old.\nNo ear has ever heard, no eye ever seen, any God but you\ndoing such deeds for those who wait for him.\nWould that you might meet us doing right,\nthat we were mindful of you in our ways!\nBehold, you are angry, and we are sinful;\nall of us have become like unclean people,\nall our good deeds are like polluted rags;\nwe have all withered like leaves,\nand our guilt carries us away like the wind.\nThere is none who calls upon your name,\nwho rouses himself to cling to you;\nfor you have hidden your face from us\nand have delivered us up to our guilt.\nYet, O LORD, you are our father;\n 1/4\nwe are the clay and you the potter:\nwe are all the work of your hands.'}, psalm: {ref: 'Psalm 80:2-3, 15-16, 18-19', response: 'Lord, make us turn to you; let us see your face and we shall be saved.', stanzas: ['O shepherd of Israel, hearken,\nfrom your throne upon the cherubim, shine forth.\nRouse your power,\nand come to save us.', 'Once again, O LORD of hosts,\nlook down from heaven, and see;\ntake care of this vine,\nand protect what your right hand has planted\nthe son of man whom you yourself made strong.', 'May your help be with the man of your right hand,\nwith the son of man whom you yourself made strong.\nThen we will no more withdraw from you;\ngive us new life, and we will call upon your name.']}, second: {ref: '1 Corinthians 1:3-9', text: 'Brothers and sisters:\nGrace to you and peace from God our Father\nand the Lord Jesus Christ.\nI give thanks to my God always on your account\nfor the grace of God bestowed on you in Christ Jesus,\nthat in him you were enriched in every way,\n 2/4\nwith all discourse and all knowledge,\nas the testimony to Christ was confirmed among you,\nso that you are not lacking in any spiritual gift\nas you wait for the revelation of our Lord Jesus Christ.\nHe will keep you firm to the end,\nirreproachable on the day of our Lord Jesus Christ.\nGod is faithful,\nand by him you were called to fellowship with his Son,\nJesus Christ our Lord.'}, gospel: {ref: 'Mark 13:33-37', text: 'Jesus said to his disciples:\n“Be watchful! Be alert!\nYou do not know when the time will come.\nIt is like a man traveling abroad.\nHe leaves home and places his servants in charge,\neach with his own work,\nand orders the gatekeeper to be on the watch.\nWatch, therefore;\nyou do not know when the lord of the house is coming,\nwhether in the evening, or at midnight,\nor at cockcrow, or in the morning.\nMay he not come suddenly and find you sleeping.\nWhat I say to you, I say to all: ‘Watch!’”\n 3/4\n 4/4'}},
+  '11-30': {title: 'Feast of Saint Andrew, Apostle', lectionary: '684', first: {ref: 'Romans 10:9-18', text: 'Brothers and sisters:\nIf you confess with your mouth that Jesus is Lord\nand believe in your heart that God raised him from the dead,\nyou will be saved.\nFor one believes with the heart and so is justified,\nand one confesses with the mouth and so is saved.\nThe Scripture says,\nNo one who believes in him will be put to shame.\nThere is no distinction between Jew and Greek;\nthe same Lord is Lord of all,\nenriching all who call upon him.\nFor everyone who calls on the name of the Lord will be saved.\nBut how can they call on him in whom they have not believed?\nAnd how can they believe in him of whom they have not heard?\nAnd how can they hear without someone to preach?\nAnd how can people preach unless they are sent?\nAs it is written,\nHow beautiful are the feet of those who bring the good news!\nBut not everyone has heeded the good news;\nfor Isaiah says, Lord, who has believed what was heard from us?\nThus faith comes from what is heard,\nand what is heard comes through the word of Christ.\n 1/3\nBut I ask, did they not hear?\nCertainly they did; for\nTheir voice has gone forth to all the earth,\nand their words to the ends of the world.'}, psalm: {ref: 'Psalm 19:8, 9, 10, 11', response: 'The judgments of the Lord are true, and all of them are just.', stanzas: ['or:', 'The law of the LORD is perfect,\nrefreshing the soul;\nThe decree of the LORD is trustworthy,\ngiving wisdom to the simple.', 'or:', 'The precepts of the LORD are right,\nrejoicing the heart;\nThe command of the LORD is clear,\nenlightening the eye.', 'or:', 'The fear of the LORD is pure,\nenduring forever;\nThe ordinances of the LORD are true,\nall of them just.', 'or:', 'They are more precious than gold,\nthan a heap of purest gold;\nSweeter also than syrup\n2/3\nor honey from the comb.', 'or:']}, gospel: {ref: 'Matthew 4:18-22', text: 'As Jesus was walking by the Sea of Galilee, he saw two brothers,\nSimon who is called Peter, and his brother Andrew,\ncasting a net into the sea; they were fishermen.\nHe said to them,\n“Come after me, and I will make you fishers of men.”\nAt once they left their nets and followed him.\nHe walked along from there and saw two other brothers,\nJames, the son of Zebedee, and his brother John.\nThey were in a boat, with their father Zebedee, mending their nets.\nHe called them, and immediately they left their boat and their father\nand followed him.\n 3/3'}},
+  '12-1': {title: 'Tuesday of the First Week of Advent', lectionary: '176', first: {ref: 'Isaiah 11:1-10', text: 'On that day,\nA shoot shall sprout from the stump of Jesse,\nand from his roots a bud shall blossom.\nThe Spirit of the LORD shall rest upon him:\na Spirit of wisdom and of understanding,\nA Spirit of counsel and of strength,\na Spirit of knowledge and of fear of the LORD,\nand his delight shall be the fear of the LORD.\nNot by appearance shall he judge,\nnor by hearsay shall he decide,\nBut he shall judge the poor with justice,\nand decide aright for the land\'s afflicted.\nHe shall strike the ruthless with the rod of his mouth,\nand with the breath of his lips he shall slay the wicked.\nJustice shall be the band around his waist,\nand faithfulness a belt upon his hips.\nThen the wolf shall be a guest of the lamb,\nand the leopard shall lie down with the kid;\nThe calf and the young lion shall browse together,\nwith a little child to guide them.\nThe cow and the bear shall be neighbors,\ntogether their young shall rest;\nthe lion shall eat hay like the ox.\n 1/4\nThe baby shall play by the cobra\'s den,\nand the child lay his hand on the adder\'s lair.\nThere shall be no harm or ruin on all my holy mountain;\nfor the earth shall be filled with knowledge of the LORD,\nas water covers the sea.\nOn that day,\nThe root of Jesse,\nset up as a signal for the nations,\nThe Gentiles shall seek out,\nfor his dwelling shall be glorious.'}, psalm: {ref: 'Psalm 72:1-2, 7-8, 12-13, 17', response: 'Justice shall flourish in his time, and fullness of peace for ever.', stanzas: ['O God, with your judgment endow the king,\nand with your justice, the king\'s son;\nHe shall govern your people with justice\nand your afflicted ones with judgment.', 'Justice shall flower in his days,\nand profound peace, till the moon be no more.\nMay he rule from sea to sea,\nand from the River to the ends of the earth.', 'He shall rescue the poor when he cries out,\nand the afflicted when he has no one to help him.\nHe shall have pity for the lowly and the poor;\nthe lives of the poor he shall save.', 'May his name be blessed forever;\nas long as the sun his name shall remain.\nIn him shall all the tribes of the earth be blessed;\n2/4\nall the nations shall proclaim his happiness.']}, gospel: {ref: 'Luke 10:21-24', text: 'Jesus rejoiced in the Holy Spirit and said,\n"I give you praise, Father, Lord of heaven and earth,\nfor although you have hidden these things\nfrom the wise and the learned\nyou have revealed them to the childlike.\nYes, Father, such has been your gracious will.\nAll things have been handed over to me by my Father.\nNo one knows who the Son is except the Father,\nand who the Father is except the Son\nand anyone to whom the Son wishes to reveal him."\nTurning to the disciples in private he said,\n"Blessed are the eyes that see what you see.\nFor I say to you,\nmany prophets and kings desired to see what you see,\nbut did not see it,\nand to hear what you hear, but did not hear it."\n 3/4\n 4/4'}},
+  '12-2': {title: 'Wednesday of the First Week of Advent', lectionary: '177', first: {ref: 'Isaiah 25:6-10a', text: 'On this mountain the LORD of hosts\nwill provide for all peoples\nA feast of rich food and choice wines,\njuicy, rich food and pure, choice wines.\nOn this mountain he will destroy\nthe veil that veils all peoples,\nThe web that is woven over all nations;\nhe will destroy death forever.\nThe Lord GOD will wipe away\nthe tears from all faces;\nThe reproach of his people he will remove\nfrom the whole earth; for the LORD has spoken.\nOn that day it will be said:\n"Behold our God, to whom we looked to save us!\nThis is the LORD for whom we looked;\nlet us rejoice and be glad that he has saved us!"\nFor the hand of the LORD will rest on this mountain.'}, psalm: {ref: 'Psalm 23:1-3a, 3b-4, 5, 6', response: 'I shall live in the house of the Lord all the days of my life.', stanzas: ['The LORD is my shepherd; I shall not want.\n1/3\nIn verdant pastures he gives me repose;\nBeside restful waters he leads me;\nhe refreshes my soul.', 'He guides me in right paths\nfor his name\'s sake.\nEven though I walk in the dark valley\nI fear no evil; for you are at my side\nWith your rod and your staff\nthat give me courage.', 'You spread the table before me\nin the sight of my foes;\nYou anoint my head with oil;\nmy cup overflows.', 'Only goodness and kindness follow me\nall the days of my life;\nAnd I shall dwell in the house of the LORD\nfor years to come.']}, gospel: {ref: 'Matthew 15:29-37', text: 'At that time:\nJesus walked by the Sea of Galilee,\nwent up on the mountain, and sat down there.\n 2/3\nGreat crowds came to him,\nhaving with them the lame, the blind, the deformed, the mute,\nand many others.\nThey placed them at his feet, and he cured them.\nThe crowds were amazed when they saw the mute speaking,\nthe deformed made whole,\nthe lame walking,\nand the blind able to see,\nand they glorified the God of Israel.\nJesus summoned his disciples and said,\n"My heart is moved with pity for the crowd,\nfor they have been with me now for three days\nand have nothing to eat.\nI do not want to send them away hungry,\nfor fear they may collapse on the way."\nThe disciples said to him,\n"Where could we ever get enough bread in this deserted place\nto satisfy such a crowd?"\nJesus said to them, "How many loaves do you have?"\n"Seven," they replied, "and a few fish."\nHe ordered the crowd to sit down on the ground.\nThen he took the seven loaves and the fish,\ngave thanks, broke the loaves,\nand gave them to the disciples, who in turn gave them to the crowds.\nThey all ate and were satisfied.\nThey picked up the fragments left over–seven baskets full.\n 3/3'}},
+  '12-3': {title: 'Memorial of Saint Francis Xavier, Priest', lectionary: '178', first: {ref: 'Isaiah 26:1-6', text: 'On that day they will sing this song in the land of Judah:\n“A strong city have we;\nhe sets up walls and ramparts to protect us.\nOpen up the gates\nto let in a nation that is just,\none that keeps faith.\nA nation of firm purpose you keep in peace;\nin peace, for its trust in you.”\nTrust in the LORD forever!\nFor the LORD is an eternal Rock.\nHe humbles those in high places,\nand the lofty city he brings down;\nHe tumbles it to the ground,\nlevels it with the dust.\nIt is trampled underfoot by the needy,\nby the footsteps of the poor.'}, psalm: {ref: 'Psalm 118:1 and 8-9, 19-21, 25-27a', response: 'Blessed is he who comes in the name of the Lord.', stanzas: ['or:\nR.']}, gospel: {ref: 'Matthew 7:21, 24-27', text: 'Jesus said to his disciples:\n“Not everyone who says to me, ‘Lord, Lord,’\nwill enter the Kingdom of heaven,\nbut only the one who does the will of my Father in heaven.\n“Everyone who listens to these words of mine and acts on them\nwill be like a wise man who built his house on rock.\nThe rain fell, the floods came,\nand the winds blew and buffeted the house.\nBut it did not collapse; it had been set solidly on rock.\nAnd everyone who listens to these words of mine\nbut does not act on them\nwill be like a fool who built his house on sand.\nThe rain fell, the floods came,\nand the winds blew and buffeted the house.\nAnd it collapsed and was completely ruined.”\n 3/3'}},
+  '12-4': {title: 'Friday of the First Week of Advent', lectionary: '179', first: {ref: 'Isaiah 29:17-24', text: 'Thus says the Lord GOD:\nBut a very little while,\nand Lebanon shall be changed into an orchard,\nand the orchard be regarded as a forest!\nOn that day the deaf shall hear\nthe words of a book;\nAnd out of gloom and darkness,\nthe eyes of the blind shall see.\nThe lowly will ever find joy in the LORD,\nand the poor rejoice in the Holy One of Israel.\nFor the tyrant will be no more\nand the arrogant will have gone;\nAll who are alert to do evil will be cut off,\nthose whose mere word condemns a man,\nWho ensnare his defender at the gate,\nand leave the just man with an empty claim.\nTherefore thus says the LORD,\nthe God of the house of Jacob,\nwho redeemed Abraham:\nNow Jacob shall have nothing to be ashamed of,\nnor shall his face grow pale.\nWhen his children see\nthe work of my hands in his midst,\nThey shall keep my name holy;\n 1/3\nthey shall reverence the Holy One of Jacob,\nand be in awe of the God of Israel.\nThose who err in spirit shall acquire understanding,\nand those who find fault shall receive instruction.'}, psalm: {ref: 'Psalm 27:1, 4, 13-14', response: 'The Lord is my light and my salvation.', stanzas: ['The LORD is my light and my salvation;\nwhom should I fear?\nThe LORD is my life\'s refuge;\nof whom should I be afraid?', 'One thing I ask of the LORD;\nthis I seek:\nTo dwell in the house of the LORD\nall the days of my life,\nThat I may gaze on the loveliness of the LORD\nand contemplate his temple.', 'I believe that I shall see the bounty of the LORD\nin the land of the living.\nWait for the LORD with courage;\nbe stouthearted, and wait for the LORD.']}, gospel: {ref: 'Matthew 9:27-31', text: 'As Jesus passed by, two blind men followed him, crying out,\n"Son of David, have pity on us!"\nWhen he entered the house,\nthe blind men approached him and Jesus said to them,\n"Do you believe that I can do this?"\n"Yes, Lord," they said to him.\nThen he touched their eyes and said,\n"Let it be done for you according to your faith."\nAnd their eyes were opened.\nJesus warned them sternly,\n"See that no one knows about this."\nBut they went out and spread word of him through all that land.\n 3/3'}},
+  '12-5': {title: 'Saturday of the First Week of Advent', lectionary: '180', first: {ref: 'Isaiah 30:19-21, 23-26', text: 'Thus says the Lord GOD,\nthe Holy One of Israel:\nO people of Zion, who dwell in Jerusalem,\nno more will you weep;\nHe will be gracious to you when you cry out,\nas soon as he hears he will answer you.\nThe Lord will give you the bread you need\nand the water for which you thirst.\nNo longer will your Teacher hide himself,\nbut with your own eyes you shall see your Teacher,\nWhile from behind, a voice shall sound in your ears:\n"This is the way; walk in it,"\nwhen you would turn to the right or to the left.\nHe will give rain for the seed\nthat you sow in the ground,\nAnd the wheat that the soil produces\nwill be rich and abundant.\nOn that day your flock will be given pasture\nand the lamb will graze in spacious meadows;\nThe oxen and the asses that till the ground\nwill eat silage tossed to them\nwith shovel and pitchfork.\nUpon every high mountain and lofty hill\n 1/3\nthere will be streams of running water.\nOn the day of the great slaughter,\nwhen the towers fall,\nThe light of the moon will be like that of the sun\nand the light of the sun will be seven times greater\nlike the light of seven days.\nOn the day the LORD binds up the wounds of his people,\nhe will heal the bruises left by his blows.'}, psalm: {ref: 'Psalm 147:1-2, 3-4, 5-6', response: 'Blessed are all who wait for the Lord.', stanzas: ['Praise the LORD, for he is good;\nsing praise to our God, for he is gracious;\nit is fitting to praise him.\nThe LORD rebuilds Jerusalem;\nthe dispersed of Israel he gathers.', 'He heals the brokenhearted\nand binds up their wounds.\nHe tells the number of the stars;\nhe calls each by name.', 'Great is our LORD and mighty in power:\nto his wisdom there is no limit.\nThe LORD sustains the lowly;\nthe wicked he casts to the ground.']}, gospel: {ref: 'Matthew 9:35–10:1, 5a, 6-8', text: 'Jesus went around to all the towns and villages,\nteaching in their synagogues,\nproclaiming the Gospel of the Kingdom,\nand curing every disease and illness.\nAt the sight of the crowds, his heart was moved with pity for them\nbecause they were troubled and abandoned,\nlike sheep without a shepherd.\nThen he said to his disciples,\n"The harvest is abundant but the laborers are few;\nso ask the master of the harvest\nto send out laborers for his harvest."\nThen he summoned his Twelve disciples\nand gave them authority over unclean spirits to drive them out\nand to cure every disease and every illness.\nJesus sent out these Twelve after instructing them thus,\n"Go to the lost sheep of the house of Israel.\nAs you go, make this proclamation: \'The Kingdom of heaven is at hand.\'\nCure the sick, raise the dead,\ncleanse lepers, drive out demons.\nWithout cost you have received; without cost you are to give."\n 3/3'}},
+  '12-6': {title: 'Second Sunday of Advent', lectionary: '5', first: {ref: 'Isaiah 40:1-5, 9-11', text: 'Comfort, give comfort to my people,\nsays your God.\nSpeak tenderly to Jerusalem, and proclaim to her\nthat her service is at an end,\nher guilt is expiated;\nindeed, she has received from the hand of the LORD\ndouble for all her sins.\nA voice cries out:\nIn the desert prepare the way of the LORD!\nMake straight in the wasteland a highway for our God!\nEvery valley shall be filled in,\nevery mountain and hill shall be made low;\nthe rugged land shall be made a plain,\nthe rough country, a broad valley.\nThen the glory of the LORD shall be revealed,\nand all people shall see it together;\nfor the mouth of the LORD has spoken.\nGo up on to a high mountain,\nZion, herald of glad tidings;\ncry out at the top of your voice,\nJerusalem, herald of good news!\nFear not to cry out\nand say to the cities of Judah:\n 1/4\nHere is your God!\nHere comes with power\nthe Lord GOD,\nwho rules by his strong arm;\nhere is his reward with him,\nhis recompense before him.\nLike a shepherd he feeds his flock;\nin his arms he gathers the lambs,\ncarrying them in his bosom,\nand leading the ewes with care.'}, psalm: {ref: 'Psalm 85:9-10-11-12, 13-14', response: 'Lord, let us see your kindness, and grant us your salvation.', stanzas: ['I will hear what God proclaims;\nthe LORD—for he proclaims peace to his people.\nNear indeed is his salvation to those who fear him,\nglory dwelling in our land.', 'Kindness and truth shall meet;\njustice and peace shall kiss.\nTruth shall spring out of the earth,\nand justice shall look down from heaven.', 'The LORD himself will give his benefits;\nour land shall yield its increase.\nJustice shall walk before him,\nand prepare the way of his steps.']}, second: {ref: '2 Peter 3:8-14', text: 'Do not ignore this one fact, beloved,\nthat with the Lord one day is like a thousand years\n 2/4\nand a thousand years like one day.\nThe Lord does not delay his promise, as some regard “delay,”\nbut he is patient with you,\nnot wishing that any should perish\nbut that all should come to repentance.\nBut the day of the Lord will come like a thief,\nand then the heavens will pass away with a mighty roar\nand the elements will be dissolved by fire,\nand the earth and everything done on it will be found out.\nSince everything is to be dissolved in this way,\nwhat sort of persons ought you to be,\nconducting yourselves in holiness and devotion,\nwaiting for and hastening the coming of the day of God,\nbecause of which the heavens will be dissolved in flames\nand the elements melted by fire.\nBut according to his promise\nwe await new heavens and a new earth\nin which righteousness dwells.\nTherefore, beloved, since you await these things,\nbe eager to be found without spot or blemish before him, at peace.'}, gospel: {ref: 'Mark 1:1-8', text: 'The beginning of the gospel of Jesus Christ the Son of God.\nAs it is written in Isaiah the prophet:\nBehold, I am sending my messenger ahead of you;\n 3/4\nhe will prepare your way.\nA voice of one crying out in the desert:\n“Prepare the way of the Lord,\nmake straight his paths.”\nJohn the Baptist appeared in the desert\nproclaiming a baptism of repentance for the forgiveness of sins.\nPeople of the whole Judean countryside\nand all the inhabitants of Jerusalem\nwere going out to him\nand were being baptized by him in the Jordan River\nas they acknowledged their sins.\nJohn was clothed in camel’s hair,\nwith a leather belt around his waist.\nHe fed on locusts and wild honey.\nAnd this is what he proclaimed:\n“One mightier than I is coming after me.\nI am not worthy to stoop and loosen the thongs of his sandals.\nI have baptized you with water;\nhe will baptize you with the Holy Spirit.”\n 4/4'}},
+  '12-7': {title: 'Memorial of Saint Ambrose, Bishop and', lectionary: '181', first: {ref: 'Isaiah 35:1-10', text: 'The desert and the parched land will exult;\nthe steppe will rejoice and bloom.\nThey will bloom with abundant flowers,\nand rejoice with joyful song.\nThe glory of Lebanon will be given to them,\nthe splendor of Carmel and Sharon;\nThey will see the glory of the LORD,\nthe splendor of our God.\nStrengthen the hands that are feeble,\nmake firm the knees that are weak,\nSay to those whose hearts are frightened:\nBe strong, fear not!\nHere is your God,\nhe comes with vindication;\nWith divine recompense\nhe comes to save you.\nThen will the eyes of the blind be opened,\nthe ears of the deaf be cleared;\nThen will the lame leap like a stag,\nthen the tongue of the mute will sing.\nStreams will burst forth in the desert,\n 1/4\nand rivers in the steppe.\nThe burning sands will become pools,\nand the thirsty ground, springs of water;\nThe abode where jackals lurk\nwill be a marsh for the reed and papyrus.\nA highway will be there,\ncalled the holy way;\nNo one unclean may pass over it,\nnor fools go astray on it.\nNo lion will be there,\nnor beast of prey go up to be met upon it.\nIt is for those with a journey to make,\nand on it the redeemed will walk.\nThose whom the LORD has ransomed will return\nand enter Zion singing,\ncrowned with everlasting joy;\nThey will meet with joy and gladness,\nsorrow and mourning will flee.'}, psalm: {ref: 'Psalm 85:9ab and 10, 11-12, 13-14', response: 'Our God will come to save us!', stanzas: ['I will hear what God proclaims;\nthe LORD –for he proclaims peace to his people.\nNear indeed is his salvation to those who fear him,\nglory dwelling in our land.', 'Kindness and truth shall meet;\njustice and peace shall kiss.\nTruth shall spring out of the earth,\nand justice shall look down from heaven.', 'The LORD himself will give his benefits;\n2/4\nour land shall yield its increase.\nJustice shall walk before him,\nand salvation, along the way of his steps.']}, gospel: {ref: 'Luke 5:17-26', text: 'One day as Jesus was teaching,\nPharisees and teachers of the law,\nwho had come from every village of Galilee and Judea and Jerusalem,\nwere sitting there,\nand the power of the Lord was with him for healing.\nAnd some men brought on a stretcher a man who was paralyzed;\nthey were trying to bring him in and set him in his presence.\nBut not finding a way to bring him in because of the crowd,\nthey went up on the roof\nand lowered him on the stretcher through the tiles\ninto the middle in front of Jesus.\nWhen Jesus saw their faith, he said,\n"As for you, your sins are forgiven."\nThen the scribes and Pharisees began to ask themselves,\n"Who is this who speaks blasphemies?\nWho but God alone can forgive sins?"\nJesus knew their thoughts and said to them in reply,\n 3/4\n"What are you thinking in your hearts?\nWhich is easier, to say, \'Your sins are forgiven,\'\nor to say, \'Rise and walk\'?\nBut that you may know\nthat the Son of Man has authority on earth to forgive sins"–\nhe said to the one who was paralyzed,\n"I say to you, rise, pick up your stretcher, and go home."\nHe stood up immediately before them,\npicked up what he had been lying on,\nand went home, glorifying God.\nThen astonishment seized them all and they glorified God,\nand, struck with awe, they said,\n"We have seen incredible things today."\n 4/4'}},
+  '12-8': {title: 'Solemnity of the Immaculate Conception of', lectionary: '689', first: {ref: 'Genesis 3:9-15, 20', text: 'After the man, Adam, had eaten of the tree,\nthe LORD God called to the man and asked him, "Where are you?"\nHe answered, "I heard you in the garden;\nbut I was afraid, because I was naked,\nso I hid myself."\nThen he asked, "Who told you that you were naked?\nYou have eaten, then,\nfrom the tree of which I had forbidden you to eat!"\nThe man replied, "The woman whom you put here with me--\nshe gave me fruit from the tree, and so I ate it."\nThe LORD God then asked the woman,\n"Why did you do such a thing?"\nThe woman answered, "The serpent tricked me into it, so I ate it."\nThen the LORD God said to the serpent:\n"Because you have done this, you shall be banned\nfrom all the animals\nand from all the wild creatures;\non your belly shall you crawl,\nand dirt shall you eat\nall the days of your life.\nI will put enmity between you and the woman,\n 1/4\nand between your offspring and hers;\nhe will strike at your head,\nwhile you strike at his heel."\nThe man called his wife Eve,\nbecause she became the mother of all the living.'}, psalm: {ref: 'Psalm 98:1, 2-3ab, 3cd-4', response: 'Sing to the Lord a new song, for he has done marvelous deeds.', stanzas: ['Sing to the LORD a new song,\nfor he has done wondrous deeds;\nHis right hand has won victory for him,\nhis holy arm.', 'The LORD has made his salvation known:\nin the sight of the nations he has revealed his justice.\nHe has remembered his kindness and his faithfulness\ntoward the house of Israel.', 'All the ends of the earth have seen\nthe salvation by our God.\nSing joyfully to the LORD, all you lands;\nbreak into song; sing praise.']}, second: {ref: 'Ephesians 1:3-6, 11-12', text: 'Brothers and sisters:\nBlessed be the God and Father of our Lord Jesus Christ,\nwho has blessed us in Christ\nwith every spiritual blessing in the heavens,\nas he chose us in him, before the foundation of the world,\nto be holy and without blemish before him.\n 2/4\nIn love he destined us for adoption to himself through Jesus Christ,\nin accord with the favor of his will,\nfor the praise of the glory of his grace\nthat he granted us in the beloved.\nIn him we were also chosen,\ndestined in accord with the purpose of the One\nwho accomplishes all things according to the intention of his will,\nso that we might exist for the praise of his glory,\nwe who first hoped in Christ.'}, gospel: {ref: 'Luke 1:26-38', text: 'The angel Gabriel was sent from God\nto a town of Galilee called Nazareth,\nto a virgin betrothed to a man named Joseph,\nof the house of David,\nand the virgin\'s name was Mary.\nAnd coming to her, he said,\n"Hail, full of grace! The Lord is with you."\nBut she was greatly troubled at what was said\nand pondered what sort of greeting this might be.\nThen the angel said to her,\n"Do not be afraid, Mary,\nfor you have found favor with God.\nBehold, you will conceive in your womb and bear a son,\nand you shall name him Jesus.\n 3/4\nHe will be great and will be called Son of the Most High,\nand the Lord God will give him the throne of David his father,\nand he will rule over the house of Jacob forever,\nand of his Kingdom there will be no end."\nBut Mary said to the angel,\n"How can this be,\nsince I have no relations with a man?"\nAnd the angel said to her in reply,\n"The Holy Spirit will come upon you,\nand the power of the Most High will overshadow you.\nTherefore the child to be born\nwill be called holy, the Son of God.\nAnd behold, Elizabeth, your relative,\nhas also conceived a son in her old age,\nand this is the sixth month for her who was called barren;\nfor nothing will be impossible for God."\nMary said, "Behold, I am the handmaid of the Lord.\nMay it be done to me according to your word."\nThen the angel departed from her.\n 4/4'}},
+  '12-9': {title: 'Wednesday of the Second Week of Advent', lectionary: '183', first: {ref: 'Isaiah 40:25-31', text: 'To whom can you liken me as an equal?\nsays the Holy One.\nLift up your eyes on high\nand see who has created these things:\nHe leads out their army and numbers them,\ncalling them all by name.\nBy his great might and the strength of his power\nnot one of them is missing!\nWhy, O Jacob, do you say,\nand declare, O Israel,\n"My way is hidden from the LORD,\nand my right is disregarded by my God"?\nDo you not know\nor have you not heard?\nThe LORD is the eternal God,\ncreator of the ends of the earth.\nHe does not faint nor grow weary,\nand his knowledge is beyond scrutiny.\nHe gives strength to the fainting;\nfor the weak he makes vigor abound.\nThough young men faint and grow weary,\nand youths stagger and fall,\nThey that hope in the LORD will renew their strength,\n 1/3\nthey will soar as with eagles\' wings;\nThey will run and not grow weary,\nwalk and not grow faint.'}, psalm: {ref: 'Psalm 103:1-2, 3-4, 8 and 10', response: 'O bless the Lord, my soul!', stanzas: ['Bless the LORD, O my soul;\nand all my being, bless his holy name.\nBless the LORD, O my soul,\nand forget not all his benefits.', 'He pardons all your iniquities,\nhe heals all your ills.\nHe redeems your life from destruction,\nhe crowns you with kindness and compassion.', 'Merciful and gracious is the LORD,\nslow to anger and abounding in kindness.\nNot according to our sins does he deal with us,\nnor does he requite us according to our crimes.']}, gospel: {ref: 'Matthew 11:28-30', text: '2/3\nJesus said to the crowds:\n"Come to me, all you who labor and are burdened,\nand I will give you rest.\nTake my yoke upon you and learn from me,\nfor I am meek and humble of heart;\nand you will find rest for yourselves.\nFor my yoke is easy, and my burden light."\n 3/3'}},
+  '12-10': {title: 'Thursday of the Second Week of Advent', lectionary: '184', first: {ref: 'Isaiah 41:13-20', text: 'I am the LORD, your God,\nwho grasp your right hand;\nIt is I who say to you, “Fear not,\nI will help you.”\nFear not, O worm Jacob,\nO maggot Israel;\nI will help you, says the LORD;\nyour redeemer is the Holy One of Israel.\nI will make of you a threshing sledge,\nsharp, new, and double-edged,\nTo thresh the mountains and crush them,\nto make the hills like chaff.\nWhen you winnow them, the wind shall carry them off\nand the storm shall scatter them.\nBut you shall rejoice in the LORD,\nand glory in the Holy One of Israel.\nThe afflicted and the needy seek water in vain,\ntheir tongues are parched with thirst.\nI, the LORD, will answer them;\nI, the God of Israel, will not forsake them.\nI will open up rivers on the bare heights,\nand fountains in the broad valleys;\nI will turn the desert into a marshland,\n 1/3\nand the dry ground into springs of water.\nI will plant in the desert the cedar,\nacacia, myrtle, and olive;\nI will set in the wasteland the cypress,\ntogether with the plane tree and the pine,\nThat all may see and know,\nobserve and understand,\nThat the hand of the LORD has done this,\nthe Holy One of Israel has created it.'}, psalm: {ref: 'Psalm 145:1 and 9, 10-11, 12-13ab', response: 'The Lord is gracious and merciful; slow to anger, and of great', stanzas: ['kindness.\nI will extol you, O my God and King,\nand I will bless your name forever and ever.\nThe LORD is good to all\nand compassionate toward all his works.', 'Let all your works give you thanks, O LORD,\nand let your faithful ones bless you.\nLet them discourse of the glory of your Kingdom\nand speak of your might.', 'Let them make known to men your might\nand the glorious splendor of your Kingdom.\nYour Kingdom is a Kingdom for all ages,\nand your dominion endures through all generations.']}, gospel: {ref: 'Matthew 11:11-15', text: 'Jesus said to the crowds:\n“Amen, I say to you,\namong those born of women\nthere has been none greater than John the Baptist;\nyet the least in the Kingdom of heaven is greater than he.\nFrom the days of John the Baptist until now,\nthe Kingdom of heaven suffers violence,\nand the violent are taking it by force.\nAll the prophets and the law prophesied up to the time of John.\nAnd if you are willing to accept it,\nhe is Elijah, the one who is to come.\nWhoever has ears ought to hear.”\n 3/3'}},
+  '12-11': {title: 'Friday of the Second Week of Advent', lectionary: '185', first: {ref: 'Isaiah 48:17-19', text: 'Thus says the LORD, your redeemer,\nthe Holy One of Israel:\nI, the LORD, your God,\nteach you what is for your good,\nand lead you on the way you should go.\nIf you would hearken to my commandments,\nyour prosperity would be like a river,\nand your vindication like the waves of the sea;\nYour descendants would be like the sand,\nand those born of your stock like its grains,\nTheir name never cut off\nor blotted out from my presence.'}, psalm: {ref: 'Psalm 1:1-2, 3, 4 and 6', response: 'Those who follow you, Lord, will have the light of life.', stanzas: ['Blessed the man who follows not\nthe counsel of the wicked\nNor walks in the way of sinners,\nnor sits in the company of the insolent,\nBut delights in the law of the LORD\nand meditates on his law day and night.\n1/3', 'He is like a tree\nplanted near running water,\nThat yields its fruit in due season,\nand whose leaves never fade.\nWhatever he does, prospers.', 'Not so the wicked, not so;\nthey are like chaff which the wind drives away.\nFor the LORD watches over the way of the just,\nbut the way of the wicked vanishes.']}, gospel: {ref: 'Matthew 11:16-19', text: 'Jesus said to the crowds:\n"To what shall I compare this generation?\nIt is like children who sit in marketplaces and call to one another,\n\'We played the flute for you, but you did not dance,\nwe sang a dirge but you did not mourn.\'\nFor John came neither eating nor drinking, and they said,\n\'He is possessed by a demon.\'\nThe Son of Man came eating and drinking and they said,\n\'Look, he is a glutton and a drunkard,\na friend of tax collectors and sinners.\'\n 2/3\nBut wisdom is vindicated by her works."\n 3/3'}},
+  '12-12': {title: 'Feast of Our Lady of Guadalupe', lectionary: '690', first: {ref: 'Zechariah 2:14-17', text: 'Sing and rejoice, O daughter Zion!\nSee, I am coming to dwell among you, says the LORD.\nMany nations shall join themselves to the LORD on that day,\nand they shall be his people,\nand he will dwell among you,\nand you shall know that the LORD of hosts has sent me to you.\nThe LORD will possess Judah as his portion in the holy land,\nand he will again choose Jerusalem.\nSilence, all mankind, in the presence of the LORD!\nFor he stirs forth from his holy dwelling.\nor\nRevelation 11:19a; 12:1-6a, 10ab\nGod’s temple in heaven was opened,\nand the ark of his covenant could be seen in the temple.\nA great sign appeared in the sky, a woman clothed with the sun,\nwith the moon under her feet,\nand on her head a crown of twelve stars.\nShe was with child and wailed aloud in pain as she labored to give birth.\nThen another sign appeared in the sky;\n 1/5\nit was a huge red dragon, with seven heads and ten horns,\nand on its heads were seven diadems.\nIts tail swept away a third of the stars in the sky\nand hurled them down to the earth.\nThen the dragon stood before the woman about to give birth,\nto devour her child when she gave birth.\nShe gave birth to a son, a male child,\ndestined to rule all the nations with an iron rod.\nHer child was caught up to God and his throne.\nThe woman herself fled into the desert\nwhere she had a place prepared by God.\nThen I heard a loud voice in heaven say:\n“Now have salvation and power come,\nand the Kingdom of our God\nand the authority of his Anointed.”'}, psalm: {ref: '', response: '', stanzas: ['Judith 13:18bcde, 19', 'Blessed are you, daughter, by the Most High God,\nabove all the women on earth;\nand blessed be the LORD God,\nthe creator of heaven and earth.', 'Your deed of hope will never be forgotten\nby those who tell of the might of God.']}, gospel: {ref: 'Luke 1:26-38', text: 'The angel Gabriel was sent from God\nto a town of Galilee called Nazareth,\nto a virgin betrothed to a man named Joseph,\nof the house of David,\nand the virgin’s name was Mary.\nAnd coming to her, he said,\n“Hail, full of grace! The Lord is with you.”\nBut she was greatly troubled at what was said\nand pondered what sort of greeting this might be.\nThen the angel said to her,\n“Do not be afraid, Mary,\nfor you have found favor with God.\nBehold, you will conceive in your womb and bear a son,\nand you shall name him Jesus.\nHe will be great and will be called Son of the Most High,\nand the Lord God will give him the throne of David his father,\nand he will rule over the house of Jacob forever,\nand of his Kingdom there will be no end.”\nBut Mary said to the angel,\n“How can this be,\nsince I have no relations with a man?”\nAnd the angel said to her in reply,\n“The Holy Spirit will come upon you,\nand the power of the Most High will overshadow you.\nTherefore the child to be born\nwill be called holy, the Son of God.\nAnd behold, Elizabeth, your relative,\n 3/5\nhas also conceived a son in her old age,\nand this is the sixth month for her who was called barren;\nfor nothing will be impossible for God.”\nMary said, “Behold, I am the handmaid of the Lord.\nMay it be done to me according to your word.”\nThen the angel departed from her.\nor\nLuke 1:39-47\nMary set out\nand traveled to the hill country in haste\nto a town of Judah,\nwhere she entered the house of Zechariah\nand greeted Elizabeth.\nWhen Elizabeth heard Mary’s greeting,\nthe infant leaped in her womb,\nand Elizabeth, filled with the Holy Spirit,\ncried out in a loud voice and said,\n“Most blessed are you among women,\nand blessed is the fruit of your womb.\nAnd how does this happen to me,\nthat the mother of my Lord should come to me?\nFor at the moment the sound of your greeting reached my ears,\nthe infant in my womb leaped for joy.\nBlessed are you who believed\nthat what was spoken to you by the Lord\nwould be fulfilled.”\nAnd Mary said:\n“My soul proclaims the greatness of the Lord;\nmy spirit rejoices in God my savior.”\n 4/5\n 5/5'}},
+  '12-13': {title: 'Third Sunday of Advent', lectionary: '8', first: {ref: 'Isaiah 61:1-2a, 10-11', text: 'The spirit of the Lord GOD is upon me,\nbecause the LORD has anointed me;\nhe has sent me to bring glad tidings to the poor,\nto heal the brokenhearted,\nto proclaim liberty to the captives\nand release to the prisoners,\nto announce a year of favor from the LORD\nand a day of vindication by our God.\nI rejoice heartily in the LORD,\nin my God is the joy of my soul;\nfor he has clothed me with a robe of salvation\nand wrapped me in a mantle of justice,\nlike a bridegroom adorned with a diadem,\nlike a bride bedecked with her jewels.\nAs the earth brings forth its plants,\nand a garden makes its growth spring up,\nso will the Lord GOD make justice and praise\nspring up before all the nations.'}, psalm: {ref: 'Luke 1:46-48, 49-50, 53-54', response: '', stanzas: ['1/4', 'My soul proclaims the greatness of the Lord;\nmy spirit rejoices in God my Savior,\nfor he has looked upon his lowly servant.\nFrom this day all generations will call me blessed:', 'the Almighty has done great things for me,\nand holy is his Name.\nHe has mercy on those who fear him\nin every generation.', 'He has filled the hungry with good things,\nand the rich he has sent away empty.\nHe has come to the help of his servant Israel\nfor he has remembered his promise of mercy,']}, second: {ref: '1 Thessalonians 5:16-24', text: 'Rejoice always. Pray without ceasing.\nIn all circumstances give thanks,\nfor this is the will of God for you in Christ Jesus.\nDo not quench the Spirit.\nDo not despise prophetic utterances.\nTest everything; retain what is good.\nRefrain from every kind of evil.\nMay the God of peace make you perfectly holy\nand may you entirely, spirit, soul, and body,\nbe preserved blameless for the coming of our Lord Jesus Christ.\nThe one who calls you is faithful,\nand he will also accomplish it.\n 2/4'}, gospel: {ref: 'John 1:6-8, 19-28', text: 'A man named John was sent from God.\nHe came for testimony, to testify to the light,\nso that all might believe through him.\nHe was not the light,\nbut came to testify to the light.\nAnd this is the testimony of John.\nWhen the Jews from Jerusalem sent priests\nand Levites to him\nto ask him, “Who are you?”\nHe admitted and did not deny it,\nbut admitted, “I am not the Christ.”\nSo they asked him,\n“What are you then? Are you Elijah?”\nAnd he said, “I am not.”\n“Are you the Prophet?”\nHe answered, “No.”\nSo they said to him,\n“Who are you, so we can give an answer to those who sent us?\nWhat do you have to say for yourself?”\nHe said:\n“I am the voice of one crying out in the desert,\n‘make straight the way of the Lord,’\nas Isaiah the prophet said.”\nSome Pharisees were also sent.\n 3/4\nThey asked him,\n“Why then do you baptize\nif you are not the Christ or Elijah or the Prophet?”\nJohn answered them,\n“I baptize with water;\nbut there is one among you whom you do not recognize,\nthe one who is coming after me,\nwhose sandal strap I am not worthy to untie.”\nThis happened in Bethany across the Jordan,\nwhere John was baptizing.\n 4/4'}},
+  '12-14': {title: 'Memorial of Saint John of the Cross, Priest', lectionary: '187', first: {ref: 'Numbers 24:2-7, 15-17a', text: 'When Balaam raised his eyes and saw Israel encamped, tribe by tribe,\nthe spirit of God came upon him,\nand he gave voice to his oracle:\nThe utterance of Balaam, son of Beor,\nthe utterance of a man whose eye is true,\nThe utterance of one who hears what God says,\nand knows what the Most High knows,\nOf one who sees what the Almighty sees,\nenraptured, and with eyes unveiled:\nHow goodly are your tents, O Jacob;\nyour encampments, O Israel!\nThey are like gardens beside a stream,\nlike the cedars planted by the LORD.\nHis wells shall yield free-flowing waters,\nhe shall have the sea within reach;\nHis king shall rise higher,\nand his royalty shall be exalted.\nThen Balaam gave voice to his oracle:\nThe utterance of Balaam, son of Beor,\n 1/3\nthe utterance of the man whose eye is true,\nThe utterance of one who hears what God says,\nand knows what the Most High knows,\nOf one who sees what the Almighty sees,\nenraptured, and with eyes unveiled.\nI see him, though not now;\nI behold him, though not near:\nA star shall advance from Jacob,\nand a staff shall rise from Israel.'}, psalm: {ref: 'Psalm 25:4-5ab, 6 and 7bc, 8-9', response: 'Teach me your ways, O Lord.', stanzas: ['Your ways, O LORD, make known to me;\nteach me your paths,\nGuide me in your truth and teach me,\nfor you are God my savior.', 'Remember that your compassion, O LORD,\nand your kindness are from of old.\nIn your kindness remember me,\nbecause of your goodness, O LORD.', 'Good and upright is the LORD;\nthus he shows sinners the way.\nHe guides the humble to justice,\nhe teaches the humble his way.']}, gospel: {ref: 'Matthew 21:23-27', text: 'When Jesus had come into the temple area,\nthe chief priests and the elders of the people approached him\nas he was teaching and said,\n"By what authority are you doing these things?\nAnd who gave you this authority?"\nJesus said to them in reply,\n"I shall ask you one question, and if you answer it for me,\nthen I shall tell you by what authority I do these things.\nWhere was John\'s baptism from?\nWas it of heavenly or of human origin?"\nThey discussed this among themselves and said,\n"If we say \'Of heavenly origin,\' he will say to us,\n\'Then why did you not believe him?\'\nBut if we say, \'Of human origin,\' we fear the crowd,\nfor they all regard John as a prophet."\nSo they said to Jesus in reply, "We do not know."\nHe himself said to them,\n"Neither shall I tell you by what authority I do these things."\n 3/3'}},
+  '12-15': {title: 'Tuesday of the Third Week of Advent', lectionary: '188', first: {ref: 'Zephaniah 3:1-2, 9-13', text: 'Thus says the LORD:\nWoe to the city, rebellious and polluted,\nto the tyrannical city!\nShe hears no voice,\naccepts no correction;\nIn the LORD she has not trusted,\nto her God she has not drawn near.\nFor then I will change and purify\nthe lips of the peoples,\nThat they all may call upon the name of the LORD,\nto serve him with one accord;\nFrom beyond the rivers of Ethiopia\nand as far as the recesses of the North,\nthey shall bring me offerings.\nOn that day\nYou need not be ashamed\nof all your deeds,\nyour rebellious actions against me;\nFor then will I remove from your midst\nthe proud braggarts,\nAnd you shall no longer exalt yourself\non my holy mountain.\nBut I will leave as a remnant in your midst\n 1/4\na people humble and lowly,\nWho shall take refuge in the name of the LORD:\nthe remnant of Israel.\nThey shall do no wrong\nand speak no lies;\nNor shall there be found in their mouths\na deceitful tongue;\nThey shall pasture and couch their flocks\nwith none to disturb them.'}, psalm: {ref: 'Psalm 34:2-3, 6-7, 17-18, 19 and 23', response: 'The Lord hears the cry of the poor.', stanzas: ['I will bless the LORD at all times;\nhis praise shall be ever in my mouth.\nLet my soul glory in the LORD;\nthe lowly will hear me and be glad.', 'Look to him that you may be radiant with joy,\nand your faces may not blush with shame.\nWhen the poor one called out, the LORD heard,\nand from all his distress he saved him.', 'The LORD confronts the evildoers,\nto destroy remembrance of them from the earth.\nWhen the just cry out, the LORD hears them,\nand from all their distress he rescues them.', 'The LORD is close to the brokenhearted;\nand those who are crushed in spirit he saves.\nThe LORD redeems the lives of his servants;\n2/4\nno one incurs guilt who takes refuge in him.']}, gospel: {ref: 'Matthew 21:28-32', text: 'Jesus said to the chief priests and the elders of the people:\n“What is your opinion?\nA man had two sons.\nHe came to the first and said,\n‘Son, go out and work in the vineyard today.’\nThe son said in reply, ‘I will not,’\nbut afterwards he changed his mind and went.\nThe man came to the other son and gave the same order.\nHe said in reply, ‘Yes, sir,’ but did not go.\nWhich of the two did his father’s will?”\nThey answered, “The first.”\nJesus said to them, “Amen, I say to you,\ntax collectors and prostitutes\nare entering the Kingdom of God before you.\nWhen John came to you in the way of righteousness,\nyou did not believe him;\nbut tax collectors and prostitutes did.\nYet even when you saw that,\nyou did not later change your minds and believe him.”\n 3/4\n 4/4'}},
+  '12-16': {title: 'Wednesday of the Third Week of Advent', lectionary: '189', first: {ref: 'Isaiah 45:6c-8, 18, 21c-25', text: 'I am the LORD, there is no other;\nI form the light, and create the darkness,\nI make well-being and create woe;\nI, the LORD, do all these things.\nLet justice descend, O heavens, like dew from above,\nlike gentle rain let the skies drop it down.\nLet the earth open and salvation bud forth;\nlet justice also spring up!\nI, the LORD, have created this.\nFor thus says the LORD,\nThe creator of the heavens,\nwho is God,\nThe designer and maker of the earth\nwho established it,\nNot creating it to be a waste,\nbut designing it be lived in:\nI am the LORD, and there is no other.\nWho announced this from the beginning\nand foretold it from of old?\nWas it not I, the LORD,\nbesides whom there is no other God?\nThere is no just and saving God but me.\n 1/3\nTurn to me and be safe,\nall you ends of the earth,\nfor I am God; there is no other!\nBy myself I swear,\nuttering my just decree\nand my unalterable word:\nTo me every knee shall bend;\nby me every tongue shall swear,\nSaying, “Only in the LORD\nare just deeds and power.\nBefore him in shame shall come\nall who vent their anger against him.\nIn the LORD shall be the vindication and the glory\nof all the descendants of Israel.”'}, psalm: {ref: 'Psalm 85:9ab, 10, 11-12, 13-14', response: 'Let the clouds rain down the Just One, and the earth bring', stanzas: ['forth a Savior.\nI will hear what God proclaims;\nthe LORD–for he proclaims peace to his people.\nNear indeed is his salvation to those who fear him,\nglory dwelling in our land.', 'Kindness and truth shall meet;\njustice and peace shall kiss.\nTruth shall spring out of the earth,\nand justice shall look down from heaven.', 'The LORD himself will give his benefits;\nour land shall yield its increase.\nJustice shall walk before him,\nand salvation, along the way of his steps.', '2/3']}, gospel: {ref: 'Luke 7:18b-23', text: 'At that time,\nJohn summoned two of his disciples and sent them to the Lord to ask,\n“Are you the one who is to come, or should we look for another?”\nWhen the men came to the Lord, they said,\n“John the Baptist has sent us to you to ask,\n‘Are you the one who is to come, or should we look for another?’”\nAt that time Jesus cured many of their diseases, sufferings, and evil spirits;\nhe also granted sight to many who were blind.\nAnd Jesus said to them in reply,\n“Go and tell John what you have seen and heard:\nthe blind regain their sight,\nthe lame walk,\nlepers are cleansed,\nthe deaf hear, the dead are raised,\nthe poor have the good news proclaimed to them.\nAnd blessed is the one who takes no offense at me.”\n 3/3'}},
+  '12-17': {title: 'Thursday of the Third Week of Advent', lectionary: '193', first: {ref: 'Genesis 49:2, 8-10', text: 'Jacob called his sons and said to them:\n“Assemble and listen, sons of Jacob,\nlisten to Israel, your father.\n“You, Judah, shall your brothers praise\n–your hand on the neck of your enemies;\nthe sons of your father shall bow down to you.\nJudah, like a lion’s whelp,\nyou have grown up on prey, my son.\nHe crouches like a lion recumbent,\nthe king of beasts–who would dare rouse him?\nThe scepter shall never depart from Judah,\nor the mace from between his legs,\nWhile tribute is brought to him,\nand he receives the people’s homage.”'}, psalm: {ref: 'Psalm 72:1-2, 3-4ab, 7-8, 17', response: 'Justice shall flourish in his time, and fullness of peace for ever.', stanzas: ['O God, with your judgment endow the king,\nand with your justice, the king’s son;\nHe shall govern your people with justice\nand your afflicted ones with judgment.\n1/4', 'The mountains shall yield peace for the people,\nand the hills justice.\nHe shall defend the afflicted among the people,\nsave the children of the poor.', 'Justice shall flower in his days,\nand profound peace, till the moon be no more.\nMay he rule from sea to sea,\nand from the River to the ends of the earth.', 'May his name be blessed forever;\nas long as the sun his name shall remain.\nIn him shall all the tribes of the earth be blessed;\nall the nations shall proclaim his happiness.']}, gospel: {ref: 'Matthew 1:1-17', text: 'The book of the genealogy of Jesus Christ,\nthe son of David, the son of Abraham.\nAbraham became the father of Isaac,\nIsaac the father of Jacob,\nJacob the father of Judah and his brothers.\nJudah became the father of Perez and Zerah,\n 2/4\nwhose mother was Tamar.\nPerez became the father of Hezron,\nHezron the father of Ram,\nRam the father of Amminadab.\nAmminadab became the father of Nahshon,\nNahshon the father of Salmon,\nSalmon the father of Boaz,\nwhose mother was Rahab.\nBoaz became the father of Obed,\nwhose mother was Ruth.\nObed became the father of Jesse,\nJesse the father of David the king.\nDavid became the father of Solomon,\nwhose mother had been the wife of Uriah.\nSolomon became the father of Rehoboam,\nRehoboam the father of Abijah,\nAbijah the father of Asaph.\nAsaph became the father of Jehoshaphat,\nJehoshaphat the father of Joram,\nJoram the father of Uzziah.\nUzziah became the father of Jotham,\nJotham the father of Ahaz,\nAhaz the father of Hezekiah.\nHezekiah became the father of Manasseh,\nManasseh the father of Amos,\nAmos the father of Josiah.\nJosiah became the father of Jechoniah and his brothers\nat the time of the Babylonian exile.\nAfter the Babylonian exile,\nJechoniah became the father of Shealtiel,\nShealtiel the father of Zerubbabel,\nZerubbabel the father of Abiud.\nAbiud became the father of Eliakim,\n 3/4\nEliakim the father of Azor,\nAzor the father of Zadok.\nZadok became the father of Achim,\nAchim the father of Eliud,\nEliud the father of Eleazar.\nEleazar became the father of Matthan,\nMatthan the father of Jacob,\nJacob the father of Joseph, the husband of Mary.\nOf her was born Jesus who is called the Christ.\nThus the total number of generations\nfrom Abraham to David\nis fourteen generations;\nfrom David to the Babylonian exile, fourteen generations;\nfrom the Babylonian exile to the Christ,\nfourteen generations.\n 4/4'}},
+  '12-18': {title: 'Friday of the Third Week of Advent', lectionary: '194', first: {ref: 'Jeremiah 23:5-8', text: 'Behold, the days are coming, says the LORD,\nwhen I will raise up a righteous shoot to David;\nAs king he shall reign and govern wisely,\nhe shall do what is just and right in the land.\nIn his days Judah shall be saved,\nIsrael shall dwell in security.\nThis is the name they give him:\n“The LORD our justice.”\nTherefore, the days will come, says the LORD,\nwhen they shall no longer say, “As the LORD lives,\nwho brought the children of Israel out of the land of Egypt”;\nbut rather, "As the LORD lives,\nwho brought the descendants of the house of Israel\nup from the land of the north”–\nand from all the lands to which I banished them;\nthey shall again live on their own land.'}, psalm: {ref: 'Psalm 72:1-2, 12-13, 18-19', response: 'Justice shall flourish in his time, and fullness of peace for ever.', stanzas: ['O God, with your judgment endow the king,\nand with your justice, the king’s son;\n1/3\nHe shall govern your people with justice\nand your afflicted ones with judgment.', 'For he shall rescue the poor when he cries out,\nand the afflicted when he has no one to help him.\nHe shall have pity for the lowly and the poor;\nthe lives of the poor he shall save.', 'Blessed be the LORD, the God of Israel,\nwho alone does wondrous deeds.\nAnd blessed forever be his glorious name;\nmay the whole earth be filled with his glory.']}, gospel: {ref: 'Matthew 1:18-25', text: 'This is how the birth of Jesus Christ came about.\nWhen his mother Mary was betrothed to Joseph,\nbut before they lived together,\nshe was found with child through the Holy Spirit.\nJoseph her husband, since he was a righteous man,\nyet unwilling to expose her to shame,\ndecided to divorce her quietly.\nSuch was his intention when, behold,\nthe angel of the Lord appeared to him in a dream and said,\n“Joseph, son of David,\n 2/3\ndo not be afraid to take Mary your wife into your home.\nFor it is through the Holy Spirit\nthat this child has been conceived in her.\nShe will bear a son and you are to name him Jesus,\nbecause he will save his people from their sins.”\nAll this took place to fulfill\nwhat the Lord had said through the prophet:\nBehold, the virgin shall be with child and bear a son,\nand they shall name him Emmanuel,\nwhich means “God is with us.”\nWhen Joseph awoke,\nhe did as the angel of the Lord had commanded him\nand took his wife into his home.\nHe had no relations with her until she bore a son,\nand he named him Jesus.\n 3/3'}},
+  '12-19': {title: 'Saturday of the Third Week of Advent', lectionary: '195', first: {ref: 'Judges 13:2-7, 24-25a', text: 'There was a certain man from Zorah, of the clan of the Danites,\nwhose name was Manoah.\nHis wife was barren and had borne no children.\nAn angel of the LORD appeared to the woman and said to her,\n“Though you are barren and have had no children,\nyet you will conceive and bear a son.\nNow, then, be careful to take no wine or strong drink\nand to eat nothing unclean.\nAs for the son you will conceive and bear,\nno razor shall touch his head,\nfor this boy is to be consecrated to God from the womb.\nIt is he who will begin the deliverance of Israel\nfrom the power of the Philistines.”\nThe woman went and told her husband,\n“A man of God came to me;\nhe had the appearance of an angel of God, terrible indeed.\nI did not ask him where he came from, nor did he tell me his name.\nBut he said to me,\n‘You will be with child and will bear a son.\nSo take neither wine nor strong drink, and eat nothing unclean.\nFor the boy shall be consecrated to God from the womb,\nuntil the day of his death.’”\n 1/4\nThe woman bore a son and named him Samson.\nThe boy grew up and the LORD blessed him;\nthe Spirit of the LORD stirred him.'}, psalm: {ref: 'Psalm 71:3-4a, 5-6ab, 16-17', response: 'My mouth shall be filled with your praise, and I will sing your glory!', stanzas: ['Be my rock of refuge,\na stronghold to give me safety,\nfor you are my rock and my fortress.\nO my God, rescue me from the hand of the wicked.', 'For you are my hope, O LORD;\nmy trust, O God, from my youth.\nOn you I depend from birth;\nfrom my mother’s womb you are my strength.', 'I will treat of the mighty works of the LORD;\nO God, I will tell of your singular justice.\nO God, you have taught me from my youth,\nand till the present I proclaim your wondrous deeds.']}, gospel: {ref: 'Luke 1:5-25', text: '2/4\nIn the days of Herod, King of Judea,\nthere was a priest named Zechariah\nof the priestly division of Abijah;\nhis wife was from the daughters of Aaron,\nand her name was Elizabeth.\nBoth were righteous in the eyes of God,\nobserving all the commandments\nand ordinances of the Lord blamelessly.\nBut they had no child, because Elizabeth was barren\nand both were advanced in years.\nOnce when he was serving as priest\nin his division’s turn before God,\naccording to the practice of the priestly service,\nhe was chosen by lot\nto enter the sanctuary of the Lord to burn incense.\nThen, when the whole assembly of the people was praying outside\nat the hour of the incense offering,\nthe angel of the Lord appeared to him,\nstanding at the right of the altar of incense.\nZechariah was troubled by what he saw, and fear came upon him.\nBut the angel said to him, “Do not be afraid, Zechariah,\nbecause your prayer has been heard.\nYour wife Elizabeth will bear you a son,\nand you shall name him John.\nAnd you will have joy and gladness,\nand many will rejoice at his birth,\nfor he will be great in the sight of the Lord.\nHe will drink neither wine nor strong drink.\nHe will be filled with the Holy Spirit even from his mother’s womb,\nand he will turn many of the children of Israel\nto the Lord their God.\nHe will go before him in the spirit and power of Elijah\nto turn the hearts of fathers toward children\n 3/4\nand the disobedient to the understanding of the righteous,\nto prepare a people fit for the Lord.”\nThen Zechariah said to the angel,\n“How shall I know this?\nFor I am an old man, and my wife is advanced in years.”\nAnd the angel said to him in reply,\n“I am Gabriel, who stand before God.\nI was sent to speak to you and to announce to you this good news.\nBut now you will be speechless and unable to talk\nuntil the day these things take place,\nbecause you did not believe my words,\nwhich will be fulfilled at their proper time.”\nMeanwhile the people were waiting for Zechariah\nand were amazed that he stayed so long in the sanctuary.\nBut when he came out, he was unable to speak to them,\nand they realized that he had seen a vision in the sanctuary.\nHe was gesturing to them but remained mute.\nThen, when his days of ministry were completed, he went home.\nAfter this time his wife Elizabeth conceived,\nand she went into seclusion for five months, saying,\n“So has the Lord done for me at a time when he has seen fit\nto take away my disgrace before others.”\n 4/4'}},
+  '12-20': {title: 'Fourth Sunday of Advent', lectionary: '11', first: {ref: '2 Samuel 7:1-5, 8b-12, 14a, 16', text: 'When King David was settled in his palace,\nand the LORD had given him rest from his enemies on every side,\nhe said to Nathan the prophet,\n"Here I am living in a house of cedar,\nwhile the ark of God dwells in a tent!"\nNathan answered the king,\n"Go, do whatever you have in mind,\nfor the LORD is with you."\nBut that night the LORD spoke to Nathan and said:\n"Go, tell my servant David, \'Thus says the LORD:\nShould you build me a house to dwell in?\'\n"It was I who took you from the pasture\nand from the care of the flock\nto be commander of my people Israel.\nI have been with you wherever you went,\nand I have destroyed all your enemies before you.\nAnd I will make you famous like the great ones of the earth.\nI will fix a place for my people Israel;\nI will plant them so that they may dwell in their place\nwithout further disturbance.\nNeither shall the wicked continue to afflict them as they did of old,\nsince the time I first appointed judges over my people Israel.\nI will give you rest from all your enemies.\n 1/4\nThe LORD also reveals to you\nthat he will establish a house for you.\nAnd when your time comes and you rest with your ancestors,\nI will raise up your heir after you, sprung from your loins,\nand I will make his kingdom firm.\nI will be a father to him,\nand he shall be a son to me.\nYour house and your kingdom shall endure forever before me;\nyour throne shall stand firm forever."'}, psalm: {ref: 'Psalm 89:2-3, 4-5, 27, 29', response: 'For ever I will sing the goodness of the Lord.', stanzas: ['The promises of the LORD I will sing forever;\nthrough all generations my mouth shall proclaim your faithfulness.\nFor you have said, "My kindness is established forever";\nin heaven you have confirmed your faithfulness.', '"I have made a covenant with my chosen one,\nI have sworn to David my servant:\nForever will I confirm your posterity\nand establish your throne for all generations."', '"He shall say of me, \'You are my father,\nmy God, the Rock, my savior.\'\nForever I will maintain my kindness toward him,\nand my covenant with him stands firm."']}, second: {ref: 'Romans 16:25-27', text: '2/4\nBrothers and sisters:\nTo him who can strengthen you,\naccording to my gospel and the proclamation of Jesus Christ,\naccording to the revelation of the mystery kept secret for long ages\nbut now manifested through the prophetic writings and,\naccording to the command of the eternal God,\nmade known to all nations to bring about the obedience of faith,\nto the only wise God, through Jesus Christ\nbe glory forever and ever. Amen.'}, gospel: {ref: 'Luke 1:26-38', text: 'The angel Gabriel was sent from God\nto a town of Galilee called Nazareth,\nto a virgin betrothed to a man named Joseph,\nof the house of David,\nand the virgin\'s name was Mary.\nAnd coming to her, he said,\n"Hail, full of grace! The Lord is with you."\nBut she was greatly troubled at what was said\nand pondered what sort of greeting this might be.\nThen the angel said to her,\n"Do not be afraid, Mary,\nfor you have found favor with God.\n 3/4\n"Behold, you will conceive in your womb and bear a son,\nand you shall name him Jesus.\nHe will be great and will be called Son of the Most High,\nand the Lord God will give him the throne of David his father,\nand he will rule over the house of Jacob forever,\nand of his kingdom there will be no end."\nBut Mary said to the angel,\n"How can this be,\nsince I have no relations with a man?"\nAnd the angel said to her in reply,\n"The Holy Spirit will come upon you,\nand the power of the Most High will overshadow you.\nTherefore the child to be born\nwill be called holy, the Son of God.\nAnd behold, Elizabeth, your relative,\nhas also conceived a son in her old age,\nand this is the sixth month for her who was called barren;\nfor nothing will be impossible for God."\nMary said, "Behold, I am the handmaid of the Lord.\nMay it be done to me according to your word."\nThen the angel departed from her.\n 4/4'}},
+  '12-21': {title: 'Monday of the Fourth Week of Advent', lectionary: '197', first: {ref: 'Song of Songs 2:8-14', text: 'Hark! my lover–here he comes\nspringing across the mountains,\nleaping across the hills.\nMy lover is like a gazelle\nor a young stag.\nHere he stands behind our wall,\ngazing through the windows,\npeering through the lattices.\nMy lover speaks; he says to me,\n"Arise, my beloved, my dove, my beautiful one,\nand come!\n"For see, the winter is past,\nthe rains are over and gone.\nThe flowers appear on the earth,\nthe time of pruning the vines has come,\nand the song of the dove is heard in our land.\nThe fig tree puts forth its figs,\nand the vines, in bloom, give forth fragrance.\nArise, my beloved, my beautiful one,\nand come!\n"O my dove in the clefts of the rock,\nin the secret recesses of the cliff,\nLet me see you,\n 1/4\nlet me hear your voice,\nFor your voice is sweet,\nand you are lovely."\nOr\nZephaniah 3:14-18a\nShout for joy, O daughter Zion!\nSing joyfully, O Israel!\nBe glad and exult with all your heart,\nO daughter Jerusalem!\nThe LORD has removed the judgment against you,\nhe has turned away your enemies;\nThe King of Israel, the LORD, is in your midst,\nyou have no further misfortune to fear.\nOn that day, it shall be said to Jerusalem:\nFear not, O Zion, be not discouraged!\nThe LORD, your God, is in your midst,\na mighty savior;\nHe will rejoice over you with gladness,\nand renew you in his love,\nHe will sing joyfully because of you,\nas one sings at festivals.'}, psalm: {ref: 'Psalm 33:2-3, 11-12, 20-21', response: 'Exult, you just, in the Lord! Sing to him a new song.', stanzas: ['Give thanks to the LORD on the harp;\nwith the ten-stringed lyre chant his praises.\nSing to him a new song;\npluck the strings skillfully, with shouts of gladness.', 'But the plan of the LORD stands forever;\n2/4\nthe design of his heart, through all generations.\nBlessed the nation whose God is the LORD,\nthe people he has chosen for his own inheritance.', 'Our soul waits for the LORD,\nwho is our help and our shield,\nFor in him our hearts rejoice;\nin his holy name we trust.']}, gospel: {ref: 'Luke 1:39-45', text: 'Mary set out in those days\nand traveled to the hill country in haste\nto a town of Judah,\nwhere she entered the house of Zechariah\nand greeted Elizabeth.\nWhen Elizabeth heard Mary\'s greeting,\nthe infant leaped in her womb,\nand Elizabeth, filled with the Holy Spirit,\ncried out in a loud voice and said,\n"Most blessed are you among women,\nand blessed is the fruit of your womb.\nAnd how does this happen to me,\nthat the mother of my Lord should come to me?\n 3/4\nFor at the moment the sound of your greeting reached my ears,\nthe infant in my womb leaped for joy.\nBlessed are you who believed\nthat what was spoken to you by the Lord\nwould be fulfilled."\n 4/4'}},
+  '12-22': {title: 'Tuesday of the Fourth Week of Advent', lectionary: '198', first: {ref: '1 Samuel 1:24-28', text: 'In those days,\nHannah brought Samuel with her,\nalong with a three-year-old bull,\nan ephah of flour, and a skin of wine,\nand presented him at the temple of the LORD in Shiloh.\nAfter the boy’s father had sacrificed the young bull,\nHannah, his mother, approached Eli and said:\n“Pardon, my lord!\nAs you live, my lord,\nI am the woman who stood near you here, praying to the LORD.\nI prayed for this child, and the LORD granted my request.\nNow I, in turn, give him to the LORD;\nas long as he lives, he shall be dedicated to the LORD.”\nShe left Samuel there.'}, psalm: {ref: '', response: '', stanzas: ['1 Samuel 2:1, 4-5, 6-7, 8abcd', '“My heart exults in the LORD,\nmy horn is exalted in my God.\nI have swallowed up my enemies;\nI rejoice in my victory.”', '1/3\n“The bows of the mighty are broken,\nwhile the tottering gird on strength.\nThe well-fed hire themselves out for bread,\nwhile the hungry batten on spoil.\nThe barren wife bears seven sons,\nwhile the mother of many languishes.”', '“The LORD puts to death and gives life;\nhe casts down to the nether world;\nhe raises up again.\nThe LORD makes poor and makes rich,\nhe humbles, he also exalts.”', '“He raises the needy from the dust;\nfrom the dung heap he lifts up the poor,\nTo seat them with nobles\nand make a glorious throne their heritage.”']}, gospel: {ref: 'Luke 1:46-56', text: 'Mary said:\n“My soul proclaims the greatness of the Lord;\nmy spirit rejoices in God my savior.\nfor he has looked upon his lowly servant.\nFrom this day all generations will call me blessed:\n 2/3\nthe Almighty has done great things for me,\nand holy is his Name.\nHe has mercy on those who fear him\nin every generation.\nHe has shown the strength of his arm,\nand has scattered the proud in their conceit.\nHe has cast down the mighty from their thrones\nand has lifted up the lowly.\nHe has filled the hungry with good things,\nand the rich he has sent away empty.\nHe has come to the help of his servant Israel\nfor he remembered his promise of mercy,\nthe promise he made to our fathers,\nto Abraham and his children for ever.”\nMary remained with Elizabeth about three months\nand then returned to her home.\n 3/3'}},
+  '12-23': {title: 'Wednesday of the Fourth Week of Advent', lectionary: '199', first: {ref: 'Malachi 3:1-4, 23-24', text: 'Thus says the Lord GOD:\nLo, I am sending my messenger\nto prepare the way before me;\nAnd suddenly there will come to the temple\nthe LORD whom you seek,\nAnd the messenger of the covenant whom you desire.\nYes, he is coming, says the LORD of hosts.\nBut who will endure the day of his coming?\nAnd who can stand when he appears?\nFor he is like the refiner’s fire,\nor like the fuller’s lye.\nHe will sit refining and purifying silver,\nand he will purify the sons of Levi,\nRefining them like gold or like silver\nthat they may offer due sacrifice to the LORD.\nThen the sacrifice of Judah and Jerusalem\nwill please the LORD,\nas in the days of old, as in years gone by.\nLo, I will send you\nElijah, the prophet,\nBefore the day of the LORD comes,\nthe great and terrible day,\nTo turn the hearts of the fathers to their children,\n 1/3\nand the hearts of the children to their fathers,\nLest I come and strike\nthe land with doom.'}, psalm: {ref: 'Psalm 25:4-5ab, 8-9, 10 and 14', response: 'Lift up your heads and see; your redemption is near at', stanzas: ['hand.\nYour ways, O LORD, make known to me;\nteach me your paths,\nGuide me in your truth and teach me,\nfor you are God my savior.', 'Good and upright is the LORD;\nthus he shows sinners the way.\nHe guides the humble to justice,\nhe teaches the humble his way.', 'All the paths of the LORD are kindness and constancy\ntoward those who keep his covenant and his decrees.\nThe friendship of the LORD is with those who fear him,\nand his covenant, for their instruction.']}, gospel: {ref: 'Luke 1:57-66', text: '2/3\nWhen the time arrived for Elizabeth to have her child\nshe gave birth to a son.\nHer neighbors and relatives heard\nthat the Lord had shown his great mercy toward her,\nand they rejoiced with her.\nWhen they came on the eighth day to circumcise the child,\nthey were going to call him Zechariah after his father,\nbut his mother said in reply,\n“No. He will be called John.”\nBut they answered her,\n“There is no one among your relatives who has this name.”\nSo they made signs, asking his father what he wished him to be called.\nHe asked for a tablet and wrote, “John is his name,”\nand all were amazed.\nImmediately his mouth was opened, his tongue freed,\nand he spoke blessing God.\nThen fear came upon all their neighbors,\nand all these matters were discussed\nthroughout the hill country of Judea.\nAll who heard these things took them to heart, saying,\n“What, then, will this child be?\nFor surely the hand of the Lord was with him.”\n 3/3'}},
+  '12-24': {title: 'Thursday of the Fourth Week of Advent', lectionary: '200', first: {ref: '2 Samuel 7:1-5, 8b-12, 14a, 16', text: 'When King David was settled in his palace,\nand the LORD had given him rest from his enemies on every side,\nhe said to Nathan the prophet,\n“Here I am living in a house of cedar,\nwhile the ark of God dwells in a tent!”\nNathan answered the king,\n“Go, do whatever you have in mind,\nfor the LORD is with you.”\nBut that night the LORD spoke to Nathan and said:\n“Go, tell my servant David, ‘Thus says the LORD:\nShould you build me a house to dwell in?\n“‘It was I who took you from the pasture\nand from the care of the flock\nto be commander of my people Israel.\nI have been with you wherever you went,\nand I have destroyed all your enemies before you.\nAnd I will make you famous like the great ones of the earth.\nI will fix a place for my people Israel;\nI will plant them so that they may dwell in their place\nwithout further disturbance.\nNeither shall the wicked continue to afflict them as they did of old,\n 1/4\nsince the time I first appointed judges over my people Israel.\nI will give you rest from all your enemies.\nThe LORD also reveals to you\nthat he will establish a house for you.\nAnd when your time comes and you rest with your ancestors,\nI will raise up your heir after you, sprung from your loins,\nand I will make his Kingdom firm.\nI will be a father to him,\nand he shall be a son to me.\nYour house and your Kingdom shall endure forever before me;\nyour throne shall stand firm forever.’”'}, psalm: {ref: 'Psalm 89:2-3, 4-5, 27 and 29', response: 'For ever I will sing the goodness of the Lord.', stanzas: ['The favors of the LORD I will sing forever;\nthrough all generations my mouth shall proclaim your faithfulness.\nFor you have said, “My kindness is established forever”;\nin heaven you have confirmed your faithfulness.', '“I have made a covenant with my chosen one,\nI have sworn to David my servant:\nForever will I confirm your posterity\nand establish your throne for all generations.”', '“He shall say of me, ‘You are my father,\nmy God, the rock, my savior.’\nForever I will maintain my kindness toward him,\nand my covenant with him stands firm.”']}, gospel: {ref: 'Luke 1:67-79', text: 'Zechariah his father, filled with the Holy Spirit, prophesied, saying:\n“Blessed be the Lord, the God of Israel;\nfor he has come to his people and set them free.\nHe has raised up for us a mighty Savior,\nborn of the house of his servant David.\nThrough his prophets he promised of old\nthat he would save us from our enemies,\nfrom the hands of all who hate us.\nHe promised to show mercy to our fathers\nand to remember his holy covenant.\nThis was the oath he swore to our father Abraham:\nto set us free from the hand of our enemies,\nfree to worship him without fear,\nholy and righteous in his sight\nall the days of our life.\nYou, my child, shall be called the prophet of the Most High,\nfor you will go before the Lord to prepare his way,\nto give his people knowledge of salvation\nby the forgiveness of their sins.\nIn the tender compassion of our God\nthe dawn from on high shall break upon us,\nto shine on those who dwell in darkness and the shadow of death,\nand to guide our feet into the way of peace.”\n 3/4\n 4/4'}}
+};
+
+
+let currentDay = 0;
+
+function getLectionaryEntry(d) {
+  const key = (d.getMonth()+1) + '-' + d.getDate();
+  return READINGS[key] || null;
+}
+
+function getDateForDay(dayIdx) {
+  return new Date(ADVENT_START.getTime() + dayIdx * 86400000);
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+}
+
+function shortDate(d) {
+  return d.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+}
+
+function fmtText(txt) {
+  if (!txt) return '';
+  return txt.replace(/\n/g, '<br>');
+}
+
+// ============================================================
+// RENDER DAY
+// ============================================================
+
+const IGNATIAN = {
+  '11-29': {composition: 'A dark night. The master of the house has gone on a journey. Servants wait in the lamplight, not knowing when he will return. Every creak of the gate could be his arrival. Advent begins in watchfulness.', senses: 'Feel the cool night air. See flickering lamplight against dark windows. Hear the silence between gusts of wind. Feel the tension of anticipation in your body.', questions: ['Jesus says \'Watch!\' What are you watching for this Advent—and what distracts you from watching?', 'The doorkeeper must stay alert. What spiritual practices help you stay awake rather than drift into complacency?', 'You do not know when the Lord of the house is coming. How does not knowing the hour change how you live today?'], colloquy: 'Stand at the door with the watchman. Tell Jesus what you hope His coming will bring. Ask for the grace to stay alert through this Advent season—not drowsy, not distracted, but truly waiting.'},
+  '11-30': {composition: 'The Sea of Galilee. Two brothers—Simon and Andrew—cast nets into the water. Jesus walks by and calls: \'Come after me, and I will make you fishers of men.\' They leave everything immediately.', senses: 'Hear the waves lapping. Feel the rough rope of fishing nets. See Jesus walking along the shore—His eyes finding yours. Hear those two words: \'Follow me.\' Feel the nets drop from your hands.', questions: ['Andrew and Simon left their nets at once. What nets are you still holding that prevent you from following more fully?', 'Saint Andrew brought his brother to Jesus. Who can you bring to Christ this Advent?', 'Jesus made fishermen into apostles. How is God transforming your ordinary skills for His kingdom?'], colloquy: 'Stand on the shore. Jesus is walking toward you. He calls your name and says \'Follow me.\' What do you need to drop? Tell Him, and drop it.'},
+  '12-1': {composition: 'Jesus rejoices in the Holy Spirit—a rare glimpse of His interior joy. He praises the Father for revealing mysteries to the childlike. Then He turns privately to the disciples: \'Blessed are the eyes that see what you see.\'', senses: 'See Jesus\' face radiant with joy—the Spirit visible in His delight. Hear the intimacy of His prayer to the Father. Feel the privilege of witnessing this moment.', questions: ['God reveals to the childlike. This Advent, where does your sophistication block simple faith?', 'Blessed are the eyes that see. What are you seeing this Advent that you might be taking for granted?', 'Many prophets desired to see what you see. How does the privilege of knowing Christ shape your gratitude?'], colloquy: 'Sit close to Jesus in His joy. Let His delight in the Father become contagious. Ask for childlike eyes this Advent.'},
+  '12-2': {composition: 'Jesus goes up a mountain. Great crowds bring the lame, blind, deformed, and mute. He heals them all. Then, with compassion, He feeds four thousand with seven loaves and a few fish.', senses: 'See the mountainside covered with the broken and sick. Hear cries of healing. Smell bread multiplying. Taste the unexpected feast. Feel the abundance where there should have been scarcity.', questions: ['The crowds brought their broken to Jesus. What brokenness are you bringing to Him this Advent?', 'Jesus had compassion and fed them. Where do you see hunger—physical or spiritual—around you?', 'Seven loaves fed four thousand. What small offering is Jesus asking you to bring so He can multiply it?'], colloquy: 'Bring your seven loaves—your inadequacy—to Jesus. Watch Him bless, break, and multiply. Let Advent be a season of unexpected abundance.'},
+  '12-3': {composition: 'Jesus warns: Not everyone who says \'Lord, Lord\' will enter the Kingdom—only those who do the Father\'s will. The wise man builds on rock; the fool builds on sand. The rain falls on both.', senses: 'Hear the storm crashing against both houses. See the sand-house collapsing. Feel the rock foundation—solid beneath your feet. Hear Jesus\' voice cutting through the storm.', questions: ['As Advent begins, is your spiritual house built on rock or sand?', 'Saint Francis Xavier brought the Gospel to the ends of the earth. How far are you willing to go?', 'Doing the Father\'s will, not just saying \'Lord\'—where is the gap between your words and actions this Advent?'], colloquy: 'Ask Jesus to show you your foundation. Is it rock? If not, Advent is the season to rebuild. Ask Him to lay the cornerstone.'},
+  '12-4': {composition: 'Two blind men follow Jesus, crying: \'Son of David, have pity on us!\' Jesus asks: \'Do you believe I can do this?\' They answer: \'Yes, Lord.\' He touches their eyes and they see.', senses: 'Feel the darkness of blindness. Hear yourself calling out. Feel Jesus\' fingers on your closed eyelids. Then—light flooding in. See His face, the first thing your new eyes behold.', questions: ['Do you believe I can do this? Jesus asks about your faith before He heals. What do you believe He can do in your life?', 'The blind men followed Jesus even before they could see. How do you follow in the dark?', 'What blindness do you need healed this Advent—spiritual, relational, intellectual?'], colloquy: 'Close your eyes. Call out: \'Son of David, have pity on me!\' Feel His touch. Open your eyes. What do you see now that you couldn\'t see before?'},
+  '12-5': {composition: 'Jesus sees the crowds—harassed and helpless, like sheep without a shepherd. His heart is moved. He tells the disciples: \'The harvest is abundant. Ask the master to send laborers.\' Then He sends them.', senses: 'See the vast crowd stretching to the horizon. Feel Jesus\' compassion like a weight in your chest. Hear His urgent voice: \'Ask the master to send laborers.\' Feel yourself being sent.', questions: ['The harvest is abundant but laborers few. Where is God calling you to labor this Advent?', 'Jesus saw the crowds as harassed and helpless. Who around you is struggling without a shepherd?', 'He gave them authority. What authority has Christ given you that you\'re not exercising?'], colloquy: 'Let Jesus show you the harvest field. Ask: \'Where do you need me?\' Then go—this Advent, be a laborer, not just a spectator.'},
+  '12-6': {composition: 'The wilderness of Judea. A voice cries out: \'Prepare the way of the Lord!\' John the Baptist appears—wild, dressed in camel hair, eating locusts. He plunges people into the Jordan. He points beyond himself.', senses: 'Feel the desert heat. See the wild figure at the river\'s edge. Hear his thundering voice echoing off canyon walls. Feel the cold Jordan water as you wade in. See him pointing: \'One mightier than I is coming.\'', questions: ['Prepare the way of the Lord. What in your life needs to be straightened, leveled, or cleared this Advent?', 'John pointed beyond himself to Christ. How well do you point others to Jesus rather than to yourself?', 'John\'s message was repentance. What do you need to repent of before Christmas?'], colloquy: 'Stand at the Jordan with John. Let him point you to Christ. Ask: \'What valley in my life needs filling? What mountain needs leveling?\' Begin the work of preparation.'},
+  '12-7': {composition: 'A paralyzed man is lowered through the roof by his friends. Jesus sees their faith and says: \'Your sins are forgiven.\' The scribes grumble. Jesus heals the man completely—forgiveness and healing together.', senses: 'Hear the scraping on the roof above. See dust falling. Watch the mat descending. See Jesus look up with delight at their audacity. Hear gasps when the man stands.', questions: ['The paralytic\'s friends carried him to Jesus. Who carries you to Jesus when you can\'t get there yourself?', 'Saint Ambrose taught that Christ is both physician and medicine. How is Jesus healing you this Advent?', 'Jesus forgave sins before healing the body. What interior healing matters more than any physical fix?'], colloquy: 'You are on the mat. Your friends are lowering you to Jesus. He looks at you first with forgiveness, then with healing. Receive both.'},
+  '12-8': {composition: 'Nazareth. A young woman in a small room. The angel Gabriel appears in radiant light: \'Hail, full of grace! The Lord is with you.\' Mary is troubled. \'Do not be afraid. You will conceive and bear a son.\' Her answer changes everything: \'Let it be done to me.\'', senses: 'See the light of Gabriel flooding the simple room. Hear Mary\'s breath catch. Feel the weight of the question hanging in the air. Hear her voice—steady, trusting: \'Let it be done.\' Feel the cosmos shift.', questions: ['Mary was \'full of grace\' from the first moment of her conception. How does the Immaculate Conception reveal God\'s plan for purity?', 'Mary said yes without knowing the full cost. What is God asking of you that requires trust beyond understanding?', 'Let it be done to me according to your word. Can you pray that prayer today—and mean it?'], colloquy: 'Kneel with Mary at the Annunciation. Hear the angel\'s greeting directed to you: \'The Lord is with you.\' Say her words: \'Let it be done to me.\' Mean it. Let the Word become flesh in your life.'},
+  '12-9': {composition: 'Jesus speaks tenderly: \'Come to me, all you who labor and are burdened, and I will give you rest. Learn from me, for I am meek and humble of heart.\' In the midst of Advent\'s busyness, He offers rest.', senses: 'Feel the ache in your bones from the season\'s demands. Hear Jesus\' voice—quiet, steady, tender. Feel His easy yoke replacing your heavy one. Breathe. Rest.', questions: ['Advent can become frenetic. What burden are you carrying that Jesus never asked you to carry?', 'Learn from me, for I am meek and humble. How different is Jesus\' approach from the world\'s Advent pace?', 'My yoke is easy, my burden light. What would it look like to have a restful, not frantic, Advent?'], colloquy: 'Come to Jesus tired—tired from shopping, obligations, expectations. Let Him take the heavy yoke off. Put on His. Feel how light it is. Rest here.'},
+  '12-10': {composition: 'Jesus speaks of John the Baptist: \'Among those born of women there has been none greater than John the Baptist; yet the least in the Kingdom of heaven is greater than he.\' A stunning paradox about greatness.', senses: 'See John in the wilderness—the greatest of the old era. Then see the open door of the Kingdom. Hear Jesus\' astonishing claim about the least being greatest.', questions: ['The least in the Kingdom is greater than the greatest prophet. How does belonging to God\'s kingdom redefine your sense of significance?', 'John prepared the way but didn\'t enter the new Kingdom in his lifetime. What are you preparing that you may not see completed?', 'The Kingdom suffers violence and the violent take it by force. How aggressively do you pursue the Kingdom?'], colloquy: 'Ask Jesus to show you your place in the Kingdom. Not your rank—your place. However small, it is greater than you imagine.'},
+  '12-11': {composition: 'Jesus compares His generation to children in the marketplace who refuse to play along: John fasted and they said he was possessed; Jesus feasted and they called Him a glutton. Wisdom is vindicated by her works.', senses: 'Hear the children\'s piping, ignored. See the petulant crowd refusing both austerity and celebration. Hear Jesus\' exasperation—and His confidence that wisdom will win.', questions: ['Are you responsive to God, or do you refuse His invitations—whether they come in severity or joy?', 'Wisdom is vindicated by her works. What works in your life vindicate the wisdom of following Christ?', 'John came one way, Jesus another. God approaches in diverse ways. Which approach do you need this Advent?'], colloquy: 'Ask Jesus: \'Am I playing along, or am I sitting with arms crossed?\' Open yourself to however He comes—in fasting or feasting, silence or song.'},
+  '12-12': {composition: 'The angel Gabriel comes to Mary of Nazareth. On this feast of Our Lady of Guadalupe, we remember that Mary appeared to Juan Diego as a mestiza—God\'s mother embracing all peoples, especially the poor and indigenous.', senses: 'See roses blooming in December. See the miraculous image on Juan Diego\'s tilma. Hear Mary\'s words: \'Am I not here, I who am your Mother?\' Feel her protective mantle.', questions: ['Our Lady of Guadalupe appeared to the poorest and most marginalized. How does Mary draw you toward the marginalized?', 'She asked for a temple to be built. What is Mary building in your heart this Advent?', 'Juan Diego doubted his worthiness. Where does unworthiness keep you from saying yes to God\'s mission?'], colloquy: 'Stand with Juan Diego on the hill. Hear Mary say: \'Am I not here?\' Let her maternal presence comfort whatever fear or doubt you carry this Advent.'},
+  '12-13': {composition: 'Gaudete Sunday—the rose candle is lit. Joy breaks through the purple. The Baptist testifies: \'I am not the Christ. I am the voice of one crying out in the desert.\' He points away from himself to the Light.', senses: 'See the rose candle\'s warm glow amid the purple. Feel joy rising. Hear the Pharisees interrogating John. See him pointing persistently away from himself: \'There is one among you whom you do not recognize.\'', questions: ['Rejoice always! In the midst of Advent\'s waiting, what brings you genuine joy?', 'John said \'I am not the Christ.\' Where do you need the humility to point away from yourself toward Jesus?', 'There is one among you whom you do not recognize. Where is Christ present in your life unrecognized?'], colloquy: 'Light the rose candle in your heart. Let joy surprise you in the middle of preparation. Ask John to teach you his humility—the art of pointing to Another.'},
+  '12-14': {composition: 'The chief priests and elders challenge Jesus\' authority. He responds with a question about John\'s baptism—was it from heaven or human? They refuse to answer. Jesus refuses to answer them.', senses: 'See the Temple confrontation—power against truth. Feel the trap being set. Watch Jesus calmly turn it back. Hear the leaders\' frustrated silence.', questions: ['The leaders wouldn\'t answer honestly because they feared the consequences. Where does fear of consequences keep you from honesty?', 'Saint John of the Cross found God in the dark night. Where is God meeting you in darkness this Advent?', 'Jesus\' authority was questioned. Whose authority do you recognize—and resist?'], colloquy: 'In the dark night of Advent waiting, ask Saint John of the Cross to guide you. Trust that God works in darkness as powerfully as in light.'},
+  '12-15': {composition: 'Two sons are asked to work in the vineyard. One says \'no\' but goes. The other says \'yes\' but stays home. Tax collectors and prostitutes are entering the Kingdom ahead of the religious leaders.', senses: 'See the first son\'s defiance—then watch him pick up his tools and go to work. See the second son\'s pious nod—then watch him sit back down.', questions: ['Which son are you this Advent—the one who says the right things but doesn\'t follow through?', 'Tax collectors enter ahead of Pharisees. How does this challenge spiritual complacency?', 'What has God asked you to do this Advent that you\'ve agreed to but haven\'t started?'], colloquy: 'Ask Jesus: \'Where have I said yes but not gone to the vineyard?\' This Advent, be the son who actually goes—regardless of what you said.'},
+  '12-16': {composition: 'John\'s disciples bring Jesus a question from prison: \'Are you the one who is to come, or should we look for another?\' Jesus answers with evidence: the blind see, the lame walk, the dead are raised, the poor hear good news.', senses: 'Feel the cold dampness of John\'s prison. Hear the question born of doubt and suffering. See Jesus\' answer in action—healing everywhere. Hear: \'Go tell John what you see.\'', questions: ['Even John the Baptist had doubts. How do you handle doubt during Advent\'s waiting?', 'Jesus answered John\'s doubt with evidence of action. What evidence of God\'s work do you see around you?', 'Blessed is the one who takes no offense at me. Where does Jesus offend your expectations?'], colloquy: 'Bring your doubts to Jesus like John did. Don\'t be ashamed of them. Listen as He points to evidence—then choose to believe.'},
+  '12-17': {composition: 'The genealogy of Jesus Christ unfolds: Abraham, Isaac, Jacob, Judah, David, Solomon—through exile and return—down to Joseph, the husband of Mary, of whom was born Jesus who is called the Christ. Forty-two generations.', senses: 'See the scroll of names unrolling through centuries. Hear each name—sinners and saints, kings and outcasts. Feel the weight of history converging on one child in Bethlehem.', questions: ['God worked through forty-two imperfect generations. How does this patience encourage you?', 'The genealogy includes Rahab, Ruth, Bathsheba—unexpected women. Where does God work through the unexpected in your life?', 'As the O Antiphons begin, the Church cries: \'O Wisdom!\' What wisdom do you need from God this Advent?'], colloquy: 'Place yourself in the genealogy of grace. You are part of this story. Thank God for His patience through millennia—and His patience with you.'},
+  '12-18': {composition: 'Joseph discovers Mary is pregnant. A just man, he plans to divorce her quietly. But an angel appears in a dream: \'Do not be afraid to take Mary your wife. The child is from the Holy Spirit.\' Joseph obeys.', senses: 'Feel Joseph\'s confusion, his heartbreak, his wrestling in the dark. Then the angel in the dream—light breaking through. See Joseph\'s face change from anguish to resolve. He takes Mary home.', questions: ['Joseph\'s plans were disrupted by God. What plans of yours has God disrupted—and how did you respond?', 'Joseph was obedient in silence—he never speaks in Scripture. What does silent obedience look like in your life?', 'Do not be afraid. What fear is the angel addressing in your Advent?'], colloquy: 'Sit with Joseph in the dark before the angel comes. Share his confusion. Then let the angel speak to your fear: \'Do not be afraid.\' Like Joseph, get up and obey.'},
+  '12-19': {composition: 'An angel appears to Manoah\'s wife: you will conceive a son who will be a Nazirite, set apart for God. The story of Samson\'s birth echoes the annunciations of Advent—God entering through miraculous births.', senses: 'See the barren woman receiving impossible news. Feel the pattern repeating: Sarah, Hannah, Elizabeth, Mary—God choosing the empty to be filled.', questions: ['God chose barren women to bear His greatest servants. Where is God working through your emptiness?', 'Samson was set apart from the womb. How are you set apart for God\'s purposes?', 'The angel of the Lord appeared. As Christmas approaches, how attentive are you to God\'s messengers?'], colloquy: 'Bring your barrenness to God—whatever feels empty and unfruitful. Trust the pattern: God fills the empty. He brings life from barrenness.'},
+  '12-20': {composition: 'The angel Gabriel comes to Mary a second time in this Advent\'s readings. She hears: \'The Holy Spirit will come upon you. The child will be called Son of the Most High. His kingdom will have no end.\' Mary says: \'Behold, I am the handmaid of the Lord.\'', senses: 'See Gabriel again—radiant, overwhelming. Hear the promise: the throne of David, a kingdom without end. Feel the weight of history resting on this young woman\'s yes. Hear her voice—steady, surrendered.', questions: ['Mary said \'I am the handmaid of the Lord.\' How do you understand yourself as God\'s servant?', 'Nothing is impossible for God. What impossible thing are you being asked to believe this Advent?', 'With only four days until Christmas, how has your heart been prepared?'], colloquy: 'Kneel with Mary four days before Christmas. Say her words with her: \'Be it done unto me according to your word.\' What is being born in you?'},
+  '12-21': {composition: 'Mary sets out in haste to visit Elizabeth. The child leaps in Elizabeth\'s womb. Elizabeth cries out: \'Blessed are you among women! Blessed is the fruit of your womb!\' The Visitation—joy meeting joy.', senses: 'Feel the urgency of Mary\'s journey through the hills. Hear Elizabeth\'s cry of recognition. Feel the baby leap. See two women embracing—both carrying miracles.', questions: ['Mary went in haste. When the Spirit moves, do you go quickly or delay?', 'Elizabeth recognized the Lord before He was born. Where do you recognize Christ\'s hidden presence?', 'Blessed is she who believed. How is your belief bearing fruit this Advent?'], colloquy: 'Walk with Mary to Elizabeth\'s house. Feel the joy of carrying Christ to others. Ask: \'To whom am I bringing Christ this Christmas?\''},
+  '12-22': {composition: 'Mary sings the Magnificat: \'My soul proclaims the greatness of the Lord!\' He has cast down the mighty and lifted the lowly. He has filled the hungry and sent the rich away empty. The great reversal.', senses: 'Hear Mary\'s voice rising in song—young, strong, prophetic. Feel the revolution in her words. See the mighty toppling, the lowly rising. Taste the food of the hungry, finally filled.', questions: ['He has cast down the mighty. Where do you see God reversing the world\'s power structures?', 'He has filled the hungry. Who is hungry around you this Christmas?', 'My soul proclaims the greatness of the Lord. Can you make Mary\'s song your own?'], colloquy: 'Sing the Magnificat with Mary. Let her revolutionary joy fill your heart. Ask: \'How is God doing great things in my lowliness?\''},
+  '12-23': {composition: 'Zechariah\'s neighbors and relatives gather for the naming of John. They want to name him after his father. Elizabeth insists: \'He will be called John.\' Zechariah writes: \'John is his name.\' His mouth is opened and he speaks.', senses: 'Feel the crowd\'s surprise. See the writing tablet. Read the words: \'John is his name.\' Then hear Zechariah\'s voice—silent for nine months—burst out in praise.', questions: ['Zechariah was silenced for his doubt, then freed to speak. What period of silence has God used to prepare you?', 'They asked: \'What will this child be?\' As Christmas Eve approaches, what is being born in your life?', 'The hand of the Lord was with him. Do you sense God\'s hand on your life this Advent?'], colloquy: 'Like Zechariah, you may have been silent—doubtful, confused, waiting. Now Christmas is almost here. Let your mouth be opened. Speak praise.'},
+  '12-24': {composition: 'Christmas Eve. Zechariah prophesies: \'Blessed be the Lord, the God of Israel, for He has visited and brought redemption to His people.\' The dawn from on high shall visit us, to shine on those who sit in darkness. Tomorrow, the Light comes.', senses: 'Feel the hush of Christmas Eve. Hear Zechariah\'s Benedictus—ancient, solemn, bursting with hope. See the first star appearing. Feel the darkness that will not last one more night.', questions: ['The daybreak from on high will visit us. On this last day of Advent, are you ready to receive the Light?', 'To guide our feet into the way of peace. Where do you need Christ\'s peace this Christmas?', 'What has this Advent journey meant to you? What have you learned about waiting, preparing, hoping?'], colloquy: 'It is Christmas Eve. The long Advent is almost over. Stand in the darkness one last moment. Feel the whole world holding its breath. Tomorrow, God becomes a child. Tonight, let the waiting be its own prayer. \'Come, Lord Jesus.\''}
+};
+
+function renderDay() {
+  const date = getDateForDay(currentDay);
+  const entry = getLectionaryEntry(date);
+  const title = entry ? entry.title : 'Ordinary Time';
+
+  // Hero
+  document.getElementById('hero-date').textContent = title + ' · ' + shortDate(date);
+  document.getElementById('progress-label').textContent = 'Day ' + (currentDay + 1) + ' of ' + TOTAL_DAYS;
+
+  // Date nav
+  document.getElementById('nav-day-name').textContent = title;
+  document.getElementById('nav-date-full').textContent = formatDate(date);
+  document.getElementById('nav-lent-label').textContent = 'Day ' + (currentDay + 1) + ' of Ordinary Time';
+  document.getElementById('readings-title').textContent = 'Mass Readings — ' + title;
+
+  // Prev/Next
+  document.getElementById('prev-btn').disabled = (currentDay <= 0);
+  document.getElementById('next-btn').disabled = (currentDay >= TOTAL_DAYS - 1);
+
+  // Progress bar
+  const pct = ((currentDay + 1) / TOTAL_DAYS) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  // Build readings HTML
+  let readingsHTML = '';
+
+  if (entry && entry.first) {
+    readingsHTML += `
+      <div class="reading-block">
+        <div class="reading-type">${entry.second ? 'First Reading' : 'Reading'}</div>
+        <div class="reading-ref">${entry.first.ref}</div>
+        <div class="reading-text">${fmtText(entry.first.text)}</div>
+      </div>`;
+  }
+
+  // Psalm
+  if (entry && entry.psalm) {
+    let psalmInner = '';
+    if (entry.psalm.response) {
+      psalmInner += `<div class="psalm-response">℟ ${entry.psalm.response}</div>`;
+    }
+    if (entry.psalm.stanzas) {
+      entry.psalm.stanzas.forEach(function(stanza) {
+        psalmInner += `<div class="psalm-stanza">${fmtText(stanza)}</div>`;
+        if (entry.psalm.response) {
+          psalmInner += `<div class="psalm-response">℟ ${entry.psalm.response}</div>`;
+        }
+      });
+    }
+    readingsHTML += `
+      <div class="reading-block">
+        <div class="reading-type">Responsorial Psalm</div>
+        <div class="reading-ref">${entry.psalm.ref}</div>
+        ${psalmInner}
+      </div>`;
+  }
+
+  // Second Reading (Sundays/Solemnities)
+  if (entry && entry.second) {
+    readingsHTML += `
+      <div class="reading-block">
+        <div class="reading-type">Second Reading</div>
+        <div class="reading-ref">${entry.second.ref}</div>
+        <div class="reading-text">${fmtText(entry.second.text)}</div>
+      </div>`;
+  }
+
+  // Gospel
+  if (entry && entry.gospel) {
+    readingsHTML += `
+      <div class="gospel-block">
+        <div class="reading-type">✝ Holy Gospel</div>
+        <div class="reading-ref">${entry.gospel.ref}</div>
+        <div class="reading-text">${fmtText(entry.gospel.text)}</div>
+      </div>`;
+  }
+
+  if (!readingsHTML) {
+    readingsHTML = `<div class="reading-block" style="padding:2rem;text-align:center;color:var(--ash);font-style:italic;">
+      No readings available for this date.
+    </div>`;
+  }
+
+  // NABRE credit
+  
+  // Ignatian Contemplation
+  const dateKey2 = (date.getMonth()+1) + '-' + date.getDate();
+  const ignatian = IGNATIAN[dateKey2];
+  if (ignatian) {
+    const questionsHTML = ignatian.questions.map(function(q) { return '<li>' + q + '</li>'; }).join('');
+    readingsHTML += '<div class="ignatian-block"><div class="ignatian-header"><div class="ignatian-ihs">IHS</div><div style="flex:1"><div class="ignatian-label">Ignatian Contemplation</div><div class="ignatian-title">Praying with the Gospel</div></div></div>'
+      + '<div class="ignatian-step"><div class="ignatian-step-label">\u2460 Composition of Place</div><div class="ignatian-step-text">' + ignatian.composition + '</div></div>'
+      + '<div class="ignatian-step"><div class="ignatian-step-label">\u2461 Engage Your Senses</div><div class="ignatian-step-text">' + ignatian.senses + '</div></div>'
+      + '<div class="ignatian-step"><div class="ignatian-step-label">\u2462 Reflection</div><ul class="ignatian-questions">' + questionsHTML + '</ul></div>'
+      + '<div class="ignatian-colloquy"><div class="ignatian-colloquy-label">\u2463 Colloquy \u2014 Speak with Jesus</div><div class="ignatian-colloquy-text">' + ignatian.colloquy + '</div></div></div>';
+  }
+
+  readingsHTML += `<p style="text-align:right;font-size:0.8rem;color:var(--ash-light);font-style:italic;margin-top:0.5rem;">
+    Readings: New American Bible, Revised Edition (NABRE)
+  </p>`;
+
+  document.getElementById('readings-container').innerHTML = readingsHTML;
+
+  // Saint placeholder
+  document.getElementById('saint-container').innerHTML = `
+    <div class="saint-card">
+      <div class="saint-icon">⛪</div>
+      <div>
+        <div class="saint-name">${title}</div>
+        <div class="saint-dates">Ordinary Time · Year A (Matthew)</div>
+        <div class="saint-bio">During Ordinary Time, the Church walks with Christ through His public ministry — His parables, miracles, and teachings that reveal the Kingdom of God. The liturgical color green symbolizes hope and the growth of faith.</div>
+        <div class="saint-feast">Ordinary Time II</div>
+      </div>
+    </div>`;
+
+  // Meditation
+  document.getElementById('meditation-container').innerHTML = `
+    <div class="meditation-card">
+      <div class="meditation-quote">"The kingdom of heaven is like a mustard seed that a person took and sowed in a field. It is the smallest of all the seeds, yet when full-grown it is the largest of plants."</div>
+      <div class="meditation-author">— Jesus Christ</div>
+      <div class="meditation-context">Matthew 13:31-32</div>
+      <div class="meditation-prompt">In the long, green season of Ordinary Time, we grow slowly and quietly — like seeds in rich soil. What seeds has God planted in your life this season? How are they growing?</div>
+    </div>`;
+
+  // Prayer
+  document.getElementById('prayer-container').innerHTML = `
+    <div class="prayer-card">
+      <div class="prayer-title-text">🕊 Collect for Ordinary Time</div>
+      <div class="prayer-text">O God, protector of those who hope in you, without whom nothing has firm foundation, nothing is holy, bestow in abundance your mercy upon us and grant that, with you as our ruler and guide, we may use the good things that pass in such a way as to hold fast even now to those that ever endure. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.</div>
+    </div>`;
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+
+function populateDaySelect() {
+  const select = document.getElementById('day-select');
+  for (let i = 0; i < TOTAL_DAYS; i++) {
+    const d = getDateForDay(i);
+    const entry = getLectionaryEntry(d);
+    const label = entry ? entry.title : 'Ordinary Time';
+    const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${dateStr} — ${label}`;
+    if (i === currentDay) opt.selected = true;
+    select.appendChild(opt);
+  }
+}
+
+function jumpToDay(val) {
+  if (val === '') return;
+  currentDay = Math.max(0, Math.min(TOTAL_DAYS - 1, parseInt(val)));
+  document.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
+  renderDay();
+  document.getElementById('day-select').value = currentDay;
+  document.getElementById('readings').scrollIntoView({ behavior: 'smooth' });
+}
+
+function syncDaySelect() {
+  const select = document.getElementById('day-select');
+  if (select) select.value = currentDay;
+}
+
+function changeDay(delta) {
+  currentDay = Math.max(0, Math.min(TOTAL_DAYS - 1, currentDay + delta));
+  document.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
+  syncDaySelect();
+  renderDay();
+  document.getElementById('readings').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ============================================================
+// EMAIL
+// ============================================================
+
+function handleSubscribe() {
+  const email = document.getElementById('email-input').value.trim();
+  const btn = document.querySelector('.subscribe-btn');
+  const formDiv = document.getElementById('custom-subscribe-form');
+  const successEl = document.getElementById('sub-success');
+
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  btn.textContent = 'Subscribing…';
+  btn.disabled = true;
+
+  function trySubmit(attempts) {
+    const eoContainer = document.getElementById('eo-form-container');
+    const eoForm = eoContainer ? eoContainer.querySelector('form') : null;
+    const eoEmailInput = eoForm ? eoForm.querySelector('input[type="email"], input[name="field_0"]') : null;
+    const eoSubmitBtn = eoForm ? eoForm.querySelector('button[type="submit"], input[type="submit"]') : null;
+
+    if (eoEmailInput && eoSubmitBtn) {
+      eoEmailInput.value = email;
+      eoEmailInput.dispatchEvent(new Event('input', { bubbles: true }));
+      eoEmailInput.dispatchEvent(new Event('change', { bubbles: true }));
+      eoSubmitBtn.click();
+
+      setTimeout(function() {
+        formDiv.style.opacity = '0.4';
+        formDiv.style.pointerEvents = 'none';
+        successEl.innerHTML = '☧ &nbsp; You are now enrolled. Check your inbox.';
+        successEl.style.display = 'block';
+      }, 2000);
+    } else if (attempts > 0) {
+      setTimeout(function() { trySubmit(attempts - 1); }, 500);
+    } else {
+      successEl.innerHTML = '☧ &nbsp; Connection error. Please try again.';
+      successEl.style.display = 'block';
+      btn.textContent = 'Subscribe';
+      btn.disabled = false;
+    }
+  }
+
+  trySubmit(20);
+}
+
+let cachedEmailHTML = '';
+
+function previewEmail() {
+  const modal = document.getElementById('email-preview-modal');
+  const frame = document.getElementById('email-preview-frame');
+  modal.style.opacity = '1';
+  modal.style.pointerEvents = 'all';
+  cachedEmailHTML = generateEmailHTML(currentDay);
+  frame.srcdoc = cachedEmailHTML;
+}
+
+function copyEmailHTML() {
+  if (!cachedEmailHTML) return;
+  navigator.clipboard.writeText(cachedEmailHTML).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+function openEmailInTab() {
+  if (!cachedEmailHTML) return;
+  const blob = new Blob([cachedEmailHTML], { type: 'text/html' });
+  window.open(URL.createObjectURL(blob), '_blank');
+}
+
+function generateEmailHTML(dayIdx) {
+  const date = getDateForDay(dayIdx);
+  const entry = getLectionaryEntry(date);
+  const title = entry ? entry.title : 'Ordinary Time';
+  const dateStr = formatDate(date);
+
+  let firstText = '', secondText = '', gospelText = '';
+  if (entry) {
+    firstText = entry.first ? (entry.first.text || '').replace(/\n/g, '<br>') : '';
+    secondText = entry.second ? (entry.second.text || '').replace(/\n/g, '<br>') : '';
+    gospelText = entry.gospel ? (entry.gospel.text || '').replace(/\n/g, '<br>') : '';
+  }
+
+  function readingBlock(type, ref, text) {
+    if (!text) return '';
+    return `<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+      <tr><td style="border-left:3px solid #c9a84c;padding:16px 20px;background:#ffffff;">
+        <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#2a5a3a;margin-bottom:4px;">${type}</div>
+        <div style="font-family:Georgia,serif;font-size:16px;font-style:italic;font-weight:bold;color:#1f2a1f;margin-bottom:10px;">${ref}</div>
+        <div style="font-family:Georgia,serif;font-size:15px;color:#404a40;line-height:1.75;">${text}</div>
+      </td></tr></table>`;
+  }
+
+  function gospelBlock(ref, text) {
+    if (!text) return '';
+    return `<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+      <tr><td style="background:#0f2218;padding:20px;border-radius:4px;">
+        <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c9a84c;margin-bottom:4px;">✝ Holy Gospel</div>
+        <div style="font-family:Georgia,serif;font-size:16px;font-style:italic;font-weight:bold;color:#e8c97a;margin-bottom:10px;">${ref}</div>
+        <div style="font-family:Georgia,serif;font-size:15px;color:rgba(245,232,192,0.92);line-height:1.75;">${text}</div>
+      </td></tr></table>`;
+  }
+
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Ordinary Time — ${dateStr}</title></head>
+<body style="margin:0;padding:0;background:#f2eedf;font-family:Georgia,serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f2eedf;">
+<tr><td align="center" style="padding:24px 16px;">
+  <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+    <tr><td style="background:#0f2218;text-align:center;padding:36px 24px;border-radius:6px 6px 0 0;">
+      <div style="font-family:Georgia,serif;font-size:28px;color:#c9a84c;margin-bottom:4px;">☧</div>
+      <div style="font-family:Georgia,serif;font-size:26px;font-weight:bold;color:#e8c97a;letter-spacing:2px;">ORDINARY TIME</div>
+      <div style="font-family:Georgia,serif;font-size:13px;color:#b0b8b0;font-style:italic;margin-top:4px;">Preparing the Way of the Lord</div>
+      <div style="height:1px;background:rgba(201,168,76,0.3);margin:16px auto;max-width:300px;"></div>
+      <div style="font-family:Georgia,serif;font-size:12px;color:#c9a84c;letter-spacing:3px;text-transform:uppercase;">Day ${dayIdx + 1}</div>
+      <div style="font-family:Georgia,serif;font-size:20px;font-weight:bold;color:#f5e8c0;margin-top:6px;">${title}</div>
+      <div style="font-family:Georgia,serif;font-size:13px;color:#7a8a80;font-style:italic;margin-top:4px;">${dateStr}</div>
+    </td></tr>
+    <tr><td style="background:#faf8f2;padding:28px;border-radius:0 0 6px 6px;">
+      ${entry ? readingBlock(entry.second ? 'First Reading' : 'Reading', entry.first ? entry.first.ref : '', firstText) : ''}
+      ${entry && entry.second ? readingBlock('Second Reading', entry.second.ref, secondText) : ''}
+      ${entry ? gospelBlock(entry.gospel ? entry.gospel.ref : '', gospelText) : ''}
+      <p style="text-align:right;font-size:12px;color:#b0b8b0;font-style:italic;">Readings: NABRE</p>
+    </td></tr>
+  </table>
+</td></tr></table></body></html>`;
+}
+
+// ============================================================
+// INIT
+// ============================================================
+
+function initReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+function initCurrentDay() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const start = new Date(ADVENT_START);
+  start.setHours(0,0,0,0);
+  const diff = Math.round((today - start) / 86400000);
+
+  if (diff >= 0 && diff < TOTAL_DAYS) {
+    currentDay = diff;
+  } else if (diff < 0) {
+    currentDay = 0;
+  } else {
+    currentDay = TOTAL_DAYS - 1;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initCurrentDay();
+  populateDaySelect();
+  renderDay();
+  initReveal();
+
+  setTimeout(() => {
+    const pct = ((currentDay + 1) / TOTAL_DAYS) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  }, 1600);
+});
+</script>
+</body>
+</html>
